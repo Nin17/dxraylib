@@ -12,6 +12,7 @@ from .cross_sections import (
     cs_rayl,
     cs_total,
 )
+from .init import init
 from .refractive_indices import (
     refractive_index,
     refractive_index_im,
@@ -30,6 +31,7 @@ __all__ = (
     "cs_total",
     "fi",
     "fii",
+    "init",
     "refractive_index",
     "refractive_index_im",
     "refractive_index_re",
