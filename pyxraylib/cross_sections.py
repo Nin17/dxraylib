@@ -6,8 +6,8 @@ import xraylib
 from .config import xp
 
 MEC2 = 511.0034  # electron rest mass (keV)
-RE2 = 0.07940775
-PI = xp.pi  # square of classical electron radius (barn)
+RE2 = 0.07940775 # square of classical electron radius (barn)
+PI = xp.pi  
 
 
 def cs_compt(atomic_number: int, energy: float) -> float:
