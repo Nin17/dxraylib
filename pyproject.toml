@@ -1,0 +1,29 @@
+# tells pip what build tool to use to build your package
+[build-system]
+build-backend = "setuptools.build_meta"
+requires = ["setuptools>=61.0"]
+
+# tells pip how to build your pypi webpage & what dependencies to install
+[project]
+authors = [
+  {name = "Chris Ninham", email = "christopher.ninham@creatis.insa-lyon.fr"},
+]
+dependencies = ['pandas', 'scipy']
+description = "A python implementation of xraylib."
+dynamic = ["readme"]
+name = "pyxraylib"
+version = "0.0.1"
+
+requires-python = ">=3.x"
+
+
+[tool.setuptools.dynamic]
+readme = {file = ["README.md"]}
+
+# (OPTIONAL) tells pypi that these urls are where your project's source code and issue tracker reside
+# [project.urls]
+# "Homepage" = "https://github.com/pypa/packaging.python.org"
+# "Bug Tracker" = "https://github.com/pypa/packaging.python.org/issues"
+
+[tool.setuptools]
+py-modules = ["pyxraylib"]
