@@ -4,20 +4,21 @@
 import xraylib
 
 from .config import xp
+from ._splint import _splint
 
 MEC2 = 511.0034  # electron rest mass (keV)
-RE2 = 0.07940775 # square of classical electron radius (barn)
-PI = xp.pi  
+RE2 = 0.07940775  # square of classical electron radius (barn)
+PI = xp.pi
 
 
-def cs_compt(atomic_number: int, energy: float) -> float:
+def CS_Compt(Z: int, E: float) -> float:
     """_summary_
 
     Parameters
     ----------
-    atomic_number : int
+    Z : int
         _description_
-    energy : float
+    E : float
         _description_
 
     Returns
@@ -25,20 +26,21 @@ def cs_compt(atomic_number: int, energy: float) -> float:
     float
         _description_
     """
-    return xraylib.CS_Compt(atomic_number, energy)
+    return xraylib.CS_Compt(Z, E)
 
 
-def cs_energy():
+def CS_Energy():
     # !!! Not needed
     return
 
 
-def cs_kn(energy: float) -> float:
+# TODO fix type hint
+def CS_KN(E: float) -> float:
     """_summary_
 
     Parameters
     ----------
-    energy : float
+    E : float
         _description_
 
     Returns
@@ -52,9 +54,9 @@ def cs_kn(energy: float) -> float:
         _description_
     """
 
-    if energy < 0.0:
+    if E < 0.0:
         raise ValueError("energy must be positive")
-    a = energy / MEC2
+    a = E / MEC2
     a3 = a * a * a
     b = 1 + 2 * a
     b2 = b * b
@@ -72,14 +74,14 @@ def cs_kn(energy: float) -> float:
     return sigma
 
 
-def cs_photo(atomic_number: int, energy: float) -> float:
+def CS_Photo(Z: int, E: float) -> float:
     """_summary_
 
     Parameters
     ----------
-    atomic_number : int
+    Z : int
         _description_
-    energy : float
+    E : float
         _description_
 
     Returns
@@ -87,17 +89,17 @@ def cs_photo(atomic_number: int, energy: float) -> float:
     float
         _description_
     """
-    return xraylib.CS_Photo(atomic_number, energy)
+    return xraylib.CS_Photo(Z, E)
 
 
-def cs_rayl(atomic_number: int, energy: float) -> float:
+def CS_Rayl(Z: int, E: float) -> float:
     """_summary_
 
     Parameters
     ----------
-    atomic_number : int
+    Z : int
         _description_
-    energy : float
+    E : float
         _description_
 
     Returns
@@ -105,17 +107,17 @@ def cs_rayl(atomic_number: int, energy: float) -> float:
     float
         _description_
     """
-    return xraylib.CS_Rayl(atomic_number, energy)
+    return xraylib.CS_Rayl(Z, E)
 
 
-def cs_total(atomic_number: int, energy: float) -> float:
+def CS_Total(Z: int, E: float) -> float:
     """_summary_
 
     Parameters
     ----------
-    atomic_number : int
+    Z : int
         _description_
-    energy : float
+    E : float
         _description_
 
     Returns
@@ -123,8 +125,8 @@ def cs_total(atomic_number: int, energy: float) -> float:
     float
         _description_
     """
-    compton = cs_compt(atomic_number, energy)
-    photo = cs_photo(atomic_number, energy)
-    rayleigh = cs_rayl(atomic_number, energy)
+    compton = CS_Compt(Z, E)
+    photo = CS_Photo(Z, E)
+    rayleigh = CS_Rayl(Z, E)
 
     return compton + photo + rayleigh

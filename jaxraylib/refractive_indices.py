@@ -1,46 +1,45 @@
 """_summary_
 """
 
-
-from .anomalous_scattering import fi
-from .atomic_weight import atomic_weight
-from .compound_parser import compound_parser
-from .cross_sections import cs_total
+from .anomalous_scattering import Fi
+from .atomic_weight import AtomicWeight
+from .compound_parser import CompoundParser
+from .cross_sections import CS_Total
 
 
 KD = 4.15179082788e-4
 HC_4PI = 9.8663479e-9  # h*c/4pi apparently ???
 
 
-def refractive_index_re(compound: str, energy: float, density: float) -> float:
-    compound_dict = compound_parser(compound)
+def Refractive_Index_Re(compound: str, E: float, density: float) -> float:
+    compound_dict = CompoundParser(compound)
     mass_fractions = compound_dict["massFractions"]
     elements = compound_dict["Elements"]
     assert len(mass_fractions) == compound_dict["nElements"]
     assert len(elements) == compound_dict["nElements"]
     rv = 0.0
     for i, j in zip(elements, mass_fractions):
-        _fi = fi(i, energy)
-        aw = atomic_weight(i)
-        rv += j * KD * (i + _fi) / aw / energy / energy
+        fi = Fi(i, E)
+        aw = AtomicWeight(i)
+        rv += j * KD * (i + fi) / aw / E / E
     return 1 - rv * density
 
 
-def refractive_index_im(compound: str, energy: float, density: float) -> float:
-    compound_dict = compound_parser(compound)
+def Refractive_Index_Im(compound: str, E: float, density: float) -> float:
+    compound_dict = CompoundParser(compound)
     mass_fractions = compound_dict["massFractions"]
     elements = compound_dict["Elements"]
     assert len(mass_fractions) == compound_dict["nElements"]
     assert len(elements) == compound_dict["nElements"]
     rv = 0.0
     for i, j in zip(elements, mass_fractions):
-        xs = cs_total(i, energy)
+        xs = CS_Total(i, E)
         rv += xs * j
-    return rv * density * HC_4PI / energy
+    return rv * density * HC_4PI / E
 
 
-def refractive_index(compound: str, energy: float, density: float) -> complex:
-    compound_dict = compound_parser(compound)
+def Refractive_Index(compound: str, E: float, density: float) -> complex:
+    compound_dict = CompoundParser(compound)
     mass_fractions = compound_dict["massFractions"]
     elements = compound_dict["Elements"]
     assert len(mass_fractions) == compound_dict["nElements"]
@@ -48,11 +47,11 @@ def refractive_index(compound: str, energy: float, density: float) -> complex:
     rv_real = 0.0
     rv_imag = 0.0
     for i, j in zip(elements, mass_fractions):
-        _fi = fi(i, energy)
-        aw = atomic_weight(i)
-        rv_real += j * KD * (i + _fi) / aw / energy / energy
+        fi = Fi(i, E)
+        aw = AtomicWeight(i)
+        rv_real += j * KD * (i + fi) / aw / E / E
 
-        xs = cs_total(i, energy)
+        xs = CS_Total(i, E)
         rv_imag += xs * j
 
-    return 1 - rv_real * density + (rv_imag * density * HC_4PI / energy) * 1j
+    return 1 - rv_real * density + (rv_imag * density * HC_4PI / E) * 1j

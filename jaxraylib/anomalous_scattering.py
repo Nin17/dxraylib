@@ -4,14 +4,14 @@
 import xraylib
 
 
-def fi(atomic_number: int, energy: float) -> float:
+def Fi(Z: int, E: float) -> float:
     """_summary_
 
     Parameters
     ----------
-    atomic_number : int
+    Z : int
         _description_
-    energy : float
+    E : float
         _description_
 
     Returns
@@ -19,17 +19,17 @@ def fi(atomic_number: int, energy: float) -> float:
     float
         _description_
     """
-    return xraylib.Fi(atomic_number, energy)
+    return xraylib.Fi(Z, E)
 
 
-def fii(atomic_number: int, energy: float) -> float:
+def Fii(Z: int, E: float) -> float:
     """_summary_
 
     Parameters
     ----------
-    atomic_number : int
+    Z : int
         _description_
-    energy : float
+    E : float
         _description_
 
     Returns
@@ -37,4 +37,4 @@ def fii(atomic_number: int, energy: float) -> float:
     float
         _description_
     """
-    return xraylib.Fii(atomic_number, energy)
+    return xraylib.Fii(Z, E)

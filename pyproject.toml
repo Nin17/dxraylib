@@ -8,14 +8,16 @@ requires = ["setuptools>=61.0"]
 authors = [
   {name = "Chris Ninham", email = "christopher.ninham@creatis.insa-lyon.fr"},
 ]
-dependencies = ['pandas', 'scipy']
-description = "A python implementation of xraylib."
+dependencies = ['jax', 'pandas', 'xraylib']
+description = "A python (with jax backend) implementation of xraylib."
 dynamic = ["readme"]
-name = "pyxraylib"
+name = "jaxraylib"
 version = "0.0.1"
 
 requires-python = ">=3.x"
 
+[project.optional-dependencies]
+jaxraylib = ["numpy"]
 
 [tool.setuptools.dynamic]
 readme = {file = ["README.md"]}
@@ -26,4 +28,4 @@ readme = {file = ["README.md"]}
 # "Bug Tracker" = "https://github.com/pypa/packaging.python.org/issues"
 
 [tool.setuptools]
-py-modules = ["pyxraylib"]
+py-modules = ["jaxraylib"]

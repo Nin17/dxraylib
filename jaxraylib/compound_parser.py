@@ -6,13 +6,13 @@
 import xraylib
 
 
-def compound_parser(compound: str) -> dict:
+def CompoundParser(compoundString: str) -> dict:
     """
     Wrapper around xraylib.CompoundParser
 
     Parameters
     ----------
-    compound : str
+    compoundString : str
        The compound to parse.
 
     Returns
@@ -20,4 +20,4 @@ def compound_parser(compound: str) -> dict:
     dict
         _description_
     """
-    return xraylib.CompoundParser(compound)
+    return xraylib.CompoundParser(compoundString)

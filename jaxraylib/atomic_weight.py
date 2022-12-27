@@ -16,12 +16,12 @@ df.set_index(0, inplace=True)
 data = df.to_dict()[1]
 
 
-def atomic_weight(atomic_number: int) -> float:
+def AtomicWeight(Z: int) -> float:
     """_summary_
 
     Parameters
     ----------
-    z : int
+    Z : int
         _description_
 
     Returns
@@ -29,4 +29,7 @@ def atomic_weight(atomic_number: int) -> float:
     float
         _description_
     """
-    return data[atomic_number]
+    return data[Z]
+
+
+del dirpath, df
