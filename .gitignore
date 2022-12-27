@@ -1,0 +1,4 @@
+**/__pycache__
+**/pyxraylib.egg-info
+**/*.DS_Store
+/__init__.py
