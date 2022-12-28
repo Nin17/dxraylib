@@ -2,6 +2,7 @@
 """
 
 
+# TODO a numpy implementation of this without while loops
 def _splint(
     xa: list[float], ya: list[float], y2a: list[float], n: int, x: float
 ) -> float:
