@@ -1,14 +1,26 @@
 """_summary_
 """
 
-import xraylib
+import os
+
 
 from .config import xp
+from ._io import _load
 from ._splint import _splint
 
 MEC2 = 511.0034  # electron rest mass (keV)
 RE2 = 0.07940775  # square of classical electron radius (barn)
 PI = xp.pi
+
+DIRPATH = os.path.dirname(__file__)
+
+CS_COMPT_PATH = os.path.join(DIRPATH, 'xraylib/data/CS_Compt.dat' )
+CS_PHOTO_PATH = os.path.join(DIRPATH, 'xraylib/data/CS_Photo.dat')
+CS_RAYL_PATH = os.path.join(DIRPATH, 'xraylib/data/CS_Rayl.dat')
+
+CS_COMPT = _load(CS_COMPT_PATH)
+CS_PHOTO = _load(CS_PHOTO_PATH)
+CS_RAYL = _load(CS_RAYL_PATH)
 
 
 def CS_Compt(Z: int, E: float) -> float:
@@ -26,7 +38,8 @@ def CS_Compt(Z: int, E: float) -> float:
     float
         _description_
     """
-    return xraylib.CS_Compt(Z, E)
+    x, y, y2 = CS_COMPT[Z]
+    return xp.exp(_splint(x, y, y2, len(x), xp.log(E * 1000)))
 
 
 def CS_Energy():
@@ -89,7 +102,8 @@ def CS_Photo(Z: int, E: float) -> float:
     float
         _description_
     """
-    return xraylib.CS_Photo(Z, E)
+    x, y, y2 = CS_PHOTO[Z]
+    return xp.exp(_splint(x, y, y2, len(x), xp.log(E * 1000)))
 
 
 def CS_Rayl(Z: int, E: float) -> float:
@@ -107,7 +121,8 @@ def CS_Rayl(Z: int, E: float) -> float:
     float
         _description_
     """
-    return xraylib.CS_Rayl(Z, E)
+    x, y, y2 = CS_RAYL[Z]
+    return xp.exp(_splint(x, y, y2, len(x), xp.log(E * 1000)))
 
 
 def CS_Total(Z: int, E: float) -> float:
