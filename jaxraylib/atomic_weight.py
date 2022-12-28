@@ -5,10 +5,10 @@ import os
 
 import pandas as pd
 
-dirpath = os.path.dirname(os.path.dirname(__file__))
-
 df = pd.read_csv(
-    os.path.join(dirpath, "xraylib", "data", "atomicweight.dat"),
+    os.path.join(
+        os.path.dirname(__file__), "xraylib", "data", "atomicweight.dat"
+    ),
     delimiter="\t",
     header=None,
 )
@@ -32,4 +32,4 @@ def AtomicWeight(Z: int) -> float:
     return data[Z]
 
 
-del dirpath, df
+del df
