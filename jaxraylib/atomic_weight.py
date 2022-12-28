@@ -12,8 +12,8 @@ df = pd.read_csv(
     delimiter="\t",
     header=None,
 )
-df.set_index(0, inplace=True)
-data = df.to_dict()[1]
+
+data = df[1].to_list()
 
 
 def AtomicWeight(Z: int) -> float:
@@ -29,7 +29,9 @@ def AtomicWeight(Z: int) -> float:
     float
         standard atomic weight
     """
-    return data[Z]
+    if Z < 1 or Z > 103:
+        raise ValueError("Z out of range: 1 to 103")
+    return data[Z - 1]
 
 
 del df
