@@ -4,7 +4,8 @@
 import csv
 
 
-def _load(path: str) -> dict[int, list[list[float]]]:
+# TODO make it faster by saving as .npy file or similar
+def _load(path: str, delimiter: str = ' ') -> dict[int, list[list[float]]]:
     """_summary_
 
     Parameters
@@ -19,7 +20,7 @@ def _load(path: str) -> dict[int, list[list[float]]]:
     """
     data = {}
     with open(path, mode="r") as f:
-        reader = csv.reader(f, delimiter=" ", quotechar="|")
+        reader = csv.reader(f, delimiter=delimiter, quotechar="|")
         next(reader)
         i = 1
         element: list[list[float]] = [[], [], []]
