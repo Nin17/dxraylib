@@ -1,3 +1,3 @@
 [submodule "jaxraylib/xraylib"]
-	path = jaxraylib/xraylib
+	path = xraylib
 	url = git@github.com:Nin17/xraylib.git
