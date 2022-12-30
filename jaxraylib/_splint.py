@@ -1,11 +1,12 @@
 """_summary_
 """
 
+from .config import jit, xp
 
-# TODO a numpy implementation of this without while loops
-def _splint(
-    xa: list[float], ya: list[float], y2a: list[float], n: int, x: float
-) -> float:
+
+# TODO docstring
+@jit
+def _splint(data, x: float) -> float:
     """
     Perform spline interpolation to calculate an interpolated y value at a given x value.
 
@@ -13,36 +14,26 @@ def _splint(
         xa (List[float]): Known x values.
         ya (List[float]): Known y values.
         y2a (List[float]): Second derivatives of the y values.
-        n (int): Number of values in the input arrays.
         x (float): Target x value at which to calculate the interpolated y value.
 
     Returns:
         float: Interpolated y value at the target x value, or 0.0 if the target x value is outside the range of the known x values.
     """
-    if x - xa[n - 1] > 1e-7:
-        return 0.0
-    if x < xa[0]:
-        return 0.0
+    # xa, ya, y2a = data
+    klo = xp.searchsorted(data[0], x) - 1
 
-    klo = 0
-    khi = n - 1
-    while khi - klo > 1:
-        k = (khi + klo) // 2
-        if xa[k] > x:
-            khi = k
-        else:
-            klo = k
+    h = data[0][klo + 1] - data[0][klo]
 
-    h = xa[khi] - xa[klo]
-    if h == 0.0:
-        return (ya[klo] + ya[khi]) / 2.0
+    # TODO check if this is actually necessary
+    # if h == 0.0:
+    #     return (data[1][klo] + data[1][klo + 1]) / 2.0
 
-    a = (xa[khi] - x) / h
-    b = (x - xa[klo]) / h
+    a = (data[0][klo + 1] - x) / h
+    b = (x - data[0][klo]) / h
     return (
-        a * ya[klo]
-        + b * ya[khi]
-        + ((a * a * a - a) * y2a[klo] + (b * b * b - b) * y2a[khi])
+        a * data[1][klo]
+        + b * data[1][klo + 1]
+        + ((a * a * a - a) * data[2][klo] + (b * b * b - b) * data[2][klo + 1])
         * (h * h)
         / 6.0
     )
