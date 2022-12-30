@@ -1,11 +1,9 @@
 """_summary_
 """
-
+# TODO cross sections in other units
 import os
 
-
-from .config import xp
-from ._io import _load
+from .config import jit, xp
 from ._splint import _splint
 
 MEC2 = 511.0034  # electron rest mass (keV)
@@ -14,20 +12,23 @@ PI = xp.pi
 
 DIRPATH = os.path.dirname(__file__)
 
-CS_COMPT_PATH = os.path.join(DIRPATH, 'xraylib/data/CS_Compt.dat' )
-CS_PHOTO_PATH = os.path.join(DIRPATH, 'xraylib/data/CS_Photo.dat')
-CS_RAYL_PATH = os.path.join(DIRPATH, 'xraylib/data/CS_Rayl.dat')
+CS_COMPT_PATH = os.path.join(DIRPATH, "data/cs_compt.npy")
+CS_PHOTO_PATH = os.path.join(DIRPATH, "data/cs_photo.npy")
+CS_RAYL_PATH = os.path.join(DIRPATH, "data/cs_rayl.npy")
 
-CS_COMPT = _load(CS_COMPT_PATH)
-CS_PHOTO = _load(CS_PHOTO_PATH)
-CS_RAYL = _load(CS_RAYL_PATH)
+CS_COMPT = xp.load(CS_COMPT_PATH)
+CS_PHOTO = xp.load(CS_PHOTO_PATH)
+CS_RAYL = xp.load(CS_RAYL_PATH)
+
+del DIRPATH, CS_COMPT_PATH, CS_PHOTO_PATH, CS_RAYL_PATH
 
 
+@jit
 def CS_Compt(Z: int, E: float) -> float:
     """_summary_
 
     Parameters
-    ----------
+    ----------z
     Z : int
         _description_
     E : float
@@ -38,8 +39,7 @@ def CS_Compt(Z: int, E: float) -> float:
     float
         _description_
     """
-    x, y, y2 = CS_COMPT[Z]
-    return xp.exp(_splint(x, y, y2, len(x), xp.log(E * 1000)))
+    return xp.exp(_splint(CS_COMPT[Z - 1], xp.log(E * 1000.0)))
 
 
 def CS_Energy():
@@ -48,7 +48,8 @@ def CS_Energy():
 
 
 # TODO fix type hint
-def CS_KN(E: float) -> float:
+@jit
+def _CS_KN(E: float) -> float:
     """_summary_
 
     Parameters
@@ -60,15 +61,7 @@ def CS_KN(E: float) -> float:
     -------
     float
         _description_
-
-    Raises
-    ------
-    ValueError
-        _description_
     """
-
-    if E < 0.0:
-        raise ValueError("energy must be positive")
     a = E / MEC2
     a3 = a * a * a
     b = 1 + 2 * a
@@ -87,6 +80,30 @@ def CS_KN(E: float) -> float:
     return sigma
 
 
+def CS_KN(E: float) -> float:
+    """_summary_
+
+    Parameters
+    ----------
+    E : float
+        _description_
+
+    Returns
+    -------
+    float
+        _description_
+
+    Raises
+    ------
+    ValueError
+        _description_
+    """
+    if E < 0:
+        raise ValueError("energy must be positive")
+    return _CS_KN(E)
+
+
+@jit
 def CS_Photo(Z: int, E: float) -> float:
     """_summary_
 
@@ -102,10 +119,10 @@ def CS_Photo(Z: int, E: float) -> float:
     float
         _description_
     """
-    x, y, y2 = CS_PHOTO[Z]
-    return xp.exp(_splint(x, y, y2, len(x), xp.log(E * 1000)))
+    return xp.exp(_splint(CS_PHOTO[Z - 1], xp.log(E * 1000.0)))
 
 
+@jit
 def CS_Rayl(Z: int, E: float) -> float:
     """_summary_
 
@@ -121,10 +138,10 @@ def CS_Rayl(Z: int, E: float) -> float:
     float
         _description_
     """
-    x, y, y2 = CS_RAYL[Z]
-    return xp.exp(_splint(x, y, y2, len(x), xp.log(E * 1000)))
+    return xp.exp(_splint(CS_RAYL[Z - 1], xp.log(E * 1000.0)))
 
 
+@jit
 def CS_Total(Z: int, E: float) -> float:
     """_summary_
 
