@@ -4,7 +4,7 @@
 import os
 
 from .config import jit, xp
-from ._splint import _splint
+from .splint import _splint
 
 MEC2 = 511.0034  # electron rest mass (keV)
 RE2 = 0.07940775  # square of classical electron radius (barn)
