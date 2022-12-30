@@ -20,7 +20,7 @@ def init(backend: str = "numpy") -> None:
     ----------
     backend : str, optional
         The backend to use for the calculations
-        either "numpy", "cupy" or "jax", by default "numpy"
+        either "numpy" or "jax", by default "numpy"
 
     Raises
     ------
@@ -29,10 +29,10 @@ def init(backend: str = "numpy") -> None:
     """
     if backend == "numpy":
         config.xp = importlib.import_module("numpy")
-    elif backend == "cupy":
-        config.xp = importlib.import_module("cupy.numpy")
+        config.jit = importlib.import_module("numba").njit
     elif backend == "jax":
         config.xp = importlib.import_module("jax.numpy")
+        config.jit = importlib.import_module("jax").jit
     else:
         raise ValueError('backend must be either "numpy" or "jax"!')
     pkgpath = os.path.dirname(__file__)
