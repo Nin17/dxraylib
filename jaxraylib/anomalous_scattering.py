@@ -1,13 +1,12 @@
 """_summary_
 """
+# TODO docstrings
 
 import os
 
 from .config import jit, xp
 from ._splint import _splint
 
-
-# TODO sort this out and save in .npy file
 DIRPATH = os.path.dirname(__file__)
 
 FI_PATH = os.path.join(DIRPATH, "data/fi.npy")
