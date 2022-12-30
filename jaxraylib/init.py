@@ -38,7 +38,7 @@ def init(backend: str = "numpy") -> None:
     pkgpath = os.path.dirname(__file__)
     mod_name = os.path.basename(pkgpath)
     for j in pkgutil.iter_modules([pkgpath]):
-        if not j.ispkg and j.name != "config":
+        if not j.ispkg and j.name != "config" and not j.name.startswith('_'):
             try:
                 importlib.reload(sys.modules[".".join([mod_name, j.name])])
             except KeyError as error:
