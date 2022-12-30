@@ -1,22 +1,27 @@
 """_summary_
 """
 
+from __future__ import annotations
 import csv
 
+from .config import xp
 
-# TODO make it faster by saving as .npy file or similar
-def _load(path: str, delimiter: str = ' ') -> dict[int, list[list[float]]]:
+
+# TODO type hint output
+def _load(path: str, delimiter: str = " "):
     """_summary_
 
     Parameters
     ----------
     path : str
-        _description_
+        the path to the file
+    delimiter : str, optional
+        the delimiter in the file, by default " "
 
     Returns
     -------
-    dict[int, list[list[float]]]
-        _description_
+    xp.ndarray
+        An xp.array containing the data padded with nans.
     """
     data = {}
     with open(path, mode="r") as f:
@@ -32,4 +37,13 @@ def _load(path: str, delimiter: str = ' ') -> dict[int, list[list[float]]]:
                 data[i] = element
                 i += 1
                 element = [[], [], []]
-    return data
+    data2 = {i: xp.array(j) for i, j in data.items()}
+    maximum = max(i.shape[-1] for i in data2.values())
+    return xp.array(
+        [
+            xp.pad(
+                i, ((0, 0), (0, maximum - i.shape[-1])), constant_values=xp.nan
+            )
+            for i in data2.values()
+        ]
+    )
