@@ -3,18 +3,23 @@
 
 import os
 
-from ._io import _load
+from .config import jit, xp
 from ._splint import _splint
 
+
+# TODO sort this out and save in .npy file
 DIRPATH = os.path.dirname(__file__)
 
-FI_PATH = os.path.join(DIRPATH, "xraylib/data/fi.dat")
-FII_PATH = os.path.join(DIRPATH, "xraylib/data/fii.dat")
+FI_PATH = os.path.join(DIRPATH, "data/fi.npy")
+FII_PATH = os.path.join(DIRPATH, "data/fii.npy")
 
-FI = _load(FI_PATH, "\t")
-FII = _load(FII_PATH, "\t")
+FI = xp.load(FI_PATH)
+FII = xp.load(FII_PATH)
+
+del DIRPATH, FI_PATH, FII_PATH
 
 
+@jit
 def Fi(Z: int, E: float) -> float:
     """_summary_
 
@@ -30,10 +35,10 @@ def Fi(Z: int, E: float) -> float:
     float
         _description_
     """
-    x, y, y2 = FI[Z]
-    return _splint(x, y, y2, len(x), E)
+    return _splint(FI[Z - 1], E)
 
 
+@jit
 def Fii(Z: int, E: float) -> float:
     """_summary_
 
@@ -49,5 +54,4 @@ def Fii(Z: int, E: float) -> float:
     float
         _description_
     """
-    x, y, y2 = FII[Z]
-    return _splint(x, y, y2, len(x), E)
+    return _splint(FII[Z - 1], E)
