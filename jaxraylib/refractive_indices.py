@@ -1,7 +1,7 @@
 """_summary_
 """
 
-from .anomalous_scattering import Fi
+from .anomalous_scattering import _Fi
 from .atomic_weight import AtomicWeight
 from .config import jit
 from .compound_parser import CompoundParser
@@ -34,7 +34,7 @@ def _Refractive_Index_Re(elements, mass_fractions, E, density):
     """
     rv = 0.0
     for i, j in zip(elements, mass_fractions):
-        fi = Fi(i, E)
+        fi = _Fi(i, E)
         aw = AtomicWeight(i)
         rv += j * KD * (i + fi) / aw / E / E
     return 1 - rv * density
@@ -141,7 +141,7 @@ def _Refractive_Index(elements, mass_fractions, E, density):
     rv_real = 0.0
     rv_imag = 0.0
     for i, j in zip(elements, mass_fractions):
-        fi = Fi(i, E)
+        fi = _Fi(i, E)
         aw = AtomicWeight(i)
         rv_real += j * KD * (i + fi) / aw / E / E
         xs = CS_Total(i, E)

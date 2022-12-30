@@ -19,7 +19,7 @@ del DIRPATH, FI_PATH, FII_PATH
 
 
 @jit
-def Fi(Z: int, E: float) -> float:
+def _Fi(Z: int, E: float) -> float:
     """_summary_
 
     Parameters
@@ -35,6 +35,24 @@ def Fi(Z: int, E: float) -> float:
         _description_
     """
     return _splint(FI[Z - 1], E)
+
+
+def Fi(Z: int, E: float) -> float:
+    """_summary_
+
+    Parameters
+    ----------
+    Z : int
+        _description_
+    E : float
+        _description_
+
+    Returns
+    -------
+    float
+        _description_
+    """
+    return _Fi(Z, E)
 
 
 @jit
