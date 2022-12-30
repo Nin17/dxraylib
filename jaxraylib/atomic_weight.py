@@ -3,19 +3,18 @@
 
 import os
 
-import pandas as pd
+from .config import jit, xp
 
-df = pd.read_csv(
-    os.path.join(
-        os.path.dirname(__file__), "xraylib", "data", "atomicweight.dat"
-    ),
-    delimiter="\t",
-    header=None,
-)
+DIRPATH = os.path.dirname(__file__)
 
-data = df[1].to_list()
+FI_PATH = os.path.join(DIRPATH, "data/atomic_weight.npy")
+
+data = xp.load(FI_PATH)
+
+del DIRPATH, FI_PATH
 
 
+@jit
 def AtomicWeight(Z: int) -> float:
     """_summary_
 
@@ -29,9 +28,6 @@ def AtomicWeight(Z: int) -> float:
     float
         standard atomic weight
     """
-    if Z < 1 or Z > 103:
-        raise ValueError("Z out of range: 1 to 103")
+    # if Z < 1 or Z > 103:
+    #     raise ValueError("Z out of range: 1 to 103")
     return data[Z - 1]
-
-
-del df
