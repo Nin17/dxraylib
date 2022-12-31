@@ -1,9 +1,7 @@
 """_summary_
 """
 
-from .anomalous_scattering import Fi, Fii
-from .atomic_weight import AtomicWeight
-from .compound_parser import CompoundParser
+from .atomicweight import AtomicWeight
 from .cross_sections import (
     CS_Compt,
     CS_Energy,
@@ -11,13 +9,22 @@ from .cross_sections import (
     CS_Photo,
     CS_Rayl,
     CS_Total,
+    CSb_Compt,
+    CSb_Photo,
+    CSb_Rayl,
+    CSb_Total,
 )
+from .fi import Fi
+from .fii import Fii
 from .init import init
+from .polarized import DCSP_KN, DCSP_Thoms
 from .refractive_indices import (
     Refractive_Index,
     Refractive_Index_Im,
     Refractive_Index_Re,
 )
+from .scattering import DCS_KN, DCS_Thoms
+from .xraylib_parser import CompoundParser
 
 
 __all__ = (
@@ -29,6 +36,14 @@ __all__ = (
     "CS_Photo",
     "CS_Rayl",
     "CS_Total",
+    "CSb_Compt",
+    "CSb_Photo",
+    "CSb_Rayl",
+    "CSb_Total",
+    "DCS_KN",
+    "DCS_Thoms",
+    "DCSP_KN",
+    "DCSP_Thoms",
     "Fi",
     "Fii",
     "init",
