@@ -16,6 +16,7 @@ version = "0.0.1"
 
 requires-python = ">=3.x"
 
+# TODO possibly add cupy and cuda.jit the functions
 [project.optional-dependencies]
 jaxraylib = ["numpy", "numba"]
 
