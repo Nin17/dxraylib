@@ -1,6 +1,8 @@
 """_summary_
 """
 
+from __future__ import annotations
+
 from .config import jit, xp
 
 
@@ -8,18 +10,23 @@ from .config import jit, xp
 @jit
 def _splint(data, x: float) -> float:
     """
-    Perform spline interpolation to calculate an interpolated y value at a given x value.
+    Perform cubic spline interpolation to calculate an interpolated y value at
+    a given x value.
 
-    Parameters:
-        xa (List[float]): Known x values.
-        ya (List[float]): Known y values.
-        y2a (List[float]): Second derivatives of the y values.
-        x (float): Target x value at which to calculate the interpolated y value.
 
-    Returns:
-        float: Interpolated y value at the target x value, or 0.0 if the target x value is outside the range of the known x values.
+    Parameters
+    ----------
+    data : xp.ndarray
+        Array with the known x, y, and second derivative values stacked along
+        the first axis.
+    x : float
+        Target x value at which to calculate the interpolated y value.
+
+    Returns
+    -------
+    float
+        Interpolated y value at the target x value
     """
-    # xa, ya, y2a = data
     klo = xp.searchsorted(data[0], x) - 1
 
     h = data[0][klo + 1] - data[0][klo]
