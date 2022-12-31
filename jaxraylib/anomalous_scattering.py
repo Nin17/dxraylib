@@ -5,7 +5,7 @@
 import os
 
 from .config import jit, xp
-from .splint import _splint
+from ._splint import _splint
 
 DIRPATH = os.path.dirname(__file__)
 
