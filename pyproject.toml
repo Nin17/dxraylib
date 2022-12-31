@@ -9,7 +9,7 @@ authors = [
   {name = "Chris Ninham", email = "christopher.ninham@creatis.insa-lyon.fr"},
 ]
 dependencies = ['jax', 'xraylib']
-description = "A python (with jax backend) implementation of xraylib."
+description = "A python implementation of xraylib with a JAX backend."
 dynamic = ["readme"]
 name = "jaxraylib"
 version = "0.0.1"
