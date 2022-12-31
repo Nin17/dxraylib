@@ -1,17 +1,12 @@
 """_summary_
 """
-
-# TODO some weird stuff to do with the jit compilation
+# TODO type hints as well when jax.typing is supported
+# https://jax.readthedocs.io/en/latest/jep/12049-type-annotations.html?highlight=type%20hints#static-type-annotations
 
 import jax
 import jax.numpy as jnp
-import numpy as np
-import numba as nb
 
 xp = jnp
 jit = jax.jit
-
-# xp = np
-# jit = nb.njit
 
 del jax, jnp
