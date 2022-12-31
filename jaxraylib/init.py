@@ -25,7 +25,7 @@ def init(backend: str = "numpy") -> None:
     Raises
     ------
     ValueError
-        if backend is not "numpy", "cupy" or "jax"
+        if backend is not "numpy" or "jax"
     """
     if backend == "numpy":
         config.xp = importlib.import_module("numpy")
