@@ -8,7 +8,7 @@ from .config import xp
 
 
 # TODO type hint output
-def _load(path: str, delimiter: str = " "):
+def _load(path: str, delimiter: str = " ", skiprows: int = 1):
     """_summary_
 
     Parameters
@@ -17,6 +17,8 @@ def _load(path: str, delimiter: str = " "):
         the path to the file
     delimiter : str, optional
         the delimiter in the file, by default " "
+    skiprows : int, optional
+        the number of rows to skip, by default 1
 
     Returns
     -------
@@ -26,7 +28,8 @@ def _load(path: str, delimiter: str = " "):
     data = {}
     with open(path, mode="r") as f:
         reader = csv.reader(f, delimiter=delimiter, quotechar="|")
-        next(reader)
+        for i in range(skiprows):
+            next(reader)
         i = 1
         element: list[list[float]] = [[], [], []]
         for j in reader:
