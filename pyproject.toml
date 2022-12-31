@@ -11,7 +11,7 @@ authors = [
 dependencies = ['jax', 'xraylib']
 description = "A python implementation of xraylib with a JAX backend."
 dynamic = ["readme"]
-name = "jaxraylib"
+name = "JAXraylib"
 version = "0.0.1"
 
 requires-python = ">=3.x"
@@ -28,4 +28,4 @@ readme = {file = ["README.md"]}
 # "Bug Tracker" = "https://github.com/pypa/packaging.python.org/issues"
 
 [tool.setuptools]
-py-modules = ["jaxraylib"]
+py-modules = ["JAXraylib"]
