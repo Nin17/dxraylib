@@ -3,8 +3,8 @@ Standard Atomic Weight
 """
 
 from __future__ import annotations
-import os
 import functools
+import os
 
 # TODO import this from config
 from jax._src.typing import Array
@@ -13,21 +13,21 @@ from .config import jit, xp
 
 DIRPATH = os.path.dirname(__file__)
 AW_PATH = os.path.join(DIRPATH, "data/atomic_weight.npy")
-data = xp.load(AW_PATH)
-shape = data.shape[0]
+AW = xp.load(AW_PATH)
+shape = AW.shape[0]
 VALUE_ERROR = f"Z out of range: 1 to {shape}"
 
 
 @functools.partial(
     jit, **({"static_argnums": (0,)} if jit.__name__ == "jit" else {})
 )
-def _AtomicWeight(Z: int) -> float | Array:
+def _AtomicWeight(Z: int) -> Array | float:
     if Z < 1 or Z > shape:
         raise ValueError(VALUE_ERROR)
-    return data[Z - 1]
+    return AW[Z - 1]
 
 
-def AtomicWeight(Z: int) -> float | Array:
+def AtomicWeight(Z: int) -> Array | float:
     """
     Standard atomic weight
 
@@ -38,7 +38,7 @@ def AtomicWeight(Z: int) -> float | Array:
 
     Returns
     -------
-    float | Array
+    Array | float
         standard atomic weight
 
     Raises
