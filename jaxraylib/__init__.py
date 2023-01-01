@@ -1,11 +1,11 @@
-"""_summary_
+"""
+JAXraylib: differentiable X-ray-matter interactions
 """
 
 from .atomicweight import AtomicWeight
 from .cross_sections import (
     CS_Compt,
     CS_Energy,
-    CS_KN,
     CS_Photo,
     CS_Rayl,
     CS_Total,
@@ -23,9 +23,8 @@ from .refractive_indices import (
     Refractive_Index_Im,
     Refractive_Index_Re,
 )
-from .scattering import DCS_KN, DCS_Thoms
+from .scattering import CS_KN, DCS_KN, DCS_Thoms
 from .xraylib_parser import CompoundParser
-
 
 __all__ = (
     "AtomicWeight",
