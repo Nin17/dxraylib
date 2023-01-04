@@ -8,5 +8,6 @@ import jax.numpy as jnp
 
 xp = jnp
 jit = jax.jit
+RAISE = False
 
 del jax, jnp
