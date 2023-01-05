@@ -1,4 +1,5 @@
-"""_summary_
+"""
+Physical constants and conversion factors
 """
 
 KD = 4.15179082788e-4
