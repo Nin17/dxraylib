@@ -2,9 +2,6 @@
 Anomalous Scattering Factor Fii
 """
 
-# TODO this is not in agreement with xraylib
-# FIXME think saved fi as fii
-
 from __future__ import annotations
 import os
 
@@ -12,14 +9,13 @@ from .config import jit, xp, NDArray
 from ._splint import _splint
 from ._utilities import raise_errors
 
-
-# TODO what is going on with numba jit and this???
-# FIXME
-
-
 DIRPATH = os.path.dirname(__file__)
 FII_PATH = os.path.join(DIRPATH, "data/fii.npy")
 FII = xp.load(FII_PATH)
+
+
+# TODO what is going on with numba jit and this???
+# FIXME
 
 
 @jit
