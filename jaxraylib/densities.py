@@ -15,13 +15,13 @@ VALUE_ERROR = f"Z out of range: 1 to {DEN.shape[0]}"
 
 
 @jit
-def _ElementDensity(Z: NDArray) -> tuple[NDArray, bool]:
+def _ElementDensity(Z: int | NDArray) -> tuple[NDArray, bool]:
     """
     Element Density
 
     Parameters
     ----------
-    Z : Array
+    Z : int | Array
         atomic number
 
     Returns
@@ -35,13 +35,13 @@ def _ElementDensity(Z: NDArray) -> tuple[NDArray, bool]:
 
 
 @raise_errors(VALUE_ERROR)
-def ElementDensity(Z: NDArray) -> NDArray:
+def ElementDensity(Z: int | NDArray) -> NDArray:
     """
     Element Density
 
     Parameters
     ----------
-    Z : Array
+    Z : int | Array
         atomic number
 
     Returns
