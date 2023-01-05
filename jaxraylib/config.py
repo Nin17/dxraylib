@@ -5,9 +5,11 @@
 
 import jax
 import jax.numpy as jnp
+from jax._src.typing import Array
 
 xp = jnp
 jit = jax.jit
 RAISE = False
+NDArray = Array
 
-del jax, jnp
+del Array, jax, jnp
