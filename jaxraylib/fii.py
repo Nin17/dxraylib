@@ -2,34 +2,41 @@
 Anomalous Scattering Factor Fii
 """
 
+# TODO this is not in agreement with xraylib
+# FIXME think saved fi as fii
+
 from __future__ import annotations
-import functools
 import os
 
-from jax._src.typing import Array
-
-from .config import jit, xp
+from .config import jit, xp, NDArray
 from ._splint import _splint
+from ._utilities import raise_errors
+
+
+# TODO what is going on with numba jit and this???
+# FIXME
+
 
 DIRPATH = os.path.dirname(__file__)
 FII_PATH = os.path.join(DIRPATH, "data/fii.npy")
 FII = xp.load(FII_PATH)
-shape = FII.shape[0]
-VALUE_ERROR = f"Z out of range: 1 to {shape}"
 
 
-@functools.partial(
-    jit, **({"static_argnums": (0,)} if jit.__name__ == "jit" else {})
+@jit
+def _Fii(Z: int | NDArray, E: float | NDArray) -> tuple[NDArray, bool]:
+    Z = xp.atleast_1d(xp.asarray(Z))
+    E = xp.atleast_1d(xp.asarray(E))
+    # TODO change to FI[Z-1] when broadcast _splint
+    output = xp.where(
+        (Z >= 1) & (Z <= FII.shape[0]), _splint(FII[Z[0] - 1], E), xp.nan
+    )
+    return output, xp.isnan(output).any()
+
+
+@raise_errors(
+    f"Z out of range: 1 to {FII.shape[0]} | Energy must be strictly positive"
 )
-def _Fii(Z: int, E: float) -> Array | float:
-    if Z < 1 or Z > 99:
-        raise ValueError(VALUE_ERROR)
-    if E < 0:
-        raise ValueError("negative energy")
-    return _splint(FII[Z - 1], E)
-
-
-def Fii(Z: int, E: float) -> Array | float:
+def Fii(Z: int | NDArray, E: float | NDArray) -> NDArray:
     """
     Anomalous Scattering Factor Fii
 
