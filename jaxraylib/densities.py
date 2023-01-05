@@ -11,7 +11,6 @@ from ._utilities import raise_errors
 DIRPATH = os.path.dirname(__file__)
 DEN_PATH = os.path.join(DIRPATH, "data/densities.npy")
 DEN = xp.load(DEN_PATH)
-VALUE_ERROR = f"Z out of range: 1 to {DEN.shape[0]}"
 
 
 @jit
@@ -34,7 +33,7 @@ def _ElementDensity(Z: int | NDArray) -> tuple[NDArray, bool]:
     return output, xp.isnan(output).any()
 
 
-@raise_errors(VALUE_ERROR)
+@raise_errors(f"Z out of range: 1 to {DEN.shape[0]}")
 def ElementDensity(Z: int | NDArray) -> NDArray:
     """
     Element Density
