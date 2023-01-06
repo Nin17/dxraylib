@@ -1,16 +1,20 @@
-"""_summary_
+"""
+.dat to .npy conversion function
 """
 
 from __future__ import annotations
 import csv
 
-# from .config import xp
 import numpy as np
+import numpy.typing as npt
 
 
 # TODO type hint output
-def _load(path: str, delimiter: str = " ", skiprows: int = 1):
-    """_summary_
+def _load(
+    path: str, delimiter: str = " ", skiprows: int = 1
+) -> npt.NDArray[np.double]:
+    """
+    Load data from .dat file and convert to a numpy array padded with nans
 
     Parameters
     ----------
@@ -23,8 +27,8 @@ def _load(path: str, delimiter: str = " ", skiprows: int = 1):
 
     Returns
     -------
-    xp.ndarray
-        An xp.array containing the data padded with nans.
+    np.ndarray
+        An np.array containing the data padded with nans.
     """
     data = {}
     with open(path, mode="r") as f:
