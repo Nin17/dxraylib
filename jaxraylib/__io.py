@@ -9,7 +9,6 @@ import numpy as np
 import numpy.typing as npt
 
 
-# TODO type hint output
 def _load(
     path: str, delimiter: str = " ", skiprows: int = 1
 ) -> npt.NDArray[np.double]:
