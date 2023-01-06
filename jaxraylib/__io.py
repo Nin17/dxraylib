@@ -4,7 +4,8 @@
 from __future__ import annotations
 import csv
 
-from .config import xp
+# from .config import xp
+import numpy as np
 
 
 # TODO type hint output
@@ -40,12 +41,12 @@ def _load(path: str, delimiter: str = " ", skiprows: int = 1):
                 data[i] = element
                 i += 1
                 element = [[], [], []]
-    data2 = {i: xp.array(j) for i, j in data.items()}
+    data2 = {i: np.array(j) for i, j in data.items()}
     maximum = max(i.shape[-1] for i in data2.values())
-    return xp.array(
+    return np.array(
         [
-            xp.pad(
-                i, ((0, 0), (0, maximum - i.shape[-1])), constant_values=xp.nan
+            np.pad(
+                i, ((0, 0), (0, maximum - i.shape[-1])), constant_values=np.nan
             )
             for i in data2.values()
         ]
