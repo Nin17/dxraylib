@@ -3,9 +3,10 @@ Anomalous Scattering Factor Fii
 """
 
 from __future__ import annotations
+import functools
 import os
 
-from .config import jit, xp, NDArray
+from .config import jit, jit_kwargs, xp, NDArray
 from ._splint import _splint
 from ._utilities import raise_errors
 
@@ -18,7 +19,7 @@ FII = xp.load(FII_PATH)
 # FIXME
 
 
-@jit
+@functools.partial(jit, **jit_kwargs)
 def _Fii(Z: int | NDArray, E: float | NDArray) -> tuple[NDArray, bool]:
     Z = xp.atleast_1d(xp.asarray(Z))
     E = xp.atleast_1d(xp.asarray(E))

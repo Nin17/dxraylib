@@ -3,9 +3,10 @@ Element Densities
 """
 
 from __future__ import annotations
+import functools
 import os
 
-from .config import jit, xp, NDArray
+from .config import jit, jit_kwargs, xp, NDArray
 from ._utilities import raise_errors
 
 DIRPATH = os.path.dirname(__file__)
@@ -13,7 +14,7 @@ DEN_PATH = os.path.join(DIRPATH, "data/densities.npy")
 DEN = xp.load(DEN_PATH)
 
 
-@jit
+@functools.partial(jit, **jit_kwargs)
 def _ElementDensity(Z: int | NDArray) -> tuple[NDArray, bool]:
     """
     Element Density

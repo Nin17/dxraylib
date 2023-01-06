@@ -3,9 +3,10 @@ Standard Atomic Weight
 """
 
 from __future__ import annotations
+import functools
 import os
 
-from .config import jit, xp, NDArray
+from .config import jit, jit_kwargs, xp, NDArray
 from ._utilities import raise_errors
 
 DIRPATH = os.path.dirname(__file__)
@@ -13,7 +14,7 @@ AW_PATH = os.path.join(DIRPATH, "data/atomic_weight.npy")
 AW = xp.load(AW_PATH)
 
 
-@jit
+@functools.partial(jit, **jit_kwargs)
 def _AtomicWeight(Z: int | NDArray) -> tuple[NDArray, bool]:
     """
     Standard atomic weight

@@ -9,6 +9,7 @@ from jax._src.typing import Array
 
 xp = jnp
 jit = jax.jit
+jit_kwargs = {}
 RAISE = False
 NDArray = Array
 
