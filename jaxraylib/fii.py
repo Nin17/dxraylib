@@ -20,7 +20,9 @@ FII = xp.load(FII_PATH)
 
 
 @wrapped_partial(jit, **jit_kwargs)
-def _Fii(Z: int | NDArray, E: float | NDArray) -> tuple[NDArray, bool]:
+def _Fii(
+    Z: int | NDArray[int], E: float | NDArray[float]
+) -> tuple[NDArray[float], bool]:
     Z = xp.atleast_1d(xp.asarray(Z))
     E = xp.atleast_1d(xp.asarray(E))
     # TODO change to FII[Z-1] when broadcast _splint
@@ -38,7 +40,7 @@ def Fii(Z: int, E: float) -> float:
 
 
 @overload
-def Fii(Z: NDArray, E: NDArray) -> NDArray:
+def Fii(Z: NDArray[int], E: NDArray[float]) -> NDArray[float]:
     ...
 
 

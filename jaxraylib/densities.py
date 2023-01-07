@@ -15,7 +15,7 @@ DEN = xp.load(DEN_PATH)
 
 
 @wrapped_partial(jit, **jit_kwargs)
-def _ElementDensity(Z: int | NDArray) -> tuple[NDArray, bool]:
+def _ElementDensity(Z: int | NDArray[int]) -> tuple[NDArray[float], bool]:
     """
     Element Density
 
@@ -40,7 +40,7 @@ def ElementDensity(Z: int) -> float:
 
 
 @overload
-def ElementDensity(Z: NDArray) -> NDArray:
+def ElementDensity(Z: NDArray[int]) -> NDArray[float]:
     ...
 
 

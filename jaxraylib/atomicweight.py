@@ -15,7 +15,7 @@ AW = xp.load(AW_PATH)
 
 
 @wrapped_partial(jit, **jit_kwargs)
-def _AtomicWeight(Z: int | NDArray) -> tuple[NDArray, bool]:
+def _AtomicWeight(Z: int | NDArray[int]) -> tuple[NDArray[float], bool]:
     """
     Standard atomic weight
 
@@ -40,7 +40,7 @@ def AtomicWeight(Z: int) -> float:
 
 
 @overload
-def AtomicWeight(Z: NDArray) -> NDArray:
+def AtomicWeight(Z: NDArray[int]) -> NDArray[float]:
     ...
 
 
