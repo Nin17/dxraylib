@@ -8,7 +8,7 @@ from typing import overload
 
 from .config import jit, jit_kwargs, xp, NDArray
 from ._splint import _splint
-from ._utilities import raise_errors, wrapped_partial, output_type
+from ._utilities import value_error, wrapped_partial, output_type
 
 DIRPATH = os.path.dirname(__file__)
 FI_PATH = os.path.join(DIRPATH, "data/fi.npy")
@@ -43,7 +43,7 @@ def Fi(Z: NDArray, E: NDArray) -> NDArray:
 
 
 @output_type
-@raise_errors(
+@value_error(
     f"Z out of range: 1 to {FI.shape[0]} | Energy must be strictly positive"
 )
 def Fi(Z, E):

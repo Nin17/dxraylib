@@ -7,7 +7,7 @@ import os
 from typing import overload
 
 from .config import jit, jit_kwargs, xp, NDArray
-from ._utilities import raise_errors, wrapped_partial, output_type
+from ._utilities import value_error, wrapped_partial, output_type
 
 DIRPATH = os.path.dirname(__file__)
 DEN_PATH = os.path.join(DIRPATH, "data/densities.npy")
@@ -45,7 +45,7 @@ def ElementDensity(Z: NDArray) -> NDArray:
 
 
 @output_type
-@raise_errors(f"Z out of range: 1 to {DEN.shape[0]}")
+@value_error(f"Z out of range: 1 to {DEN.shape[0]}")
 def ElementDensity(Z):
     """
     Element Density
