@@ -3,18 +3,18 @@ Element Densities
 """
 
 from __future__ import annotations
-import functools
 import os
+from typing import overload
 
 from .config import jit, jit_kwargs, xp, NDArray
-from ._utilities import raise_errors
+from ._utilities import raise_errors, wrapped_partial, output_type
 
 DIRPATH = os.path.dirname(__file__)
 DEN_PATH = os.path.join(DIRPATH, "data/densities.npy")
 DEN = xp.load(DEN_PATH)
 
 
-@functools.partial(jit, **jit_kwargs)
+@wrapped_partial(jit, **jit_kwargs)
 def _ElementDensity(Z: int | NDArray) -> tuple[NDArray, bool]:
     """
     Element Density
@@ -34,8 +34,19 @@ def _ElementDensity(Z: int | NDArray) -> tuple[NDArray, bool]:
     return output, xp.isnan(output).any()
 
 
+@overload
+def ElementDensity(Z: int) -> float:
+    ...
+
+
+@overload
+def ElementDensity(Z: NDArray) -> NDArray:
+    ...
+
+
+@output_type
 @raise_errors(f"Z out of range: 1 to {DEN.shape[0]}")
-def ElementDensity(Z: int | NDArray) -> NDArray:
+def ElementDensity(Z):
     """
     Element Density
 
@@ -46,7 +57,7 @@ def ElementDensity(Z: int | NDArray) -> NDArray:
 
     Returns
     -------
-    Array
+    float | Array
         element density
 
     Raises

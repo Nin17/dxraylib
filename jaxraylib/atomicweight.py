@@ -3,18 +3,18 @@ Standard Atomic Weight
 """
 
 from __future__ import annotations
-import functools
 import os
+from typing import overload
 
 from .config import jit, jit_kwargs, xp, NDArray
-from ._utilities import raise_errors
+from ._utilities import raise_errors, wrapped_partial, output_type
 
 DIRPATH = os.path.dirname(__file__)
 AW_PATH = os.path.join(DIRPATH, "data/atomic_weight.npy")
 AW = xp.load(AW_PATH)
 
 
-@functools.partial(jit, **jit_kwargs)
+@wrapped_partial(jit, **jit_kwargs)
 def _AtomicWeight(Z: int | NDArray) -> tuple[NDArray, bool]:
     """
     Standard atomic weight
@@ -34,8 +34,19 @@ def _AtomicWeight(Z: int | NDArray) -> tuple[NDArray, bool]:
     return output, xp.isnan(output).any()
 
 
+@overload
+def AtomicWeight(Z: int) -> float:
+    ...
+
+
+@overload
+def AtomicWeight(Z: NDArray) -> NDArray:
+    ...
+
+
+@output_type
 @raise_errors(f"Z out of range: 1 to {AW.shape[0]}")
-def AtomicWeight(Z: int | NDArray) -> NDArray:
+def AtomicWeight(Z):
     """
     Standard atomic weight
 
@@ -46,7 +57,7 @@ def AtomicWeight(Z: int | NDArray) -> NDArray:
 
     Returns
     -------
-    Array
+    float | Array
         standard atomic weight
 
     Raises
