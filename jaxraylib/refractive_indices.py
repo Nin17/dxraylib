@@ -1,15 +1,15 @@
 """_summary_
 """
 
-from .anomalous_scattering import _Fi
-from .atomic_weight import AtomicWeight
+from .config import xp, ArrayLike, NDArray
+from .constants import HC_4PI, KD
+from .atomicweight import _AtomicWeight
 from .config import jit
-from .compound_parser import CompoundParser
-from .cross_sections import CS_Total
+from .fi import _Fi
+from .cross_sections import _CS_Total
+from .xraylib_parser import CompoundParser
 
-
-KD = 4.15179082788e-4
-HC_4PI = 9.8663479e-9  # ??? h*c/4pi apparently ???
+# TODO decorator that does this stuff
 
 
 @jit
@@ -32,12 +32,14 @@ def _Refractive_Index_Re(elements, mass_fractions, E, density):
     _type_
         _description_
     """
+    # TODO numpy implementation of this
     rv = 0.0
     for i, j in zip(elements, mass_fractions):
-        fi = _Fi(i, E)
-        aw = AtomicWeight(i)
+        fi = _Fi(i, E)[0]
+        aw = _AtomicWeight(i)[0]
         rv += j * KD * (i + fi) / aw / E / E
-    return 1 - rv * density
+    output = xp.where(density > 0, 1 - rv * density, xp.nan)
+    return output, xp.isnan(output).any()
 
 
 def Refractive_Index_Re(compound: str, E: float, density: float) -> float:
@@ -92,9 +94,10 @@ def _Refractive_Index_Im(elements, mass_fractions, E, density):
     """
     rv = 0.0
     for i, j in zip(elements, mass_fractions):
-        xs = CS_Total(i, E)
+        xs = _CS_Total(i, E)[0]
         rv += xs * j
-    return rv * density * HC_4PI / E
+    output = xp.where(density > 0, rv * density * HC_4PI / E, xp.nan)
+    return output, xp.isnan(output).any()
 
 
 def Refractive_Index_Im(compound: str, E: float, density: float) -> float:
@@ -124,7 +127,12 @@ def Refractive_Index_Im(compound: str, E: float, density: float) -> float:
 
 
 @jit
-def _Refractive_Index(elements, mass_fractions, E, density):
+def _Refractive_Index(
+    elements: ArrayLike,
+    mass_fractions: ArrayLike,
+    E: ArrayLike,
+    density: ArrayLike,
+) -> NDArray:
     """_summary_
 
     Parameters
@@ -141,12 +149,17 @@ def _Refractive_Index(elements, mass_fractions, E, density):
     rv_real = 0.0
     rv_imag = 0.0
     for i, j in zip(elements, mass_fractions):
-        fi = _Fi(i, E)
-        aw = AtomicWeight(i)
+        fi = _Fi(i, E)[0]
+        aw = _AtomicWeight(i)[0]
         rv_real += j * KD * (i + fi) / aw / E / E
-        xs = CS_Total(i, E)
+        xs = _CS_Total(i, E)[0]
         rv_imag += xs * j
-    return 1 - rv_real * density + (rv_imag * density * HC_4PI / E) * 1j
+    output = xp.where(
+        density > 0,
+        1 - rv_real * density + (rv_imag * density * HC_4PI / E) * 1j,
+        xp.nan,
+    )
+    return output, xp.isnan(output).any()
 
 
 def Refractive_Index(compound: str, E: float, density: float) -> complex:
