@@ -4,11 +4,10 @@ Anomalous Scattering Factor Fi
 
 from __future__ import annotations
 import os
-from typing import overload
 
-from .config import jit, jit_kwargs, xp, NDArray
+from .config import jit, jit_kwargs, xp, NDArray, ArrayLike
 from ._splint import _splint
-from ._utilities import value_error, wrapped_partial, output_type
+from ._utilities import wrapped_partial, xrl_xrlnp
 
 DIRPATH = os.path.dirname(__file__)
 FI_PATH = os.path.join(DIRPATH, "data/fi.npy")
@@ -20,9 +19,7 @@ FI = xp.load(FI_PATH)
 
 
 @wrapped_partial(jit, **jit_kwargs)
-def _Fi(
-    Z: int | NDArray[int], E: float | NDArray[float]
-) -> tuple[NDArray[float], bool]:
+def _Fi(Z: ArrayLike, E: ArrayLike) -> tuple[NDArray[float], bool]:
     Z = xp.atleast_1d(xp.asarray(Z))
     E = xp.atleast_1d(xp.asarray(E))
     # TODO change to FI[Z-1] when broadcast _splint
@@ -34,34 +31,24 @@ def _Fi(
     return output, xp.isnan(output).any()
 
 
-@overload
-def Fi(Z: int, E: float) -> float:
-    ...
-
-
-@overload
-def Fi(Z: NDArray[int], E: NDArray[float]) -> NDArray[float]:
-    ...
-
-
-@output_type
-@value_error(
+# TODO another version with jax jitable decorator
+@xrl_xrlnp(
     f"Z out of range: 1 to {FI.shape[0]} | Energy must be strictly positive"
 )
-def Fi(Z, E):
+def Fi(Z: ArrayLike, E: ArrayLike) -> NDArray[float]:
     """
     Anomalous Scattering Factor Fi
 
     Parameters
     ----------
-    Z : int | Array
+    Z : array_like
         atomic number
-    E : float | Array
+    E : array_like
         Energy (keV)
 
     Returns
     -------
-    float | Array
+    Array
         Anomalous Scattering Factor Fi
 
     Raises
