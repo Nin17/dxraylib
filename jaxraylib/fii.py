@@ -4,25 +4,18 @@ Anomalous Scattering Factor Fii
 
 from __future__ import annotations
 import os
-from typing import overload
 
-from .config import jit, jit_kwargs, xp, NDArray
+from .config import jit, jit_kwargs, xp, NDArray, ArrayLike
 from ._splint import _splint
-from ._utilities import value_error, wrapped_partial, output_type
+from ._utilities import wrapped_partial, xrl_xrlnp
 
 DIRPATH = os.path.dirname(__file__)
 FII_PATH = os.path.join(DIRPATH, "data/fii.npy")
 FII = xp.load(FII_PATH)
 
 
-# TODO what is going on with numba njit and this???
-# FIXME
-
-
 @wrapped_partial(jit, **jit_kwargs)
-def _Fii(
-    Z: int | NDArray[int], E: float | NDArray[float]
-) -> tuple[NDArray[float], bool]:
+def _Fii(Z: ArrayLike, E: ArrayLike) -> tuple[NDArray[float], bool]:
     Z = xp.atleast_1d(xp.asarray(Z))
     E = xp.atleast_1d(xp.asarray(E))
     # TODO change to FII[Z-1] when broadcast _splint
@@ -34,34 +27,24 @@ def _Fii(
     return output, xp.isnan(output).any()
 
 
-@overload
-def Fii(Z: int, E: float) -> float:
-    ...
-
-
-@overload
-def Fii(Z: NDArray[int], E: NDArray[float]) -> NDArray[float]:
-    ...
-
-
-@output_type
-@value_error(
+# TODO with jax jitable decorator
+@xrl_xrlnp(
     f"Z out of range: 1 to {FII.shape[0]} | Energy must be strictly positive"
 )
-def Fii(Z, E):
+def Fii(Z: ArrayLike, E: ArrayLike) -> NDArray[float]:
     """
     Anomalous Scattering Factor Fii
 
     Parameters
     ----------
-    Z : int | Array
+    Z : array_like
         atomic number
-    E : float | Array
+    E : array_like
         Energy (keV)
 
     Returns
     -------
-    float | Array
+    Array
         Anomalous Scattering Factor Fii
 
     Raises
