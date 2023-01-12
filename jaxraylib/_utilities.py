@@ -2,11 +2,60 @@
 useful helper functions
 """
 
-import itertools
 import functools
-from .config import xp, RAISE
+import itertools
+
+import jax
+
+from .config import xp, RAISE, jit, jit_kwargs, ArrayLike
+
+XRL_NP = False
 
 
+def xrl_np():
+    ...
+    # TODO 
+
+
+def xrl_xrlnp(value_error: str = ""):
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            xrl = all(isinstance(i, (float, int, str)) for i in itertools.chain(args, kwargs.values()))
+            xrl_np = all(isinstance(i, ArrayLike | str) for i in itertools.chain(args, kwargs.values()))
+            if XRL_NP:
+                # TODO some stuff that does argument broadcasting
+                ...
+            output, nan = func(*args, **kwargs)
+            if nan and xrl:
+                raise ValueError(value_error) # TODO from where it occurred
+            if xrl:
+                return xp.squeeze(output)
+            if nan:
+                return xp.nan_to_num(output)
+            return output
+        return wrapper
+    return decorator
+
+def error(output, value_error):
+    raise ValueError(value_error)
+
+
+def xrl_xrlnp_jax(value_error: str = ""):
+    def decorator(func):
+        @functools.wraps(func)
+        def wrapper(*args, **kwargs):
+            xrl = all(isinstance(i, (float, int, str)) for i in itertools.chain(args, kwargs.values()))
+            output, nan = func(*args, **kwargs)
+            jax.lax.cond(xrl, )
+            jax.lax.cond(nan and xrl, error, )
+            return output
+        return wrapper
+    return decorator
+
+
+
+# TODO another version of this that uses jax.lax.cond
 # TODO type hints
 def output_type(func):
     """
@@ -58,6 +107,7 @@ def wrapped_partial(func, *args, **kwargs):
     return partial_func
 
 
+# TODO another version of this that uses jax.lax.cond
 # TODO type hinting
 def value_error(message: str = ""):
     """
@@ -97,3 +147,24 @@ def value_error(message: str = ""):
         return wrapper
 
     return decorator
+
+
+# def value_error2(message: str = ""):
+#     def decorator(func):
+#         @functools.wraps(func)
+#         def wrapper(*args, **kwargs):
+#             output, nan = func(*args, **kwargs)
+#             if all(isinstance(i, (int, float, str)) for i in itertools.chain(args, kwargs.values())):
+
+# jax.lax.cond()
+
+
+def meh(error):
+    raise ValueError("")
+
+
+# @wrapped_partial(jit, **jit_kwargs)
+# def chain(*iterables):
+#     for it in iterables:
+#         for element in it:
+#             yield element
