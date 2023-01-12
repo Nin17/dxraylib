@@ -25,7 +25,7 @@ def _AtomicWeight(Z: ArrayLike) -> tuple[NDArray[float], bool]:
 
     Returns
     -------
-    tuple[Array[float], bool]
+    tuple[Array, bool]
 
 
 
