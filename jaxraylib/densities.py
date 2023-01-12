@@ -4,10 +4,9 @@ Element Densities
 
 from __future__ import annotations
 import os
-from typing import overload
 
-from .config import jit, jit_kwargs, xp, NDArray
-from ._utilities import value_error, wrapped_partial, output_type
+from .config import jit, jit_kwargs, xp, NDArray, ArrayLike
+from ._utilities import wrapped_partial, xrl_xrlnp
 
 DIRPATH = os.path.dirname(__file__)
 DEN_PATH = os.path.join(DIRPATH, "data/densities.npy")
@@ -15,13 +14,13 @@ DEN = xp.load(DEN_PATH)
 
 
 @wrapped_partial(jit, **jit_kwargs)
-def _ElementDensity(Z: int | NDArray[int]) -> tuple[NDArray[float], bool]:
+def _ElementDensity(Z: ArrayLike) -> tuple[NDArray[float], bool]:
     """
     Element Density
 
     Parameters
     ----------
-    Z : int | Array
+    Z : array_like
         atomic number
 
     Returns
@@ -34,35 +33,30 @@ def _ElementDensity(Z: int | NDArray[int]) -> tuple[NDArray[float], bool]:
     return output, xp.isnan(output).any()
 
 
-@overload
-def ElementDensity(Z: int) -> float:
-    ...
-
-
-@overload
-def ElementDensity(Z: NDArray[int]) -> NDArray[float]:
-    ...
-
-
-@output_type
-@value_error(f"Z out of range: 1 to {DEN.shape[0]}")
+# TODO another version with jax jitable decorator
+@xrl_xrlnp(f"Z out of range: 1 to {DEN.shape[0]}")
 def ElementDensity(Z):
     """
     Element Density
 
     Parameters
     ----------
-    Z : int | Array
+    Z : array_like
         atomic number
 
     Returns
     -------
-    float | Array
+    Array
         element density
 
     Raises
     ------
     ValueError
         if atomic number < 1 or > 98
+
+    Notes
+    ------
+    Z must be <= 1D if jaxraylib.config.jit == numba.njit
+
     """
     return _ElementDensity(Z)
