@@ -5,13 +5,10 @@
 # TODO issue with E = 1
 from __future__ import annotations
 import os
-from typing import overload
 
-from .config import jit, jit_kwargs, xp, NDArray
+from .config import jit, jit_kwargs, xp, NDArray, ArrayLike
 from ._splint import _splint
-from ._utilities import value_error, wrapped_partial, output_type
-
-PI = xp.pi
+from ._utilities import wrapped_partial, xrl_xrlnp
 
 DIRPATH = os.path.dirname(__file__)
 
@@ -27,23 +24,21 @@ CS_RAYL = xp.load(CS_RAYL_PATH)
 
 
 @wrapped_partial(jit, **jit_kwargs)
-def _CS_Total(
-    Z: int | NDArray[int], E: float | NDArray[float]
-) -> tuple[NDArray[float, bool]]:
+def _CS_Total(Z: ArrayLike, E: ArrayLike) -> tuple[NDArray, bool]:
     """
     Total cross section  (cm2/g)
     (Photoelectric + Compton + Rayleigh)
 
     Parameters
     ----------
-    Z : int | Array
+    Z : ArrayLike
         atomic number
-    E : float | Array
+    E : ArrayLike
         energy (keV)
 
     Returns
     -------
-    float | Array
+    tuple[NDArray, bool]
         Total cross section  (cm2/g)
         (Photoelectric + Compton + Rayleigh)
     """
@@ -54,39 +49,40 @@ def _CS_Total(
     return output, xp.isnan(output).any()
 
 
-@overload
-def CS_Total(Z: int, E: float) -> float:
-    ...
+@xrl_xrlnp(" # TODO error message")
+def CS_Total(Z: ArrayLike, E: ArrayLike) -> NDArray:
+    """_summary_
 
+    Parameters
+    ----------
+    Z : ArrayLike
+        _description_
+    E : ArrayLike
+        _description_
 
-@overload
-def CS_Total(Z: NDArray[int], E: NDArray[float]) -> NDArray[float]:
-    ...
-
-
-@output_type
-@value_error(" # TODO value error")
-def CS_Total(Z, E):
+    Returns
+    -------
+    NDArray
+        _description_
+    """
     return _CS_Total(Z, E)
 
 
 @wrapped_partial(jit, **jit_kwargs)
-def _CS_Photo(
-    Z: int | NDArray[int], E: float | NDArray[float]
-) -> tuple[NDArray[float], bool]:
+def _CS_Photo(Z: ArrayLike, E: ArrayLike) -> tuple[NDArray, bool]:
     """
     Photoelectric absorption cross section  (cm2/g)
 
     Parameters
     ----------
-    Z : Array
+    Z : ArrayLike
         atomic number
-    E : Array
+    E : ArrayLike
         energy (keV)
 
     Returns
     -------
-    Array
+    tuple[NDArray, bool]
         Photoelectric absorption cross section  (cm2/g)
     """
     Z = xp.atleast_1d(xp.asarray(Z))
@@ -100,53 +96,41 @@ def _CS_Photo(
     return output, xp.isnan(output).any()
 
 
-@overload
-def CS_Photo(Z: int, E: float) -> float:
-    ...
-
-
-@overload
-def CS_Photo(Z: NDArray[int], E: NDArray[float]) -> NDArray[float]:
-    ...
-
-
-@output_type
-@value_error("# TODO error message")
-def CS_Photo(Z, E):
+@xrl_xrlnp(" # TODO error message")
+def CS_Photo(Z: ArrayLike, E: ArrayLike) -> NDArray:
+    # TODO docstring
     """_summary_
 
     Parameters
     ----------
-    Z : int | Array
+    Z : ArrayLike
         _description_
-    E : float | Array
+    E : ArrayLike
         _description_
 
     Returns
     -------
-    float | Array
+    NDArray
         _description_
     """
     return _CS_Photo(Z, E)
 
 
 @wrapped_partial(jit, **jit_kwargs)
-def _CS_Rayl(
-    Z: int | NDArray[int], E: float | NDArray[float]
-) -> tuple[NDArray[float], bool]:
+def _CS_Rayl(Z: ArrayLike, E: ArrayLike) -> tuple[NDArray, bool]:
     """
     Rayleigh scattering cross section  (cm2/g)
 
     Parameters
     ----------
-    Z : Array
+    Z : ArrayLike
         atomic number
-    E : Array
+    E : ArrayLike
         energy (keV)
 
     Returns
     -------
-    Array
+    tuple[NDArray, bool]
         Rayleigh scattering cross section  (cm2/g)
     """
     Z = xp.atleast_1d(xp.asarray(Z))
@@ -160,53 +144,40 @@ def _CS_Rayl(
     return output, xp.isnan(output).any()
 
 
-@overload
-def CS_Rayl(Z: int, E: float) -> float:
-    ...
-
-
-@overload
-def CS_Rayl(Z: NDArray[int], E: NDArray[float]) -> NDArray[float]:
-    ...
-
-
-@output_type
-@value_error(" # TODO error message")
-def CS_Rayl(Z, E):
+@xrl_xrlnp(" # TODO error message")
+def CS_Rayl(Z: ArrayLike, E: ArrayLike) -> NDArray:
     """_summary_
 
     Parameters
     ----------
-    Z : int | Array
+    Z : ArrayLike
         _description_
-    E : float | Array
+    E : ArrayLike
         _description_
 
     Returns
     -------
-    float | Array
+    NDArray
         _description_
     """
     return _CS_Rayl(Z, E)
 
 
 @wrapped_partial(jit, **jit_kwargs)
-def _CS_Compt(
-    Z: int | NDArray[int], E: float | NDArray[float]
-) -> tuple[NDArray[float], bool]:
+def _CS_Compt(Z: ArrayLike, E: ArrayLike) -> tuple[NDArray, bool]:
     """
     Compton scattering cross section  (cm2/g)
 
     Parameters
     ----------
-    Z : Array
+    Z : ArrayLike
         atomic number
-    E : Array
+    E : ArrayLike
         energy (keV)
 
     Returns
     -------
-    Array
+    tuple[NDArray, bool]
         Compton scattering cross section  (cm2/g)
     """
     Z = xp.atleast_1d(xp.asarray(Z))
@@ -220,54 +191,41 @@ def _CS_Compt(
     return output, xp.isnan(output).any()
 
 
-@overload
-def CS_Compt(Z: int, E: float) -> float:
-    ...
-
-
-@overload
-def CS_Compt(Z: NDArray[int], E: NDArray[float]) -> NDArray[float]:
-    ...
-
-
-@output_type
-@value_error(" # TODO value error")
-def CS_Compt(Z, E):
+@xrl_xrlnp(" # TODO error message")
+def CS_Compt(Z: ArrayLike, E: ArrayLike) -> NDArray:
     # TODO docstring
     """_summary_
 
     Parameters
     ----------
-    Z : int | Array
+    Z : ArrayLike
         _description_
-    E : float | Array
+    E : ArrayLike
         _description_
 
     Returns
     -------
-    float | Array
+    NDArray
         _description_
     """
     return _CS_Compt(Z, E)
 
 
 @wrapped_partial(jit, **jit_kwargs)
-def _CS_Energy(
-    Z: int | NDArray[int], E: float | NDArray[float]
-) -> tuple[NDArray[float], bool]:
+def _CS_Energy(Z: ArrayLike, E: ArrayLike) -> tuple[NDArray, bool]:
     # TODO docstring
     """_summary_
 
     Parameters
     ----------
-    Z : int | NDArray[int]
+    Z : ArrayLike
         _description_
-    E : float | NDArray[float]
+    E : ArrayLike
         _description_
 
     Returns
     -------
-    tuple[NDArray[float], bool]
+    tuple[NDArray, bool]
         _description_
     """
     Z = xp.atleast_1d(xp.asarray(Z))
@@ -281,36 +239,25 @@ def _CS_Energy(
     return xp.exp(output), xp.isnan(output).any()
 
 
-@overload
-def CS_Energy(Z: int, E: float) -> float:
-    ...
-
-
-@overload
-def CS_Energy(Z: NDArray[int], E: NDArray[float]) -> NDArray[float]:
-    ...
-
-
 CS_Energy_error = f"""Z out of range: 1 to {CS_ENERGY.shape[0]} |
  Energy must be strictly positive"""
 
 
-@output_type
-@value_error("".join(CS_Energy_error.splitlines()))
-def CS_Energy(Z, E):
+@xrl_xrlnp("".join(CS_Energy_error.splitlines()))
+def CS_Energy(Z: ArrayLike, E: ArrayLike) -> NDArray:
     """
     Mass energy-absorption coefficient (cm2/g)
 
     Parameters
     ----------
-    Z : int | Array
+    Z : ArrayLike
         atomic number
-    E : float | Array
+    E : ArrayLike
         energy (keV)
 
     Returns
     -------
-    float | Array
+    NDArray
         Mass energy-absorption coefficient (cm2/g)
 
     Raises
