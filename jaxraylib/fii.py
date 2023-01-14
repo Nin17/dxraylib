@@ -16,6 +16,20 @@ FII = xp.load(FII_PATH)
 
 @wrapped_partial(jit, **jit_kwargs)
 def _Fii(Z: ArrayLike, E: ArrayLike) -> tuple[NDArray[float], bool]:
+    """_summary_
+
+    Parameters
+    ----------
+    Z : ArrayLike
+        _description_
+    E : ArrayLike
+        _description_
+
+    Returns
+    -------
+    tuple[NDArray[float], bool]
+        _description_
+    """
     Z = xp.atleast_1d(xp.asarray(Z))
     E = xp.atleast_1d(xp.asarray(E))
     # TODO change to FII[Z-1] when broadcast _splint
