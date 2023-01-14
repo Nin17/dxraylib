@@ -21,7 +21,7 @@ def _DCSP_Rayl(
     phi = xp.atleast_1d(xp.asarray(phi))
     q = _MomentTransf(E, theta)[0]
     F = _FF_Rayl(Z, q)[0]
-    output = AVOGNUM / _AtomicWeight(Z)[0] * F * F * _DCSP_Thoms(theta, phi)
+    output = AVOGNUM / _AtomicWeight(Z)[0] * F * F * _DCSP_Thoms(theta, phi)[0]
     return output, xp.isnan(output).any()
 
 
