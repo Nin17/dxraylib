@@ -89,7 +89,7 @@ def _CS_Photo(Z: ArrayLike, E: ArrayLike) -> tuple[NDArray, bool]:
     E = xp.atleast_1d(xp.asarray(E))
     # TODO change to CS_PHOTO[Z-1] when _splint is broadcast
     output = xp.where(
-        (Z >= 1) & (Z < CS_PHOTO.shape[0]) & (E >= 0.0),
+        (Z >= 1) & (Z <= CS_PHOTO.shape[0]) & (E >= 0.0),
         xp.exp(_splint(CS_PHOTO[Z[0] - 1], xp.log(E * 1000.0))),
         xp.nan,
     )
@@ -137,7 +137,7 @@ def _CS_Rayl(Z: ArrayLike, E: ArrayLike) -> tuple[NDArray, bool]:
     E = xp.atleast_1d(xp.asarray(E))
     # TODO change to CS_RAYL[Z-1] when _splint is broadcast
     output = xp.where(
-        (Z >= 1) & (Z < CS_RAYL.shape[0]) & (E >= 0.0),
+        (Z >= 1) & (Z <= CS_RAYL.shape[0]) & (E >= 0.0),
         xp.exp(_splint(CS_RAYL[Z[0] - 1], xp.log(E * 1000.0))),
         xp.nan,
     )
@@ -184,7 +184,7 @@ def _CS_Compt(Z: ArrayLike, E: ArrayLike) -> tuple[NDArray, bool]:
     E = xp.atleast_1d(xp.asarray(E))
     # TODO change to CS_COMPT[Z-1] when _splint is broadcast
     output = xp.where(
-        (Z >= 1) & (Z < CS_COMPT.shape[0]) & (E >= 0.0),
+        (Z >= 1) & (Z <= CS_COMPT.shape[0]) & (E >= 0.0),
         xp.exp(_splint(CS_COMPT[Z[0] - 1], xp.log(E * 1000.0))),
         xp.nan,
     )
@@ -232,7 +232,7 @@ def _CS_Energy(Z: ArrayLike, E: ArrayLike) -> tuple[NDArray, bool]:
     E = xp.atleast_1d(xp.asarray(E))
     # TODO change to CS_ENERGY[Z-1] when broadcast _splint
     output = xp.where(
-        (Z >= 1) & (Z < CS_ENERGY.shape[0]) & (E >= 0.0),
+        (Z >= 1) & (Z <= CS_ENERGY.shape[0]) & (E >= 0.0),
         _splint(CS_ENERGY[Z[0] - 1], xp.log(E)),
         xp.nan,
     )
