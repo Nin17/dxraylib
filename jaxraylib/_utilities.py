@@ -21,7 +21,7 @@ def xrl_xrlnp(value_error: str = ""):
     def decorator(func):
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
-            xrl = all(isinstance(i, (float, int, str)) for i in itertools.chain(args, kwargs.values()))
+            xrl = all(isinstance(i, (float, int, xp.number, str)) for i in itertools.chain(args, kwargs.values()))
             xrl_np = all(isinstance(i, ArrayLike | str) for i in itertools.chain(args, kwargs.values()))
             if XRL_NP:
                 # TODO some stuff that does argument broadcasting
