@@ -8,6 +8,7 @@ from .config import jit
 from .fi import _Fi
 from .cross_sections import _CS_Total
 from .xraylib_parser import CompoundParser
+from ._utilities import xrl_xrlnp
 
 # TODO decorator that does this stuff
 
@@ -42,6 +43,7 @@ def _Refractive_Index_Re(elements, mass_fractions, E, density):
     return output, xp.isnan(output).any()
 
 
+@xrl_xrlnp("# TODO error message")
 def Refractive_Index_Re(compound: str, E: float, density: float) -> float:
     """_summary_
 
@@ -100,6 +102,7 @@ def _Refractive_Index_Im(elements, mass_fractions, E, density):
     return output, xp.isnan(output).any()
 
 
+@xrl_xrlnp("# TODO error message")
 def Refractive_Index_Im(compound: str, E: float, density: float) -> float:
     """_summary_
 
@@ -162,6 +165,7 @@ def _Refractive_Index(
     return output, xp.isnan(output).any()
 
 
+@xrl_xrlnp("# TODO error message")
 def Refractive_Index(compound: str, E: float, density: float) -> complex:
     compound_dict = CompoundParser(compound)
     mass_fractions = compound_dict["massFractions"]
