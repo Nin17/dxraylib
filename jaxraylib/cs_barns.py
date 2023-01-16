@@ -6,17 +6,17 @@ from typing import Callable
 
 from jax._src.typing import Array
 
-from . import atomicweight
-from . import cross_sections
-from . import polarized
-from . import scattering
+# from . import atomicweight
+# from . import cross_sections
+# from . import polarized
+# from . import scattering
 
 from .config import jit, jit_kwargs, xp
 from .constants import AVOGNUM
 from .atomicweight import _AtomicWeight
-from .cross_sections import _CS_Total, CS_Photo, CS_Rayl, CS_Compt
-from .polarized import DCSP_Compt, _DCSP_Rayl, jit as hola
-from .scattering import DCS_Rayl, DCS_Compt
+from .cross_sections import _CS_Total, _CS_Photo, _CS_Rayl, _CS_Compt
+from .polarized import _DCSP_Compt, _DCSP_Rayl
+from .scattering import _DCS_Rayl, _DCS_Compt
 from ._utilities import value_error, wrapped_partial, output_type, xrl_xrlnp
 
 
@@ -45,57 +45,59 @@ def convert_to_barns(function: Callable) -> Callable:
     # return decorator
 
 
-def add_doc(func: Callable) -> Callable:
-    def _doc(function: Callable) -> Callable:
-        function.__doc__ = (
-            func.__doc__.replace("cm2/g", "barns")
-            if func.__doc__ is not None
-            else None
-        )
-        function.__annotations__ = func.__annotations__
-        return function
+# def add_doc(func: Callable) -> Callable:
+#     def _doc(function: Callable) -> Callable:
+#         function.__doc__ = (
+#             func.__doc__.replace("cm2/g", "barns")
+#             if func.__doc__ is not None
+#             else None
+#         )
+#         function.__annotations__ = func.__annotations__
+#         return function
 
-    return _doc
-
-
-def barns(func):
-    def decorator(function):
-        @add_doc(func)
-        @convert_to_barns(func)
-        @functools.wraps(function)
-        def f(*args, **kwargs):
-            return function(*args, **kwargs)
-
-        return f
-
-    return decorator
+#     return _doc
 
 
-@wrapped_partial(jit, **jit_kwargs)
+# def barns(func):
+#     def decorator(function):
+#         @add_doc(func)
+#         @convert_to_barns(func)
+#         @functools.wraps(function)
+#         def f(*args, **kwargs):
+#             return function(*args, **kwargs)
+
+#         return f
+
+#     return decorator
+
+
+# @wrapped_partial(jit, **jit_kwargs)
+# @convert_to_barns
+# def _CSb_Total(Z: Array, E: Array) -> Array:
+#     """
+#     Total cross section  (barns)
+#     (Photoelectric + Compton + Rayleigh)
+
+#     Parameters
+#     ----------
+#     Z : Array
+#         atomic number
+#     E : Array
+#         energy (keV)
+
+#     Returns
+#     -------
+#     Array
+#         Total cross section  (barns)
+#         (Photoelectric + Compton + Rayleigh)
+#     """
+#     return _CS_Total(Z, E)
+
+
+# @output_type
+# @value_error(" # TODO value Error")
+@xrl_xrlnp(" TODO error message ")
 @convert_to_barns
-def _CSb_Total(Z: Array, E: Array) -> Array:
-    """
-    Total cross section  (barns)
-    (Photoelectric + Compton + Rayleigh)
-
-    Parameters
-    ----------
-    Z : Array
-        atomic number
-    E : Array
-        energy (keV)
-
-    Returns
-    -------
-    Array
-        Total cross section  (barns)
-        (Photoelectric + Compton + Rayleigh)
-    """
-    return _CS_Total(Z, E)
-
-
-@output_type
-@value_error(" # TODO value Error")
 def CSb_Total(Z: Array, E: Array) -> Array:
     """
     Total cross section  (barns)
@@ -115,9 +117,10 @@ def CSb_Total(Z: Array, E: Array) -> Array:
         (Photoelectric + Compton + Rayleigh)
     """
     # TODO redo implementation of cross-sections for this
-    return _CSb_Total(Z, E)
+    return _CS_Total(Z, E)
 
 
+@xrl_xrlnp(" TODO error message ")
 @convert_to_barns
 def CSb_Photo(Z: Array, E: Array) -> Array:
     """
@@ -135,9 +138,10 @@ def CSb_Photo(Z: Array, E: Array) -> Array:
     Array
         Photoelectric absorption cross section  (barns)
     """
-    return CS_Photo(Z, E)
+    return _CS_Photo(Z, E)
 
 
+@xrl_xrlnp(" TODO error message ")
 @convert_to_barns
 def CSb_Rayl(Z: Array, E: Array) -> Array:
     """
@@ -155,9 +159,10 @@ def CSb_Rayl(Z: Array, E: Array) -> Array:
     Array
         Rayleigh scattering cross section  (barns)
     """
-    return CS_Rayl(Z, E)
+    return _CS_Rayl(Z, E)
 
 
+@xrl_xrlnp(" TODO error message ")
 @convert_to_barns
 def CSb_Compt(Z, E):
     """
@@ -175,7 +180,7 @@ def CSb_Compt(Z, E):
     Array
         Compton scattering cross section  (barns)
     """
-    return CS_Compt(Z, E)
+    return _CS_Compt(Z, E)
 
 
 # @barns(CS_FluorLine)
@@ -188,6 +193,7 @@ def CSb_FluorShell(Z, shell, E):
     ...
 
 
+@xrl_xrlnp(" # TODO error message")
 @convert_to_barns
 def DCSb_Rayl(Z: Array, E: Array, theta: Array) -> Array:
     """
@@ -207,9 +213,10 @@ def DCSb_Rayl(Z: Array, E: Array, theta: Array) -> Array:
     Array
         Differential Rayleigh scattering cross section (barns/sterad)
     """
-    return DCS_Rayl(Z, E, theta)
+    return _DCS_Rayl(Z, E, theta)
 
 
+@xrl_xrlnp(" # TODO error message")
 @convert_to_barns
 def DCSb_Compt(Z, E, theta):
     """
@@ -229,11 +236,11 @@ def DCSb_Compt(Z, E, theta):
     Array
         Differential Compton scattering cross section (cm2/g/sterad)
     """
-    return DCS_Compt(Z, E, theta)
+    return _DCS_Compt(Z, E, theta)
 
 
+@xrl_xrlnp(" # TODO error message")
 @convert_to_barns
-@xrl_xrlnp()
 def DCSPb_Rayl(Z, E, theta, phi):
     """
     Differential Rayleigh scattering cross section
@@ -259,6 +266,7 @@ def DCSPb_Rayl(Z, E, theta, phi):
     return _DCSP_Rayl(Z, E, theta, phi)
 
 
+@xrl_xrlnp(" # TODO error message")
 @convert_to_barns
 def DCSPb_Compt(Z, E, theta, phi):
     """
@@ -282,4 +290,4 @@ def DCSPb_Compt(Z, E, theta, phi):
         Differential Compton scattering cross section
         for polarized beam (barns/sterad)
     """
-    return DCSP_Compt(Z, E, theta, phi)
+    return _DCSP_Compt(Z, E, theta, phi)
