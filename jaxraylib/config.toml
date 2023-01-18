@@ -1,0 +1,4 @@
+xp = "jax.numpy"
+jit = "jax.jit"
+NDArray = "jax._src.typing.ArrayLike"
+double = true
