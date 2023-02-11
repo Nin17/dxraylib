@@ -17,7 +17,7 @@ class AtomicWeight(Indexors):
         Base test class for functions that index an array of data
     """
 
-    size = AW.size
+    size: int = AW.size
 
 
 class TestAtomicWeight(AtomicWeight):

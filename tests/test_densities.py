@@ -17,4 +17,4 @@ class TestElementDensity(Indexors):
         Base test class for functions that index an array of data
     """
 
-    size = DEN.size
+    size: int = DEN.size
