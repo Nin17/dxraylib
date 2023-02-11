@@ -1,90 +1,167 @@
-"""_summary_
 """
+Tests for jaxraylib.CS_Compt, jaxraylib.CS_Energy, jaxraylib.CS_Photo,
+jaxraylib.CS_Rayl and jaxraylib.CS_Total
+"""
+
+from typing import Callable
+
 import numpy as np
 
-import jaxraylib as jxrl
 from jaxraylib.cross_sections import CS_COMPT, CS_PHOTO, CS_RAYL, CS_ENERGY
 
-from tests.utilities import TestBaseInterpolators
+from tests.utilities import CubicInterpolators
 
 
-class TestCS_Compt(TestBaseInterpolators):
-    """_summary_
+def scale(func: Callable, factor: float = 1):
+    """
+    Decorator which scales nanmin and nanmax properties of cls by:
+        func(nanmin) / factor
+        func(nanmax) / factor
 
     Parameters
     ----------
-    TestBaseInterpolators : _type_
-        _description_
+    func : Callable
+        Function to apply to nanmin and nanmax
+    factor : float, optional
+        Division factor to apply, by default 1
     """
-    def test_spline_extrapolation(self):
-        """_summary_
-        """
-        super().spline_extrapolation(
-            CS_COMPT, jxrl.CS_Compt, lambda x: np.exp(x) / 1000
-        )
+
+    def wrapper(cls):
+        @property
+        def nanmin(self):
+            return func(super(cls, self).nanmin) / factor
+
+        @property
+        def nanmax(self):
+            return func(super(cls, self).nanmax) / factor
+
+        cls.nanmin = nanmin
+        cls.nanmax = nanmax
+        return cls
+
+    return wrapper
 
 
-class TestCS_Energy(TestBaseInterpolators):
-    """_summary_
+@scale(np.exp, 1000)
+class CS_Compt(CubicInterpolators):
+    """
+    Base test class for jaxraylib.CS_Compt
 
     Parameters
     ----------
-    TestBaseInterpolators : _type_
-        _description_
+    CubicInterpolators : type
+        Base test class for functions that interpolate an array of data
     """
-    def test_spline_extrapolation(self):
-        """_summary_
-        """
-        super().spline_extrapolation(
-            CS_ENERGY, jxrl.CS_Energy, lambda x: np.exp(x)
-        )
+
+    data: tuple = (CS_COMPT,)
 
 
-class TestCS_Photo(TestBaseInterpolators):
-    """_summary_
+class TestCS_Compt(CS_Compt):
+    """
+    Test class for jaxraylib.CS_Compt
 
     Parameters
     ----------
-    TestBaseInterpolators : _type_
-        _description_
+    CS_Compt : type
+        Base test class for jaxraylib.CS_Compt
     """
-    def test_spline_extrapolation(self):
-        """_summary_
-        """
-        super().spline_extrapolation(
-            CS_PHOTO, jxrl.CS_Photo, lambda x: np.exp(x) / 1000
-        )
 
 
-class TestCS_Rayl(TestBaseInterpolators):
-    """_summary_
+@scale(np.exp)
+class CS_Energy(CubicInterpolators):
+    """
+    Base test class for jaxraylib.CS_Energy
 
     Parameters
     ----------
-    TestBaseInterpolators : _type_
-        _description_
+    CubicInterpolators : type
+        Base test class for functions that interpolate an array of data
     """
-    def test_spline_extrapolation(self):
-        """_summary_
-        """
-        super().spline_extrapolation(
-            CS_RAYL, jxrl.CS_Rayl, lambda x: np.exp(x) / 1000
-        )
+
+    data: tuple = (CS_ENERGY,)
 
 
-class TestCS_Total(TestBaseInterpolators):
-    """_summary_
+class TestCS_Energy(CS_Energy):
+    """
+    Test class for jaxraylib.CS_Energy
 
     Parameters
     ----------
-    TestBaseInterpolators : _type_
-        _description_
+    CS_Energy : type
+        Base test class for jaxraylib.CS_Energy
     """
-    def test_spline_extrapolation(self):
-        """_summary_
-        """
-        super().spline_extrapolation(
-            (CS_COMPT, CS_PHOTO, CS_RAYL),
-            jxrl.CS_Total,
-            lambda x: np.exp(x) / 1000,
-        )
+
+
+@scale(np.exp, 1000)
+class CS_Photo(CubicInterpolators):
+    """
+    Base test class for jaxraylib.CS_Photo
+
+    Parameters
+    ----------
+    CubicInterpolators : type
+        Base test class for functions that interpolate an array of data
+    """
+
+    data: tuple = (CS_PHOTO,)
+
+
+class TestCS_Photo(CS_Photo):
+    """
+    Test class for jaxraylib.CS_Photo
+
+    Parameters
+    ----------
+    CS_Photo : type
+        Base test class for jaxraylib.CS_Photo
+    """
+
+
+@scale(np.exp, 1000)
+class CS_Rayl(CubicInterpolators):
+    """
+    Base test class for jaxraylib.CS_Rayl
+
+    Parameters
+    ----------
+    CubicInterpolators : type
+        Base test class for functions that interpolate an array of data
+    """
+
+    data: tuple = (CS_RAYL,)
+
+
+class TestCS_Rayl(CS_Rayl):
+    """
+    Test class for jaxraylib.CS_Rayl
+
+    Parameters
+    ----------
+    CS_Rayl : type
+        Base test class for jaxraylib.CS_Rayl
+    """
+
+
+@scale(np.exp, 1000)
+class CS_Total(CubicInterpolators):
+    """
+    Base test class for jaxraylib.CS_Total
+
+    Parameters
+    ----------
+    CubicInterpolators : type
+        Base test class for functions that interpolate an array of data
+    """
+
+    data: tuple = CS_COMPT, CS_PHOTO, CS_RAYL
+
+
+class TestCS_Total(CS_Total):
+    """
+    Test class for jaxraylib.CS_Total
+
+    Parameters
+    ----------
+    CS_Total : type
+        Base test class for jaxraylib.CS_Total
+    """
