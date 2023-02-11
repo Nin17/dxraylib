@@ -1,5 +1,5 @@
 """_summary_
 """
-
-ATOL = 1e-5
-RTOL = 1e-8
+N: int = 1
+ATOL: float = 1e-5
+RTOL: float = 1e-8
