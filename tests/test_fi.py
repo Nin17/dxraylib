@@ -9,7 +9,7 @@ from tests.utilities import CubicInterpolators
 
 class Fi(CubicInterpolators):
     """
-    Base test class for jaxryalib.Fi
+    Base test class for jaxraylib.Fi
 
     Parameters
     ----------
