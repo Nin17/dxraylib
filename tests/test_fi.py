@@ -1,9 +1,31 @@
-import jaxraylib as jxrl
+"""
+Tests for jaxraylib.Fi
+"""
+
 from jaxraylib.fi import FI
 
-from tests.utilities import TestBaseInterpolators
+from tests.utilities import CubicInterpolators
 
 
-class TestFi(TestBaseInterpolators):
-    def test_spline_extrapolation(self):
-        return super().spline_extrapolation(FI, jxrl.Fi, lambda x: x)
+class Fi(CubicInterpolators):
+    """
+    Base test class for jaxryalib.Fi
+
+    Parameters
+    ----------
+    CubicInterpolators : type
+        Base test class for functions that interpolate an array of data
+    """
+
+    data: tuple = (FI,)
+
+
+class TestFi(Fi):
+    """
+    Test class for jaxraylib.Fi
+
+    Parameters
+    ----------
+    Fi : type
+        Base test class for jaxraylib.Fi
+    """
