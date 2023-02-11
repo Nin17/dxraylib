@@ -1,42 +1,20 @@
-"""_summary_
 """
-
-import numpy as np
+Tests for jaxraylib.ElementDensity
+"""
 
 from jaxraylib.densities import DEN
 
-from tests.utilities import TestBaseXrlXrlnp
-
-rng = np.random.default_rng()
+from tests.utilities import Indexors
 
 
-class TestElementDensity(TestBaseXrlXrlnp):
-    """_summary_
+class TestElementDensity(Indexors):
+    """
+    Test class for jaxraylib.ElementDensity
 
     Parameters
     ----------
-    TestBaseXrlXrlnp : _type_
-        _description_
+    Indexors : type
+        Base test class for functions that index an array of data
     """
-    def test_xrl(self):
-        """_summary_
-        """
-        super().xrl(rng.integers(1, DEN.shape[0] + 1))
 
-    def test_xrlnp(self):
-        """_summary_
-        """
-        super().xrlnp(rng.integers(-10, DEN.shape[0] + 10, (100,)))
-
-    def test_type_error(self):
-        """_summary_
-        """
-        super().raise_error(
-            TypeError,
-            rng.integers(1, DEN.shape[0] + 1).astype(float),
-        )
-
-    def test_value_error(self):
-        """_summary_
-        """
-        super().raise_error(ValueError, -1)
+    size = DEN.size

@@ -1,27 +1,31 @@
-"""_summary_
 """
-
-import numpy as np
+Tests for jaxraylib.AtomicWeight
+"""
 
 from jaxraylib.atomicweight import AW
 
-from tests.utilities import TestBaseXrlXrlnp
-
-rng = np.random.default_rng()
+from tests.utilities import Indexors
 
 
-class TestAtomicWeight(TestBaseXrlXrlnp):
-    def test_xrl(self):
-        super().xrl(rng.integers(1, AW.shape[0] + 1))
+class AtomicWeight(Indexors):
+    """
+    Base test class for jaxraylib.AtomicWeight
 
-    def test_xrlnp(self):
-        super().xrlnp(rng.integers(0, AW.shape[0] + 10, (100,)))
+    Parameters
+    ----------
+    Indexors : type
+        Base test class for functions that index an array of data
+    """
 
-    def test_type_error(self):
-        super().raise_error(
-            TypeError,
-            rng.integers(1, AW.shape[0] + 1).astype(float),
-        )
+    size = AW.size
 
-    def test_value_error(self):
-        super().raise_error(ValueError, -1)
+
+class TestAtomicWeight(AtomicWeight):
+    """
+    Test class for jaxraylib.AtomicWeight
+
+    Parameters
+    ----------
+    AtomicWeight : type
+        Base test class for jaxraylib.AtomicWeight
+    """
