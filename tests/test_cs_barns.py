@@ -1,138 +1,117 @@
-"""_summary_
 """
-import numpy as np
+Tests for cross sections in barns
+"""
 
-from tests.utilities import TestBaseXrlXrlnp
+from tests.test_atomicweight import AtomicWeight
+from tests.test_cross_sections import (
+    CS_Compt,
+    CS_Photo,
+    CS_Rayl,
+    CS_Total,
+)
+from tests.test_polarized import DCSP_Compt, DCSP_Rayl
+from tests.test_scattering import DCS_Compt, DCS_Rayl
 
 
-rng = np.random.default_rng()
-
-
-class TestCSb_Total(TestBaseXrlXrlnp):
-    """_summary_
+class TestCSb_Total(CS_Total, AtomicWeight):
+    """
+    Test class for jaxraylib.CSb_Total
 
     Parameters
     ----------
-    TestBaseXrlXrlnp : _type_
-        _description_
+    CS_Total : type
+        Base test class for jaxraylib.CS_Total
+    AtomicWeight : type
+        Base test class for jaxraylib.AtomicWeight
     """
 
-    def test_xrl(self):
-        """_summary_"""
-        super().xrl(rng.integers(1, 98), (1 + rng.random()) * 100)
 
-
-class TestCSb_Photo(TestBaseXrlXrlnp):
-    """_summary_
+class TestCSb_Photo(CS_Photo, AtomicWeight):
+    """
+    Test class for jaxraylib.CSb_Photo
 
     Parameters
     ----------
-    TestBaseXrlXrlnp : _type_
-        _description_
+    CS_Photo : type
+        Base test class for jaxraylib.CS_Photo
+    AtomicWeight : type
+        Base test class for jaxraylib.AtomicWeight
     """
 
-    def test_xrl(self):
-        """_summary_"""
-        super().xrl(rng.integers(1, 98), (1 + rng.random()) * 100)
 
-
-class TestCSb_Rayl(TestBaseXrlXrlnp):
-    """_summary_
+class TestCSb_Rayl(CS_Rayl, AtomicWeight):
+    """
+    Test class for jaxraylib.CSb_Rayl
 
     Parameters
     ----------
-    TestBaseXrlXrlnp : _type_
-        _description_
+    CS_Rayl : type
+        Base test class for jaxraylib.CS_Rayl
+    AtomicWeight : type
+        Base test class for jaxraylib.AtomicWeight
     """
 
-    def test_xrl(self):
-        """_summary_"""
-        super().xrl(rng.integers(1, 98), (1 + rng.random()) * 100)
 
-
-class TestCSb_Compt(TestBaseXrlXrlnp):
-    """_summary_
+class TestCSb_Compt(CS_Compt, AtomicWeight):
+    """
+    Test class for jaxraylib.CSb_Compt
 
     Parameters
     ----------
-    TestBaseXrlXrlnp : _type_
-        _description_
+    CS_Compt : type
+        Base test class for jaxraylib.CS_Compt
+    AtomicWeight : type
+        Base test class for jaxraylib.AtomicWeight
     """
 
-    def test_xrl(self):
-        """_summary_"""
-        super().xrl(rng.integers(1, 98), (1 + rng.random()) * 100)
 
-
-class TestDCSb_Rayl(TestBaseXrlXrlnp):
-    """_summary_
+class TestDCSb_Rayl(DCS_Rayl, AtomicWeight):
+    """
+    Test class for jaxraylib.DCSb_Rayl
 
     Parameters
     ----------
-    TestBaseXrlXrlnp : _type_
-        _description_
+    DCS_Rayl : type
+        Base test class for jaxraylib.DCS_Rayl
+    AtomicWeight : type
+        Base test class for jaxraylib.AtomicWeight
     """
 
-    def test_xrl(self):
-        """_summary_"""
-        super().xrl(
-            rng.integers(1, 98),
-            (1 + rng.random()) * 100,
-            (rng.random() - 0.5) * 4 * np.pi,
-        )
 
-
-class TestDCSb_Compt(TestBaseXrlXrlnp):
-    """_summary_
+class TestDCSb_Compt(DCS_Compt, AtomicWeight):
+    """
+    Test class for jaxraylib.DCSb_Compt
 
     Parameters
     ----------
-    TestBaseXrlXrlnp : _type_
-        _description_
+    DCS_Compt : type
+        Base test class for jaxraylib.DCS_Compt
+    AtomicWeight : type
+        Base test class for jaxraylib.AtomicWeight
     """
 
-    def test_xrl(self):
-        """_summary_"""
-        super().xrl(
-            rng.integers(1, 98),
-            (1 + rng.random()) * 100,
-            (rng.random() - 0.5) * 4 * np.pi,
-        )
 
-
-class TestDCSPb_Rayl(TestBaseXrlXrlnp):
-    """_summary_
+class TestDCSPb_Rayl(DCSP_Rayl, AtomicWeight):
+    """
+    Test class for jaxraylib.DCSPb_Rayl
 
     Parameters
     ----------
-    TestBaseXrlXrlnp : _type_
-        _description_
+    DCSP_Rayl : type
+        Base test class for jaxraylib.DCSP_Rayl
+    AtomicWeight : type
+        Base test class for jaxraylib.AtomicWeight
     """
 
-    def test_xrl(self):
-        """_summary_"""
-        super().xrl(
-            rng.integers(1, 98),
-            (1 + rng.random()) * 100,
-            (rng.random() - 0.5) * 4 * np.pi,
-            (rng.random() - 0.5) * 4 * np.pi,
-        )
 
-
-class TestDCSPb_Compt(TestBaseXrlXrlnp):
-    """_summary_
+class TestDCSPb_Compt(DCSP_Compt, AtomicWeight):
+    """
+    Test class for jaxraylib.DCSPb_Compt
 
     Parameters
     ----------
-    TestBaseXrlXrlnp : _type_
-        _description_
+    DCSP_Compt : type
+        Base test class for jaxraylib.DCSP_Compt
+    AtomicWeight : type
+        Base test class for jaxraylib.AtomicWeight
     """
-
-    def test_xrl(self):
-        """_summary_"""
-        super().xrl(
-            rng.integers(1, 98),
-            (1 + rng.random()) * 100,
-            (rng.random() - 0.5) * 4 * np.pi,
-            (rng.random() - 0.5) * 4 * np.pi,
-        )
