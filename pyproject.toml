@@ -9,16 +9,16 @@ authors = [
   {name = "Chris Ninham", email = "christopher.ninham@creatis.insa-lyon.fr"},
 ]
 dependencies = ['jax', 'xraylib']
-description = "A python implementation of xraylib with a JAX backend."
+description = "A python implementation of xraylib using JAX."
 dynamic = ["readme"]
 name = "JAXraylib"
 version = "0.0.1"
 
-requires-python = ">=3.x"
+# requires-python = ">=3.x"
 
 # TODO possibly add cupy and cuda.jit the functions
 [project.optional-dependencies]
-jaxraylib = ["numpy", "numba"]
+jaxraylib = ["numpy",]
 
 [tool.setuptools.dynamic]
 readme = {file = ["README.md"]}
@@ -30,3 +30,6 @@ readme = {file = ["README.md"]}
 
 [tool.setuptools]
 py-modules = ["JAXraylib"]
+
+# [tool.pytest.ini_options]
+# testpaths = ["JAXRAYLIB/tests/"]
