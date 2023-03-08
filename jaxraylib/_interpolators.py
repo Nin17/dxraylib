@@ -1,4 +1,5 @@
-"""_summary_
+"""
+Base function for cubic spline interpolation of data using _splint
 """
 # TODO summary
 # TODO docstring
@@ -22,7 +23,27 @@ def _args_splint(
 
 
 @wrapped_partial(jit, **jit_kwargs)
-def _interpolate(data, Z, E, E2):
+def _interpolate(
+    data: NDArray, Z: ArrayLike, E: ArrayLike, E2: ArrayLike
+) -> NDArray:
+    """_summary_
+
+    Parameters
+    ----------
+    data : NDArray
+        _description_
+    Z : ArrayLike
+        _description_
+    E : ArrayLike
+        _description_
+    E2 : ArrayLike
+        _description_
+
+    Returns
+    -------
+    NDArray
+        _description_
+    """
     z, e, _z, _e = _args_splint(Z, E, E2)
     output = _splint(
         data[xp.where((z >= 1) & (z <= data.shape[0]), z - 1, 0)], e
