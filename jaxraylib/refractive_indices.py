@@ -1,50 +1,18 @@
 """_summary_
 """
 
-from .config import xp, ArrayLike, NDArray
+from ._utilities import asarray, wrapped_partial
+from .atomicweight import AtomicWeight as _AtomicWeight
+from .config import ArrayLike, jit, jit_kwargs, NDArray, xp
 from .constants import HC_4PI, KD
-from .atomicweight import _AtomicWeight
-from .config import jit
-from .fi import _Fi
-from .cross_sections import _CS_Total
+from .cross_sections import CS_Total as _CS_Total
+from .fi import Fi as _Fi
 from .xraylib_parser import CompoundParser
-from ._utilities import xrl_xrlnp
-
-# TODO decorator that does this stuff
 
 
-@jit
-def _Refractive_Index_Re(elements, mass_fractions, E, density):
-    """_summary_
-
-    Parameters
-    ----------
-    elements : _type_
-        _description_
-    mass_fractions : _type_
-        _description_
-    E : _type_
-        _description_
-    density : _type_
-        _description_
-
-    Returns
-    -------
-    _type_
-        _description_
-    """
-    # TODO numpy implementation of this
-    rv = 0.0
-    for i, j in zip(elements, mass_fractions):
-        fi = _Fi(i, E)[0]
-        aw = _AtomicWeight(i)[0]
-        rv += j * KD * (i + fi) / aw / E / E
-    output = xp.where(density > 0, 1 - rv * density, xp.nan)
-    return output, xp.isnan(output).any()
-
-
-@xrl_xrlnp("# TODO error message")
-def Refractive_Index_Re(compound: str, E: float, density: float) -> float:
+@wrapped_partial(jit, **(jit_kwargs | {"static_argnums": 0}))
+@asarray(argnums=(0,), argnames=("compound"))
+def Refractive_Index_Re(compound, E, density):
     """_summary_
 
     Parameters
@@ -67,43 +35,31 @@ def Refractive_Index_Re(compound: str, E: float, density: float) -> float:
         _description_
     """
     compound_dict = CompoundParser(compound)
-    mass_fractions = compound_dict["massFractions"]
-    elements = compound_dict["Elements"]
-    if any(i > 103 for i in elements) or any(i < 1 for i in elements):
-        raise ValueError("Z out of range: 1 to 103.")
-    return _Refractive_Index_Re(elements, mass_fractions, E, density)
+    elements = xp.atleast_1d(xp.asarray(compound_dict["Elements"]))
+    mass_fractions = xp.atleast_1d(xp.asarray(compound_dict["massFractions"]))
+    mass_fractions = mass_fractions.reshape((*elements.shape, *(1,) * E.ndim))
+    _fi = _Fi(elements, E)
+    _aw = _AtomicWeight(elements).reshape((*elements.shape, *(1,) * E.ndim))
+
+    _rv = (
+        (
+            mass_fractions
+            * KD
+            * (elements.reshape((*elements.shape, *(1,) * E.ndim)) + _fi)
+            / _aw
+            / E
+            / E
+        )
+        .sum(axis=0)
+        .reshape((*E.shape, *(1,) * density.ndim))
+    )
+    _density = density.reshape((*(1,) * E.ndim, *density.shape))
+    return xp.where(_density > 0, 1 - _rv * _density, xp.nan)
 
 
-@jit
-def _Refractive_Index_Im(elements, mass_fractions, E, density):
-    """_summary_
-
-    Parameters
-    ----------
-    elements : _type_
-        _description_
-    mass_fractions : _type_
-        _description_
-    E : _type_
-        _description_
-    density : _type_
-        _description_
-
-    Returns
-    -------
-    _type_
-        _description_
-    """
-    rv = 0.0
-    for i, j in zip(elements, mass_fractions):
-        xs = _CS_Total(i, E)[0]
-        rv += xs * j
-    output = xp.where(density > 0, rv * density * HC_4PI / E, xp.nan)
-    return output, xp.isnan(output).any()
-
-
-@xrl_xrlnp("# TODO error message")
-def Refractive_Index_Im(compound: str, E: float, density: float) -> float:
+@wrapped_partial(jit, **(jit_kwargs | {"static_argnums": 0}))
+@asarray(argnums=(0,), argnames=("compound"))
+def Refractive_Index_Im(compound, E, density):
     """_summary_
 
     Parameters
@@ -121,18 +77,21 @@ def Refractive_Index_Im(compound: str, E: float, density: float) -> float:
         _description_
     """
     compound_dict = CompoundParser(compound)
-    mass_fractions = compound_dict["massFractions"]
-    elements = compound_dict["Elements"]
-    # TODO check what this should be
-    if any(i > 103 for i in elements) or any(i < 1 for i in elements):
-        raise ValueError("Z out of range: 1 to 103.")
-    return _Refractive_Index_Im(elements, mass_fractions, E, density)
+    elements = xp.atleast_1d(xp.asarray(compound_dict["Elements"]))
+    mass_fractions = xp.atleast_1d(xp.asarray(compound_dict["massFractions"]))
+    mass_fractions = mass_fractions.reshape((*elements.shape, *(1,) * E.ndim))
+
+    _rv = ((_CS_Total(elements, E) * mass_fractions).sum(axis=0) / E).reshape(
+        (*E.shape, *(1,) * density.ndim)
+    )
+    _density = density.reshape((*(1,) * E.ndim, *density.shape))
+    return xp.where(_density > 0, _rv * _density * HC_4PI, xp.nan)
 
 
-@jit
-def _Refractive_Index(
-    elements: ArrayLike,
-    mass_fractions: ArrayLike,
+@wrapped_partial(jit, **(jit_kwargs | {"static_argnums": 0}))
+@asarray(argnums=(0,), argnames=("compound"))
+def Refractive_Index(
+    compound: str,
     E: ArrayLike,
     density: ArrayLike,
 ) -> NDArray:
@@ -149,27 +108,7 @@ def _Refractive_Index(
     density : _type_
         _description_
     """
-    rv_real = 0.0
-    rv_imag = 0.0
-    for i, j in zip(elements, mass_fractions):
-        fi = _Fi(i, E)[0]
-        aw = _AtomicWeight(i)[0]
-        rv_real += j * KD * (i + fi) / aw / E / E
-        xs = _CS_Total(i, E)[0]
-        rv_imag += xs * j
-    output = xp.where(
-        density > 0,
-        1 - rv_real * density + (rv_imag * density * HC_4PI / E) * 1j,
-        xp.nan,
-    )
-    return output, xp.isnan(output).any()
-
-
-@xrl_xrlnp("# TODO error message")
-def Refractive_Index(compound: str, E: float, density: float) -> complex:
-    compound_dict = CompoundParser(compound)
-    mass_fractions = compound_dict["massFractions"]
-    elements = compound_dict["Elements"]
-    if any(i > 103 for i in elements) or any(i < 1 for i in elements):
-        raise ValueError("Z out of range: 1 to 103.")
-    return _Refractive_Index(elements, mass_fractions, E, density)
+    rv_real = Refractive_Index_Re(compound, E, density)
+    rv_imag = Refractive_Index_Im(compound, E, density)
+    # TODO if one is nan then both should be nan # ???
+    return rv_real + rv_imag * 1j
