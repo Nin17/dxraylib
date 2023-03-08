@@ -1,10 +1,11 @@
 """_summary_
 """
+# TODO docstring
+# TODO type hint dict
 
 import xraylib
 
-# TODO docstring
-# TODO type hint dict
+
 def GetCompoundDataNISTByName(compoundString: str) -> dict:
     """_summary_
 

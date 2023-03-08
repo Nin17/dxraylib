@@ -1,10 +1,12 @@
 """_summary_
 """
 
+# TODO docstring
+# TODO type hint dict
+
 import xraylib
 
 
-# TODO docstring
 def CompoundParser(compoundString: str) -> dict:
     """
     Wrapper around xraylib.CompoundParser
