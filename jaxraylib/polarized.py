@@ -15,8 +15,6 @@ from .scattering import (
 )
 
 
-
-
 @wrapped_partial(jit, **jit_kwargs)
 @asarray()
 def DCSP_Rayl(
@@ -34,12 +32,12 @@ def DCSP_Rayl(
         Energy (keV)
     theta : array_like
         scattering polar angle (rad)
-    phi : Array
+    phi : array
         scattering azimuthal angle (rad)
 
     Returns
     -------
-    Array
+    array
         Differential Rayleigh scattering cross section
         for polarized beam (cm2/g/sterad)
     """
@@ -78,7 +76,7 @@ def DCSP_Compt(
 
     Returns
     -------
-    Array
+    array
         Differential Compton scattering cross section
         for polarized beam (cm2/g/sterad)
     """
@@ -114,7 +112,7 @@ def DCSP_KN(E: ArrayLike, theta: ArrayLike, phi: ArrayLike) -> NDArray:
 
     Returns
     -------
-    Array
+    array
         Klein-Nishina differential scattering cross section
         for polarized beam (barn)
     """
@@ -158,7 +156,7 @@ def DCSP_Thoms(theta: ArrayLike, phi: ArrayLike) -> NDArray:
 
     Returns
     -------
-    Array
+    array
         Thomson differential scattering cross section
         for polarized beam (barn) # TODO change to correct units
     """
