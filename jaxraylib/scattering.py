@@ -27,14 +27,14 @@ def FF_Rayl(Z: ArrayLike, q: ArrayLike) -> NDArray:
 
     Parameters
     ----------
-    Z : ArrayLike
+    Z : array_like
         atomic number
-    q : ArrayLike
+    q : array_like
         momentum transfer (Å⁻¹)
 
     Returns
     -------
-    NDArray
+    array
         Atomic form factor for Rayleigh scattering
     """
     return _interpolate(_FF_RAYL, Z, q, q)
@@ -48,14 +48,14 @@ def SF_Compt(Z: ArrayLike, q: ArrayLike) -> NDArray:
 
     Parameters
     ----------
-    Z : ArrayLike
+    Z : array_like
         atomic number
-    q : ArrayLike
+    q : array_like
         momentum transfer  (Å⁻¹)
 
     Returns
     -------
-    NDArray
+    array
         Incoherent scattering function for Compton scattering
     """
     return _interpolate(_SF_COMPT, Z, q, q)
@@ -74,7 +74,7 @@ def DCS_Thoms(theta: ArrayLike) -> NDArray:
 
     Returns
     -------
-    Array
+    array
         Thomson differential scattering cross section (barn)
     """
     cos_theta = xp.cos(theta)
@@ -83,7 +83,7 @@ def DCS_Thoms(theta: ArrayLike) -> NDArray:
 
 @wrapped_partial(jit, **jit_kwargs)
 @asarray()
-def DCS_KN(E: ArrayLike, theta: ArrayLike) -> NDArray[float]:
+def DCS_KN(E: ArrayLike, theta: ArrayLike) -> NDArray:
     """
     Klein-Nishina differential scattering cross section (barn)
 
@@ -96,13 +96,8 @@ def DCS_KN(E: ArrayLike, theta: ArrayLike) -> NDArray[float]:
 
     Returns
     -------
-    Array
+    array
         Klein-Nishina differential scattering cross section (barn)
-
-    Raises
-    ------
-    ValueError
-        _description_
     """
     e = E.reshape((*E.shape, *(1,) * theta.ndim))
     cos_theta = xp.cos(theta).reshape((*(1,) * E.ndim, *theta.shape))
@@ -134,7 +129,7 @@ def DCS_Rayl(Z: ArrayLike, E: ArrayLike, theta: ArrayLike) -> NDArray:
 
     Returns
     -------
-    Array
+    array
         Differential Rayleigh scattering cross section (cm2/g/sterad)
     """
     # TODO broadcasting of arguments
@@ -164,7 +159,7 @@ def DCS_Compt(Z: ArrayLike, E: ArrayLike, theta: ArrayLike) -> NDArray:
 
     Returns
     -------
-    Array
+    array
         Differential Compton scattering cross section (cm2/g/sterad)
     """
     q = MomentTransf(E, theta)
@@ -189,13 +184,8 @@ def MomentTransf(E: ArrayLike, theta: ArrayLike) -> NDArray:
 
     Returns
     -------
-    Array
+    array
         Momentum transfer for X-ray photon scattering (Å⁻¹)
-
-    Raises
-    ------
-    ValueError
-        If energy is not strictly positive
     """
     e = E.reshape((*E.shape, *(1,) * theta.ndim))
     sin_theta = xp.sin(theta / 2.0).reshape((*(1,) * E.ndim, *theta.shape))
@@ -215,13 +205,9 @@ def CS_KN(E: ArrayLike) -> NDArray:
 
     Returns
     -------
-    Array
+    array
         Total klein-Nishina cross section (barn)
 
-    Raises
-    ------
-    ValueError
-        If energy is not strictly positive
     """
     a = xp.where(E > 0.0, E / MEC2, xp.nan)
     a3 = a * a * a
@@ -256,13 +242,9 @@ def ComptonEnergy(E0: ArrayLike, theta: ArrayLike) -> NDArray[float]:
 
     Returns
     -------
-    Array
+    array
         Photon energy after Compton scattering (keV)
 
-    Raises
-    ------
-    ValueError
-        If energy is not strictly positive
     """
     _e0 = E0.reshape((*E0.shape, *(1,) * theta.ndim))
     cos_theta = xp.cos(theta).reshape((*(1,) * E0.ndim, *theta.shape))
