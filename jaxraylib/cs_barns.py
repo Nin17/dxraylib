@@ -1,104 +1,58 @@
 """_summary_
 """
 from __future__ import annotations
+import inspect
 import functools
 from typing import Callable
 
-from jax._src.typing import Array
+import jax
 
-# from . import atomicweight
-# from . import cross_sections
-# from . import polarized
-# from . import scattering
-
-from .config import jit, jit_kwargs, xp
+from ._utilities import asarray, wrapped_partial
+from .atomicweight import AtomicWeight as _AtomicWeight
+from .config import ArrayLike, jit, jit_kwargs, NDArray
 from .constants import AVOGNUM
-from .atomicweight import _AtomicWeight
-from .cross_sections import _CS_Total, _CS_Photo, _CS_Rayl, _CS_Compt
-from .polarized import _DCSP_Compt, _DCSP_Rayl
-from .scattering import _DCS_Rayl, _DCS_Compt
-from ._utilities import value_error, wrapped_partial, output_type, xrl_xrlnp
+from .cross_sections import (
+    CS_Compt as _CS_Compt,
+    CS_Photo as _CS_Photo,
+    CS_Rayl as _CS_Rayl,
+    CS_Total as _CS_Total,
+)
+from .polarized import DCSP_Compt as _DCSP_Compt, DCSP_Rayl as _DCSP_Rayl
+from .scattering import DCS_Compt as _DCS_Compt, DCS_Rayl as _DCS_Rayl
 
 
-# TODO update to use _func
-# FIXME doesn't work
+def barns(function: Callable) -> Callable:
+    """_summary_
 
-# TODO maybe can jit this? or all individual functions?
-# TODO can i do it with one decorator?
-# def convert_to_barns(func: Callable) -> Callable:
+    Parameters
+    ----------
+    function : Callable
+        _description_
 
-# TODO make this work with wrapped_partial
-# TODO include nan in function output
-# @wrapped_partial(jit, **jit_kwargs)
-def convert_to_barns(function: Callable) -> Callable:
-    # @jit
-    # @functools.wraps(function)
-    # @wrapped_partial(jit, **jit_kwargs)
+    Returns
+    -------
+    Callable
+        _description_
+    """
+    # TODO jax.tree_util.partial
+    # function = jax.tree_util.Partial(functools.wraps(function))
+    function = jax.tree_util.Partial(function)
+    # ??? do i need unwrap here
     @functools.wraps(function)
-    def wrapper(Z, *args, **kwargs) -> Array:
-        aw = _AtomicWeight(Z)[0]
-        cs, nan = function(Z, *args, **kwargs)
-        return cs * aw / AVOGNUM, nan
+    def wrapper(Z, *args, **kwargs) -> NDArray:
+        output = function(Z, *args, **kwargs)
+        a_w = inspect.unwrap(_AtomicWeight)(Z).reshape(
+            (*Z.shape, *(1,) * (output.ndim - Z.ndim))
+        )
+        return output * a_w / AVOGNUM
 
     return wrapper
 
-    # return decorator
 
-
-# def add_doc(func: Callable) -> Callable:
-#     def _doc(function: Callable) -> Callable:
-#         function.__doc__ = (
-#             func.__doc__.replace("cm2/g", "barns")
-#             if func.__doc__ is not None
-#             else None
-#         )
-#         function.__annotations__ = func.__annotations__
-#         return function
-
-#     return _doc
-
-
-# def barns(func):
-#     def decorator(function):
-#         @add_doc(func)
-#         @convert_to_barns(func)
-#         @functools.wraps(function)
-#         def f(*args, **kwargs):
-#             return function(*args, **kwargs)
-
-#         return f
-
-#     return decorator
-
-
-# @wrapped_partial(jit, **jit_kwargs)
-# @convert_to_barns
-# def _CSb_Total(Z: Array, E: Array) -> Array:
-#     """
-#     Total cross section  (barns)
-#     (Photoelectric + Compton + Rayleigh)
-
-#     Parameters
-#     ----------
-#     Z : Array
-#         atomic number
-#     E : Array
-#         energy (keV)
-
-#     Returns
-#     -------
-#     Array
-#         Total cross section  (barns)
-#         (Photoelectric + Compton + Rayleigh)
-#     """
-#     return _CS_Total(Z, E)
-
-
-# @output_type
-# @value_error(" # TODO value Error")
-@xrl_xrlnp(" TODO error message ")
-@convert_to_barns
-def CSb_Total(Z: Array, E: Array) -> Array:
+@wrapped_partial(jit, **jit_kwargs)
+@asarray()
+@barns
+def CSb_Total(Z: ArrayLike, E: ArrayLike) -> NDArray:
     """
     Total cross section  (barns)
     (Photoelectric + Compton + Rayleigh)
@@ -116,13 +70,13 @@ def CSb_Total(Z: Array, E: Array) -> Array:
         Total cross section  (barns)
         (Photoelectric + Compton + Rayleigh)
     """
-    # TODO redo implementation of cross-sections for this
     return _CS_Total(Z, E)
 
 
-@xrl_xrlnp(" TODO error message ")
-@convert_to_barns
-def CSb_Photo(Z: Array, E: Array) -> Array:
+# @wrapped_partial(jit, **jit_kwargs)
+@asarray()
+@barns
+def CSb_Photo(Z: ArrayLike, E: ArrayLike) -> NDArray:
     """
     Photoelectric absorption cross section  (barns)
 
@@ -141,9 +95,10 @@ def CSb_Photo(Z: Array, E: Array) -> Array:
     return _CS_Photo(Z, E)
 
 
-@xrl_xrlnp(" TODO error message ")
-@convert_to_barns
-def CSb_Rayl(Z: Array, E: Array) -> Array:
+@wrapped_partial(jit, **jit_kwargs)
+@asarray()
+@barns
+def CSb_Rayl(Z: ArrayLike, E: ArrayLike) -> NDArray:
     """
     Rayleigh scattering cross section  (barns)
 
@@ -162,8 +117,9 @@ def CSb_Rayl(Z: Array, E: Array) -> Array:
     return _CS_Rayl(Z, E)
 
 
-@xrl_xrlnp(" TODO error message ")
-@convert_to_barns
+@wrapped_partial(jit, **jit_kwargs)
+@asarray()
+@barns
 def CSb_Compt(Z, E):
     """
     Compton scattering cross section  (barns)
@@ -193,9 +149,10 @@ def CSb_FluorShell(Z, shell, E):
     ...
 
 
-@xrl_xrlnp(" # TODO error message")
-@convert_to_barns
-def DCSb_Rayl(Z: Array, E: Array, theta: Array) -> Array:
+@wrapped_partial(jit, **jit_kwargs)
+@asarray()
+@barns
+def DCSb_Rayl(Z: ArrayLike, E: ArrayLike, theta: ArrayLike) -> NDArray:
     """
     Differential Rayleigh scattering cross section (barns/sterad)
 
@@ -216,8 +173,9 @@ def DCSb_Rayl(Z: Array, E: Array, theta: Array) -> Array:
     return _DCS_Rayl(Z, E, theta)
 
 
-@xrl_xrlnp(" # TODO error message")
-@convert_to_barns
+@wrapped_partial(jit, **jit_kwargs)
+@asarray()
+@barns
 def DCSb_Compt(Z, E, theta):
     """
     Differential Compton scattering cross section (cm2/g/sterad)
@@ -239,8 +197,9 @@ def DCSb_Compt(Z, E, theta):
     return _DCS_Compt(Z, E, theta)
 
 
-@xrl_xrlnp(" # TODO error message")
-@convert_to_barns
+@wrapped_partial(jit, **jit_kwargs)
+@asarray()
+@barns
 def DCSPb_Rayl(Z, E, theta, phi):
     """
     Differential Rayleigh scattering cross section
@@ -266,8 +225,9 @@ def DCSPb_Rayl(Z, E, theta, phi):
     return _DCSP_Rayl(Z, E, theta, phi)
 
 
-@xrl_xrlnp(" # TODO error message")
-@convert_to_barns
+@wrapped_partial(jit, **jit_kwargs)
+@asarray()
+@barns
 def DCSPb_Compt(Z, E, theta, phi):
     """
     Differential Compton scattering cross section

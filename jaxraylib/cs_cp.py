@@ -1,171 +1,453 @@
 """_summary_
 """
 # TODO docstrings
+# TODO sort out functools wraps so that signature works
 
 import functools
-from typing import Any, Callable
+from typing import Callable
 
-from jax._src.typing import Array
+import jax
 
-from . import cross_sections as cross_sections
-from . import cs_barns as cs_barns
-from . import scattering as scattering
-from . import polarized as polarized
-
-from .config import jit
-from .constants import AVOGNUM
-from .cross_sections import CS_Total, CS_Photo, CS_Rayl, CS_Compt, CS_Energy
-from .cs_barns import (
-    CSb_Total,
-    CSb_Photo,
-    CSb_Rayl,
-    CSb_Compt,
-    DCSb_Rayl,
-    DCSb_Compt,
-    DCSPb_Rayl,
-    DCSPb_Compt,
+from ._utilities import asarray, wrapped_partial
+from .config import ArrayLike, jit, jit_kwargs, NDArray, xp
+from .cross_sections import (
+    CS_Compt as _CS_Compt,
+    CS_Energy as _CS_Energy,
+    CS_Photo as _CS_Photo,
+    CS_Rayl as _CS_Rayl,
+    CS_Total as _CS_Total,
 )
-from .scattering import DCS_Rayl, DCS_Compt
-from .polarized import DCSP_Rayl, DCSP_Compt
+from .cs_barns import (
+    CSb_Compt as _CSb_Compt,
+    CSb_Photo as _CSb_Photo,
+    CSb_Rayl as _CSb_Rayl,
+    CSb_Total as _CSb_Total,
+    DCSb_Compt as _DCSb_Compt,
+    DCSb_Rayl as _DCSb_Rayl,
+    DCSPb_Compt as _DCSPb_Compt,
+    DCSPb_Rayl as _DCSPb_Rayl,
+)
+from .polarized import DCSP_Compt as _DCSP_Compt, DCSP_Rayl as _DCSP_Rayl
+from .scattering import DCS_Compt as _DCS_Compt, DCS_Rayl as _DCS_Rayl
 from .xraylib_parser import CompoundParser
-
-# TODO update to use 
-# FIXME doesn't work
-
-# CS_Photo_Total, CSb_Photo_Total, CS_Total_Kissel, CSb_Total_Kissel
-
-# TODO decorator that propagates __doc__ and __annotations__ and does
-# conversion to taking a compound as an argument
-# def convert_to_barns(func: Callable) -> Callable:
-#     def decorator(function: Callable) -> Callable:
-#         @jit
-#         @functools.wraps(function)
-#         def wrapper(Z, *args, **kwargs) -> Array:
-#             aw = _AtomicWeight(Z)[0]
-#             cs = func(Z, *args, **kwargs)
-#             return cs * aw / AVOGNUM
-
-#         return wrapper
-
-#     return decorator
-
-# def convert_to_barns(function: Callable) -> Callable:
-#     @jit
-#     @functools.wraps(function)
-#     def wrapper(Z, *args, **kwargs) -> Array:
-#         aw = _AtomicWeight(Z)[0]
-#         cs = function(Z, *args, **kwargs)
-#         return cs * aw / AVOGNUM
-
-#     return wrapper
-
-# TODO jit & functools wraps
-# def compound(func: Callable) -> Callable:
 
 
 # TODO use _function and account for nan
-def compound(function: Callable) -> Callable:
+def cp(function: Callable) -> Callable:
+    function = functools.update_wrapper(jax.tree_util.Partial(function), function)
+    
     @functools.wraps(function)
-    def wrapper(compound: str, *args, **kwargs) -> Array:
+    def wrapper(compound: str, *args, **kwargs) -> NDArray:
         # TODO nist compound database
         try:
             compound_dict = CompoundParser(compound)
-        except ValueError:
-            # TODO logging or something
-            pass
-        elements = compound_dict["Elements"]
-        mass_fractions = compound_dict["massFractions"]
-        return sum(
-            function(i, *args, **kwargs) * j
-            for i, j in zip(elements, mass_fractions)
+        except ValueError as error:
+            ...
+            # TODO nist data
+            # try:
+            #     compound_dict = GetCompoundDataNISTByName(compound)
+            # except:
+            #     pass
+        elements = xp.atleast_1d(xp.asarray(compound_dict["Elements"]))
+        mass_fractions = xp.atleast_1d(
+            xp.asarray(compound_dict["massFractions"])
+        )
+        output = function(elements, *args, **kwargs)
+        mass_fractions = mass_fractions.reshape(
+            (*elements.shape, *(1,) * (output.ndim - elements.ndim))
+        )
+        return (function(elements, *args, **kwargs) * mass_fractions).sum(
+            axis=0
         )
 
     return wrapper
 
 
-# TODO docstrings
+@wrapped_partial(jit, **(jit_kwargs | {"static_argnums": 0}))
+# @asarray(argnums=(0,), argnames=("compound"))
+@cp
+def CS_Total_CP(compound: str, E: ArrayLike) -> NDArray:
+    """_summary_
+
+    Parameters
+    ----------
+    compound : str
+        _description_
+    E : ArrayLike
+        _description_
+
+    Returns
+    -------
+    NDArray
+        _description_
+    """
+
+    return _CS_Total(compound, E)
 
 
-@compound
-def CS_Total_CP(compound: str, E: Array) -> Array:
-    return CS_Total(compound, E)
+@wrapped_partial(jit, **(jit_kwargs | {"static_argnums": 0}))
+@asarray(argnums=(0,), argnames=("compound"))
+@cp
+def CS_Photo_CP(compound: str, E: ArrayLike) -> NDArray:
+    """_summary_
+
+    Parameters
+    ----------
+    compound : str
+        _description_
+    E : ArrayLike
+        _description_
+
+    Returns
+    -------
+    NDArray
+        _description_
+    """
+    return _CS_Photo(compound, E)
 
 
-@compound
-def CS_Photo_CP(compound: str, E: Array) -> Array:
-    return CS_Photo(compound, E)
+@wrapped_partial(jit, **(jit_kwargs | {"static_argnums": 0}))
+# @asarray(argnums=(0,), argnames=("compound"))
+@cp
+def CS_Rayl_CP(compound: str, E: ArrayLike) -> NDArray:
+    """_summary_
+
+    Parameters
+    ----------
+    compound : str
+        _description_
+    E : ArrayLike
+        _description_
+
+    Returns
+    -------
+    NDArray
+        _description_
+    """
+    return _CS_Rayl(compound, E)
 
 
-@compound
-def CS_Rayl_CP(compound: str, E: Array) -> Array:
-    return CS_Rayl(compound, E)
+@wrapped_partial(jit, **(jit_kwargs | {"static_argnums": 0}))
+# @asarray(argnums=(0,), argnames=("compound"))
+@cp
+def CS_Compt_CP(compound: str, E: ArrayLike) -> NDArray:
+    """_summary_
+
+    Parameters
+    ----------
+    compound : str
+        _description_
+    E : ArrayLike
+        _description_
+
+    Returns
+    -------
+    NDArray
+        _description_
+    """
+    return _CS_Compt(compound, E)
 
 
-@compound
-def CS_Compt_CP(compound: str, E: Array) -> Array:
-    return CS_Compt(compound, E)
+@wrapped_partial(jit, **(jit_kwargs | {"static_argnums": 0}))
+# @asarray(argnums=(0,), argnames=("compound"))
+@cp
+def CSb_Total_CP(compound: str, E: ArrayLike) -> NDArray:
+    """_summary_
+
+    Parameters
+    ----------
+    compound : str
+        _description_
+    E : ArrayLike
+        _description_
+
+    Returns
+    -------
+    NDArray
+        _description_
+    """
+    return _CSb_Total(compound, E)
 
 
-@compound
-def CSb_Total_CP(compound: str, E: Array) -> Array:
-    return CSb_Total(compound, E)
+@wrapped_partial(jit, **(jit_kwargs | {"static_argnums": 0}))
+# @asarray(argnums=(0,), argnames=("compound"))
+@cp
+def CSb_Photo_CP(compound: str, E: ArrayLike) -> NDArray:
+    """_summary_
+
+    Parameters
+    ----------
+    compound : str
+        _description_
+    E : ArrayLike
+        _description_
+
+    Returns
+    -------
+    NDArray
+        _description_
+    """
+    return _CSb_Photo(compound, E)
 
 
-@compound
-def CSb_Photo_CP(compound: str, E: Array) -> Array:
-    return CSb_Photo(compound, E)
+@wrapped_partial(jit, **(jit_kwargs | {"static_argnums": 0}))
+# @asarray(argnums=(0,), argnames=("compound"))
+@cp
+def CSb_Rayl_CP(compound: str, E: ArrayLike) -> NDArray:
+    """_summary_
+
+    Parameters
+    ----------
+    compound : str
+        _description_
+    E : ArrayLike
+        _description_
+
+    Returns
+    -------
+    NDArray
+        _description_
+    """
+    return _CSb_Rayl(compound, E)
 
 
-@compound
-def CSb_Rayl_CP(compound: str, E: Array) -> Array:
-    return CSb_Rayl(compound, E)
+@wrapped_partial(jit, **(jit_kwargs | {"static_argnums": 0}))
+# @asarray(argnums=(0,), argnames=("compound"))
+@cp
+def CSb_Compt_CP(compound: str, E: ArrayLike) -> NDArray:
+    """_summary_
+
+    Parameters
+    ----------
+    compound : str
+        _description_
+    E : ArrayLike
+        _description_
+
+    Returns
+    -------
+    NDArray
+        _description_
+    """
+    return _CSb_Compt(compound, E)
 
 
-@compound
-def CSb_Compt_CP(compound: str, E: Array) -> Array:
-    return CSb_Compt(compound, E)
+@wrapped_partial(jit, **(jit_kwargs | {"static_argnums": 0}))
+# @asarray(argnums=(0,), argnames=("compound"))
+@cp
+def CS_Energy_CP(compound: str, E: ArrayLike) -> NDArray:
+    """_summary_
+
+    Parameters
+    ----------
+    compound : str
+        _description_
+    E : ArrayLike
+        _description_
+
+    Returns
+    -------
+    NDArray
+        _description_
+    """
+    return _CS_Energy(compound, E)
 
 
-@compound
-def CS_Energy_CP(compound: str, E: Array) -> Array:
-    return CS_Energy(compound, E)
+@wrapped_partial(jit, **(jit_kwargs | {"static_argnums": 0}))
+# @asarray(argnums=(0,), argnames=("compound"))
+@cp
+def DCS_Rayl_CP(compound: str, E: ArrayLike, theta: ArrayLike) -> NDArray:
+    """_summary_
+
+    Parameters
+    ----------
+    compound : str
+        _description_
+    E : ArrayLike
+        _description_
+    theta : ArrayLike
+        _description_
+
+    Returns
+    -------
+    NDArray
+        _description_
+    """
+    return _DCS_Rayl(compound, E, theta)
 
 
-@compound
-def DCS_Rayl_CP(compound: str, E: Array, theta: Array) -> Array:
-    return DCS_Rayl(compound, E, theta)
+@wrapped_partial(jit, **(jit_kwargs | {"static_argnums": 0}))
+# @asarray(argnums=(0,), argnames=("compound"))
+@cp
+def DCS_Compt_CP(compound: str, E: ArrayLike, theta: ArrayLike) -> NDArray:
+    """_summary_
+
+    Parameters
+    ----------
+    compound : str
+        _description_
+    E : ArrayLike
+        _description_
+    theta : ArrayLike
+        _description_
+
+    Returns
+    -------
+    NDArray
+        _description_
+    """
+    return _DCS_Compt(compound, E, theta)
 
 
-@compound
-def DCS_Compt_CP(compound: str, E: Array, theta: Array) -> Array:
-    return DCS_Compt(compound, E, theta)
+@wrapped_partial(jit, **(jit_kwargs | {"static_argnums": 0}))
+# @asarray(argnums=(0,), argnames=("compound"))
+@cp
+def DCSb_Rayl_CP(compound: str, E: ArrayLike, theta: ArrayLike) -> NDArray:
+    """_summary_
+
+    Parameters
+    ----------
+    compound : str
+        _description_
+    E : ArrayLike
+        _description_
+    theta : ArrayLike
+        _description_
+
+    Returns
+    -------
+    NDArray
+        _description_
+    """
+    return _DCSb_Rayl(compound, E, theta)
 
 
-@compound
-def DCSb_Rayl_CP(compound: str, E: Array, theta: Array) -> Array:
-    return DCSb_Rayl(compound, E, theta)
+@wrapped_partial(jit, **(jit_kwargs | {"static_argnums": 0}))
+# @asarray(argnums=(0,), argnames=("compound"))
+@cp
+def DCSb_Compt_CP(compound: str, E: ArrayLike, theta: ArrayLike) -> NDArray:
+    """_summary_
+
+    Parameters
+    ----------
+    compound : str
+        _description_
+    E : ArrayLike
+        _description_
+    theta : ArrayLike
+        _description_
+
+    Returns
+    -------
+    NDArray
+        _description_
+    """
+    return _DCSb_Compt(compound, E, theta)
 
 
-@compound
-def DCSb_Compt_CP(compound: str, E: Array, theta: Array) -> Array:
-    return DCSb_Compt(compound, E, theta)
+@wrapped_partial(jit, **(jit_kwargs | {"static_argnums": 0}))
+# @asarray(argnums=(0,), argnames=("compound"))
+@cp
+def DCSP_Rayl_CP(
+    compound: str, E: ArrayLike, theta: ArrayLike, phi: ArrayLike
+) -> NDArray:
+    """_summary_
+
+    Parameters
+    ----------
+    compound : str
+        _description_
+    E : ArrayLike
+        _description_
+    theta : ArrayLike
+        _description_
+    phi : ArrayLike
+        _description_
+
+    Returns
+    -------
+    NDArray
+        _description_
+    """
+    return _DCSP_Rayl(compound, E, theta, phi)
 
 
-@compound
-def DCSP_Rayl_CP(compound: str, E: Array, theta: Array, phi: Array) -> Array:
-    return DCSP_Rayl(compound, E, theta, phi)
+@wrapped_partial(jit, **(jit_kwargs | {"static_argnums": 0}))
+# @asarray(argnums=(0,), argnames=("compound"))
+@cp
+def DCSP_Compt_CP(
+    compound: str, E: ArrayLike, theta: ArrayLike, phi: ArrayLike
+) -> NDArray:
+    """_summary_
+
+    Parameters
+    ----------
+    compound : str
+        _description_
+    E : ArrayLike
+        _description_
+    theta : ArrayLike
+        _description_
+    phi : ArrayLike
+        _description_
+
+    Returns
+    -------
+    NDArray
+        _description_
+    """
+    return _DCSP_Compt(compound, E, theta, phi)
 
 
-@compound
-def DCSP_Compt_CP(compound: str, E: Array, theta: Array, phi: Array) -> Array:
-    return DCSP_Compt(compound, E, theta, phi)
+@wrapped_partial(jit, **(jit_kwargs | {"static_argnums": 0}))
+# @asarray(argnums=(0,), argnames=("compound"))
+@cp
+def DCSPb_Rayl_CP(
+    compound: str, E: ArrayLike, theta: ArrayLike, phi: ArrayLike
+) -> NDArray:
+    """_summary_
+
+    Parameters
+    ----------
+    compound : str
+        _description_
+    E : ArrayLike
+        _description_
+    theta : ArrayLike
+        _description_
+    phi : ArrayLike
+        _description_
+
+    Returns
+    -------
+    NDArray
+        _description_
+    """
+    return _DCSPb_Rayl(compound, E, theta, phi)
 
 
-@compound
-def DCSPb_Rayl_CP(compound: str, E: Array, theta: Array, phi: Array) -> Array:
-    return DCSPb_Rayl(compound, E, theta, phi)
+@wrapped_partial(jit, **(jit_kwargs | {"static_argnums": 0}))
+# @asarray(argnums=(0,), argnames=("compound"))
+@cp
+def DCSPb_Compt_CP(
+    compound: str, E: ArrayLike, theta: ArrayLike, phi: ArrayLike
+) -> NDArray:
+    """_summary_
 
+    Parameters
+    ----------
+    compound : str
+        _description_
+    E : ArrayLike
+        _description_
+    theta : ArrayLike
+        _description_
+    phi : ArrayLike
+        _description_
 
-@compound
-def DCSPb_Compt_CP(compound: str, E: Array, theta: Array, phi: Array) -> Array:
-    return DCSPb_Compt(compound, E, theta, phi)
+    Returns
+    -------
+    NDArray
+        _description_
+    """
+    return _DCSPb_Compt(compound, E, theta, phi)

@@ -1,70 +1,38 @@
 """
 Anomalous Scattering Factor Fi
 """
+# TODO document shapes in docstring
+# TODO document error raising xrl xrl_np
 
 from __future__ import annotations
 import os
 
-from .config import jit, jit_kwargs, xp, NDArray, ArrayLike
-from ._splint import _splint
-from ._utilities import wrapped_partial, xrl_xrlnp
+from ._interpolators import _interpolate
+from ._utilities import asarray, wrapped_partial
+from .config import ArrayLike, jit, jit_kwargs, NDArray, xp
 
-DIRPATH = os.path.dirname(__file__)
-FI_PATH = os.path.join(DIRPATH, "data/fi.npy")
-FI = xp.load(FI_PATH)
-
-
-# TODO what is going on with numba njit and this???
-# FIXME
+_DIRPATH = os.path.dirname(__file__)
+_FI_PATH = os.path.join(_DIRPATH, "data/fi.npy")
+_FI = xp.load(_FI_PATH)
 
 
 @wrapped_partial(jit, **jit_kwargs)
-def _Fi(Z: ArrayLike, E: ArrayLike) -> tuple[NDArray[float], bool]:
+@asarray()
+def Fi(Z: ArrayLike, E: ArrayLike) -> NDArray:
     """
     Anomalous Scattering Factor Fi
 
     Parameters
     ----------
-    Z : ArrayLike
-        _description_
-    E : ArrayLike
-        _description_
-
-    Returns
-    -------
-    tuple[NDArray, bool]
-        _description_
-    """
-    Z = xp.atleast_1d(xp.asarray(Z))
-    E = xp.atleast_1d(xp.asarray(E))
-    # TODO change to FI[Z-1] when broadcast _splint
-    output = xp.where(
-        (Z >= 1) & (Z <= FI.shape[0]) & (E > 0),
-        _splint(FI[Z[0] - 1], E),
-        xp.nan,
-    )
-    return output, xp.isnan(output).any()
-
-
-# TODO another version with jax jitable decorator
-@xrl_xrlnp(
-    f"Z out of range: 1 to {FI.shape[0]} | Energy must be strictly positive"
-)
-def Fi(Z: ArrayLike, E: ArrayLike) -> NDArray[float]:
-    """
-    Anomalous Scattering Factor Fi
-
-    Parameters
-    ----------
-    Z : ArrayLike
+    Z : array_like
         atomic number
-    E : ArrayLike
-        Energy (keV)
+    E : array_like
+        energy (keV)
 
     Returns
     -------
-    NDArray
-        Anomalous Scattering Factor Fi
+    array
+        anomalous scattering factor fi
 
     Raises
     ------
@@ -72,5 +40,7 @@ def Fi(Z: ArrayLike, E: ArrayLike) -> NDArray[float]:
         if Z < 1 or Z > 99
     ValueError
         if E < 0
+    ValueError
+        if E results in extrapolation
     """
-    return _Fi(Z, E)
+    return _interpolate(_FI, Z, E, E)
