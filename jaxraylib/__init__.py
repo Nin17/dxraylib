@@ -65,4 +65,5 @@ from .scattering import (
     MomentTransf,
     SF_Compt,
 )
+from .xraylib_nist_compounds import GetCompoundDataNISTByName
 from .xraylib_parser import CompoundParser
