@@ -3,8 +3,8 @@ JAXraylib: differentiable X-ray-matter interactions
 """
 
 __version__ = "0.0.1"
-
 from .atomicweight import AtomicWeight
+from .config import init
 from .constants import AVOGNUM, KEV2ANGST, MEC2, RE2
 from .cross_sections import (
     CS_Compt,
@@ -13,6 +13,7 @@ from .cross_sections import (
     CS_Rayl,
     CS_Total,
 )
+
 from .cs_barns import (
     CSb_Total,
     CSb_Compt,
@@ -45,7 +46,8 @@ from .cs_cp import (
 from .densities import ElementDensity
 from .fi import Fi
 from .fii import Fii
-from .init import init
+
+# from .init import init
 from .polarized import DCSP_Compt, DCSP_KN, DCSP_Rayl, DCSP_Thoms
 from .refractive_indices import (
     Refractive_Index,
