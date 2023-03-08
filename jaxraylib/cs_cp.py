@@ -6,6 +6,7 @@
 import functools
 from typing import Callable
 
+import fuckit
 import jax
 
 from ._utilities import asarray, wrapped_partial
@@ -29,25 +30,25 @@ from .cs_barns import (
 )
 from .polarized import DCSP_Compt as _DCSP_Compt, DCSP_Rayl as _DCSP_Rayl
 from .scattering import DCS_Compt as _DCS_Compt, DCS_Rayl as _DCS_Rayl
+from .xraylib_nist_compounds import GetCompoundDataNISTByName
 from .xraylib_parser import CompoundParser
 
 
-# TODO use _function and account for nan
+@fuckit
+def _compound_data(compound):
+    compound_dict = CompoundParser(compound)
+    compound_dict = GetCompoundDataNISTByName(compound)
+    return compound_dict
+
+
 def cp(function: Callable) -> Callable:
-    function = functools.update_wrapper(jax.tree_util.Partial(function), function)
-    
+    function = functools.update_wrapper(
+        jax.tree_util.Partial(function), function
+    )
+
     @functools.wraps(function)
     def wrapper(compound: str, *args, **kwargs) -> NDArray:
-        # TODO nist compound database
-        try:
-            compound_dict = CompoundParser(compound)
-        except ValueError as error:
-            ...
-            # TODO nist data
-            # try:
-            #     compound_dict = GetCompoundDataNISTByName(compound)
-            # except:
-            #     pass
+        compound_dict = _compound_data(compound)
         elements = xp.atleast_1d(xp.asarray(compound_dict["Elements"]))
         mass_fractions = xp.atleast_1d(
             xp.asarray(compound_dict["massFractions"])

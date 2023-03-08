@@ -1,5 +1,8 @@
-"""_summary_
 """
+Refractive indices: real component, imagingary component and complex
+"""
+
+import fuckit
 
 from ._utilities import asarray, wrapped_partial
 from .atomicweight import AtomicWeight as _AtomicWeight
@@ -7,34 +10,40 @@ from .config import ArrayLike, jit, jit_kwargs, NDArray, xp
 from .constants import HC_4PI, KD
 from .cross_sections import CS_Total as _CS_Total
 from .fi import Fi as _Fi
+from .xraylib_nist_compounds import GetCompoundDataNISTByName
 from .xraylib_parser import CompoundParser
+
+
+@fuckit
+def _compound_data(compound):
+    compound_dict = CompoundParser(compound)
+    compound_dict = GetCompoundDataNISTByName(compound)
+    return compound_dict
 
 
 @wrapped_partial(jit, **(jit_kwargs | {"static_argnums": 0}))
 @asarray(argnums=(0,), argnames=("compound"))
-def Refractive_Index_Re(compound, E, density):
+def Refractive_Index_Re(
+    compound: str, E: ArrayLike, density: ArrayLike
+) -> NDArray:
     """_summary_
 
     Parameters
     ----------
     compound : str
         _description_
-    E : float
+    E : array_like
         _description_
-    density : float
+    density : array_like
         _description_
 
     Returns
     -------
-    float
-        _description_
-
-    Raises
-    ------
-    ValueError
+    array
         _description_
     """
-    compound_dict = CompoundParser(compound)
+    compound_dict = _compound_data(compound)
+
     elements = xp.atleast_1d(xp.asarray(compound_dict["Elements"]))
     mass_fractions = xp.atleast_1d(xp.asarray(compound_dict["massFractions"]))
     mass_fractions = mass_fractions.reshape((*elements.shape, *(1,) * E.ndim))
@@ -59,24 +68,26 @@ def Refractive_Index_Re(compound, E, density):
 
 @wrapped_partial(jit, **(jit_kwargs | {"static_argnums": 0}))
 @asarray(argnums=(0,), argnames=("compound"))
-def Refractive_Index_Im(compound, E, density):
+def Refractive_Index_Im(
+    compound: str, E: ArrayLike, density: ArrayLike
+) -> NDArray:
     """_summary_
 
     Parameters
     ----------
     compound : str
         _description_
-    E : float
+    E : array_like
         _description_
-    density : float
+    density : array_like
         _description_
 
     Returns
     -------
-    float
+    array
         _description_
     """
-    compound_dict = CompoundParser(compound)
+    compound_dict = _compound_data(compound)
     elements = xp.atleast_1d(xp.asarray(compound_dict["Elements"]))
     mass_fractions = xp.atleast_1d(xp.asarray(compound_dict["massFractions"]))
     mass_fractions = mass_fractions.reshape((*elements.shape, *(1,) * E.ndim))
@@ -99,16 +110,19 @@ def Refractive_Index(
 
     Parameters
     ----------
-    elements : _type_
+    compound : str
         _description_
-    mass_fractions : _type_
+    E : array_like
         _description_
-    E : _type_
+    density : array_like
         _description_
-    density : _type_
+
+    Returns
+    -------
+    array
         _description_
     """
     rv_real = Refractive_Index_Re(compound, E, density)
     rv_imag = Refractive_Index_Im(compound, E, density)
-    # TODO if one is nan then both should be nan # ???
+    # ??? if one is nan then both should be nan # ???
     return rv_real + rv_imag * 1j
