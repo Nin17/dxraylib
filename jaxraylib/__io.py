@@ -44,8 +44,9 @@ def _load(
                 data[i] = element
                 i += 1
                 element = [[], [], []]
+        data[i] = element
     data2 = {i: np.array(j) for i, j in data.items()}
-    maximum = max(i.shape[-1] for i in data2.values())
+    maximum = max(i.shape[-1] for i in data2.values()) + 1
     return np.array(
         [
             np.pad(
