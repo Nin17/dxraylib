@@ -1,102 +1,68 @@
 """_summary_
 """
+# TODO sensible variable names
 from __future__ import annotations
 import os
 
-from .atomicweight import _AtomicWeight
-from .config import jit, jit_kwargs, xp, NDArray, ArrayLike
-from .constants import AVOGNUM, KEV2ANGST, MEC2,  PI, RE2
-from ._splint import _splint
-from ._utilities import wrapped_partial, xrl_xrlnp
+from ._interpolators import _interpolate
+from ._utilities import asarray, wrapped_partial
+from .atomicweight import AtomicWeight as _AtomicWeight
+from .config import ArrayLike, jit, jit_kwargs, NDArray, xp
+from .constants import AVOGNUM, KEV2ANGST, MEC2, PI, RE2
 
-DIRPATH = os.path.dirname(__file__)
+_DIRPATH = os.path.dirname(__file__)
 
-FF_RAYL_PATH = os.path.join(DIRPATH, "data/FF.npy")
-FF_RAYL = xp.load(FF_RAYL_PATH)
+_FF_RAYL_PATH = os.path.join(_DIRPATH, "data/FF.npy")
+_FF_RAYL = xp.load(_FF_RAYL_PATH)
 
-SF_COMPT_PATH = os.path.join(DIRPATH, "data/SF.npy")
-SF_COMPT = xp.load(SF_COMPT_PATH)
+_SF_COMPT_PATH = os.path.join(_DIRPATH, "data/SF.npy")
+_SF_COMPT = xp.load(_SF_COMPT_PATH)
 
 
 @wrapped_partial(jit, **jit_kwargs)
-def _FF_Rayl(Z: ArrayLike, q: ArrayLike) -> tuple[NDArray[float], bool]:
-    Z = xp.atleast_1d(xp.asarray(Z))
-    q = xp.asarray(q)
-    # TODO change to FF_RAYL[Z-1] when broadcast splint
-    output = xp.where(
-        (Z >= 1) & (Z <= FF_RAYL.shape[0]) & (q > 0),
-        _splint(FF_RAYL[Z[0] - 1], q),
-        xp.nan,
-    )
-    return output, xp.isnan(output).any()
-
-
-# TODO docstring raise section
-@xrl_xrlnp(f"Z out of range: 1 to {FF_RAYL.shape[0]} | q must be positive")
-def FF_Rayl(Z: ArrayLike, q: ArrayLike) -> NDArray[float]:
+@asarray()
+def FF_Rayl(Z: ArrayLike, q: ArrayLike) -> NDArray:
     """
     Atomic form factor for Rayleigh scattering
 
     Parameters
     ----------
-    Z : array_like
+    Z : ArrayLike
         atomic number
-    q : array_like
-        momentum transfer  (Å⁻¹)
-        https://github.com/tschoonj/xraylib/wiki/The-xraylib-API-list-of-all-functions#scattering-factors
+    q : ArrayLike
+        momentum transfer (Å⁻¹)
 
     Returns
     -------
-    Array
+    NDArray
         Atomic form factor for Rayleigh scattering
     """
-    return _FF_Rayl(Z, q)
+    return _interpolate(_FF_RAYL, Z, q, q)
 
 
 @wrapped_partial(jit, **jit_kwargs)
-def _SF_Compt(Z: ArrayLike, q: ArrayLike) -> tuple[NDArray, bool]:
-    Z = xp.atleast_1d(xp.asarray(Z))
-    q = xp.asarray(q)
-    # TODO change to SF_COMPT[Z-1] when broadcast splint
-    output = xp.where(
-        (Z >= 1) & (Z <= SF_COMPT.shape[0]) & (q > 0),
-        _splint(SF_COMPT[Z[0] - 1], q),
-        xp.nan,
-    )
-    # TODO conditions on q
-    return output, xp.isnan(output).any()
-
-
-# TODO docstring raise section
-@xrl_xrlnp(f"Z out of range: 1 to {SF_COMPT.shape[0]} | q must be positive")
-def SF_Compt(Z: ArrayLike, q: ArrayLike) -> NDArray[float]:
+@asarray()
+def SF_Compt(Z: ArrayLike, q: ArrayLike) -> NDArray:
     """
     Incoherent scattering function for Compton scattering
 
     Parameters
     ----------
-    Z : array_like
+    Z : ArrayLike
         atomic number
-    q : array_like
+    q : ArrayLike
         momentum transfer  (Å⁻¹)
-        https://github.com/tschoonj/xraylib/wiki/The-xraylib-API-list-of-all-functions#scattering-factors
 
     Returns
     -------
-    Array
+    NDArray
         Incoherent scattering function for Compton scattering
     """
-    return _SF_Compt(Z, q)
+    return _interpolate(_SF_COMPT, Z, q, q)
 
 
 @wrapped_partial(jit, **jit_kwargs)
-def _DCS_Thoms(theta: ArrayLike) -> NDArray[float]:
-    theta = xp.asarray(theta)
-    cos_theta = xp.cos(theta)
-    return (RE2 / 2.0) * (1.0 + cos_theta * cos_theta), None
-
-
-@xrl_xrlnp()
+@asarray()
 def DCS_Thoms(theta: ArrayLike) -> NDArray:
     """
     Thomson differential scattering cross section (barn)
@@ -111,23 +77,12 @@ def DCS_Thoms(theta: ArrayLike) -> NDArray:
     Array
         Thomson differential scattering cross section (barn)
     """
-    return _DCS_Thoms(theta)
+    cos_theta = xp.cos(theta)
+    return (RE2 / 2.0) * (1.0 + cos_theta * cos_theta)
 
 
 @wrapped_partial(jit, **jit_kwargs)
-def _DCS_KN(E: ArrayLike, theta: ArrayLike) -> tuple[NDArray[float], bool]:
-    E = xp.atleast_1d(xp.asarray(E))
-    theta = xp.atleast_1d(xp.asarray(theta))
-    cos_theta = xp.cos(theta)
-    t1 = xp.where(E > 0, (1.0 - cos_theta) * E / MEC2, xp.nan)
-    t2 = 1.0 + t1
-    output = (
-        (RE2 / 2.0) * (1.0 + cos_theta * cos_theta + t1 * t1 / t2) / t2 / t2
-    )
-    return output, xp.isnan(output).any()
-
-
-@xrl_xrlnp("Energy must be strictly positive")
+@asarray()
 def DCS_KN(E: ArrayLike, theta: ArrayLike) -> NDArray[float]:
     """
     Klein-Nishina differential scattering cross section (barn)
@@ -149,25 +104,22 @@ def DCS_KN(E: ArrayLike, theta: ArrayLike) -> NDArray[float]:
     ValueError
         _description_
     """
-    return _DCS_KN(E, theta)
+    e = E.reshape((*E.shape, *(1,) * theta.ndim))
+    cos_theta = xp.cos(theta).reshape((*(1,) * E.ndim, *theta.shape))
+    t_1 = xp.where(e > 0, (1.0 - cos_theta) * e / MEC2, xp.nan)
+    t_2 = 1.0 + t_1
+    output = (
+        (RE2 / 2.0)
+        * (1.0 + cos_theta * cos_theta + t_1 * t_1 / t_2)
+        / t_2
+        / t_2
+    )
+    return output
 
 
 @wrapped_partial(jit, **jit_kwargs)
-def _DCS_Rayl(
-    Z: ArrayLike, E: ArrayLike, theta: ArrayLike
-) -> tuple[NDArray, bool]:
-    Z = xp.asarray(Z)
-    E = xp.asarray(E)
-    theta = xp.asarray(theta)
-    q = _MomentTransf(E, theta)[0]
-    F = _FF_Rayl(Z, q)[0]
-    output = AVOGNUM / _AtomicWeight(Z)[0] * F * F * _DCS_Thoms(theta)[0]
-    return output, xp.isnan(output).any()
-
-
-# TODO raise section
-@xrl_xrlnp("# TODO error message")
-def DCS_Rayl(Z: ArrayLike, E: ArrayLike, theta: ArrayLike) -> NDArray[float]:
+@asarray()
+def DCS_Rayl(Z: ArrayLike, E: ArrayLike, theta: ArrayLike) -> NDArray:
     """
     Differential Rayleigh scattering cross section (cm2/g/sterad)
 
@@ -177,7 +129,7 @@ def DCS_Rayl(Z: ArrayLike, E: ArrayLike, theta: ArrayLike) -> NDArray[float]:
         atomic number
     E : array_like
         Energy (keV)
-    theta : Array
+    theta : array_like
         scattering polar angle (rad)
 
     Returns
@@ -185,26 +137,19 @@ def DCS_Rayl(Z: ArrayLike, E: ArrayLike, theta: ArrayLike) -> NDArray[float]:
     Array
         Differential Rayleigh scattering cross section (cm2/g/sterad)
     """
-    return _DCS_Rayl(Z, E, theta)
+    # TODO broadcasting of arguments
+    q = MomentTransf(E, theta)
+    ff_rayl = FF_Rayl(Z, q)
+    a_w = _AtomicWeight(Z).reshape((*Z.shape, *(1,) * (E.ndim + theta.ndim)))
+    dcs_thoms = DCS_Thoms(theta).reshape(
+        (*(1,) * (Z.ndim + E.ndim), *theta.shape)
+    )
+    return AVOGNUM / a_w * ff_rayl * ff_rayl * dcs_thoms
 
 
 @wrapped_partial(jit, **jit_kwargs)
-def _DCS_Compt(
-    Z: ArrayLike, E: ArrayLike, theta: ArrayLike
-) -> tuple[NDArray[float], bool]:
-    Z = xp.asarray(Z)
-    E = xp.asarray(E)
-    theta = xp.asarray(theta)
-    q = _MomentTransf(E, theta)[0]
-    S = _SF_Compt(Z, q)[0]
-    output = AVOGNUM / _AtomicWeight(Z)[0] * S * _DCS_KN(E, theta)[0]
-    return output, xp.isnan(output).any()
-
-
-# TODO raise section
-# TODO value_error after updating _splint
-@xrl_xrlnp("# TODO error message")
-def DCS_Compt(Z: ArrayLike, E: ArrayLike, theta: ArrayLike) -> NDArray[float]:
+@asarray()
+def DCS_Compt(Z: ArrayLike, E: ArrayLike, theta: ArrayLike) -> NDArray:
     """
     Differential Compton scattering cross section (cm2/g/sterad)
 
@@ -222,21 +167,16 @@ def DCS_Compt(Z: ArrayLike, E: ArrayLike, theta: ArrayLike) -> NDArray[float]:
     Array
         Differential Compton scattering cross section (cm2/g/sterad)
     """
-    return _DCS_Compt(Z, E, theta)
+    q = MomentTransf(E, theta)
+    sf_compt = SF_Compt(Z, q)
+    a_w = _AtomicWeight(Z).reshape((*Z.shape, *(1,) * (E.ndim + theta.ndim)))
+    dcs_kn = DCS_KN(E, theta).reshape((*(1,) * Z.ndim, *E.shape, *theta.shape))
+    return AVOGNUM / a_w * sf_compt * dcs_kn
 
 
 @wrapped_partial(jit, **jit_kwargs)
-def _MomentTransf(
-    E: ArrayLike, theta: ArrayLike
-) -> tuple[NDArray[float], bool]:
-    E = xp.atleast_1d(xp.asarray(E))
-    theta = xp.atleast_1d(xp.asarray(theta))
-    output = xp.where(E > 0, E / KEV2ANGST * xp.sin(theta / 2.0), xp.nan)
-    return output, xp.isnan(output).any()
-
-
-@xrl_xrlnp("Energy must be strictly positive")
-def MomentTransf(E: ArrayLike, theta: ArrayLike) -> NDArray[float]:
+@asarray()
+def MomentTransf(E: ArrayLike, theta: ArrayLike) -> NDArray:
     """
     Momentum transfer for X-ray photon scattering (Å⁻¹)
 
@@ -257,32 +197,14 @@ def MomentTransf(E: ArrayLike, theta: ArrayLike) -> NDArray[float]:
     ValueError
         If energy is not strictly positive
     """
-    return _MomentTransf(E, theta)
+    e = E.reshape((*E.shape, *(1,) * theta.ndim))
+    sin_theta = xp.sin(theta / 2.0).reshape((*(1,) * E.ndim, *theta.shape))
+    return xp.where(e > 0.0, e / KEV2ANGST * sin_theta, xp.nan)
 
 
 @wrapped_partial(jit, **jit_kwargs)
-def _CS_KN(E: ArrayLike) -> tuple[NDArray[float], bool]:
-    E = xp.atleast_1d(xp.asarray(E))
-    a = xp.where(E > 0, E / MEC2, xp.nan)
-    a3 = a * a * a
-    b = 1 + 2 * a
-    b2 = b * b
-    lb = xp.log(b)
-    output = (
-        2
-        * PI
-        * RE2
-        * (
-            (1 + a) / a3 * (2 * a * (1 + a) / b - lb)
-            + 0.5 * lb / a
-            - (1 + 3 * a) / b2
-        )
-    )
-    return output, xp.isnan(output).any()
-
-
-@xrl_xrlnp("Energy must be strictly positive")
-def CS_KN(E: ArrayLike) -> NDArray[float]:
+@asarray()
+def CS_KN(E: ArrayLike) -> NDArray:
     """
     Total klein-Nishina cross section (barn)
 
@@ -301,20 +223,26 @@ def CS_KN(E: ArrayLike) -> NDArray[float]:
     ValueError
         If energy is not strictly positive
     """
-    return _CS_KN(E)
+    a = xp.where(E > 0.0, E / MEC2, xp.nan)
+    a3 = a * a * a
+    b = 1 + 2 * a
+    b2 = b * b
+    lb = xp.log(b)
+    output = (
+        2
+        * PI
+        * RE2
+        * (
+            (1 + a) / a3 * (2 * a * (1 + a) / b - lb)
+            + 0.5 * lb / a
+            - (1 + 3 * a) / b2
+        )
+    )
+    return output
 
 
 @wrapped_partial(jit, **jit_kwargs)
-def _ComptonEnergy(E0: ArrayLike, theta: ArrayLike) -> tuple[NDArray, bool]:
-    E0 = xp.atleast_1d(xp.asarray(E0))
-    theta = xp.atleast_1d(xp.asarray(theta))
-    cos_theta = xp.cos(theta)
-    alpha = xp.where(E0 > 0, E0 / MEC2, xp.nan)
-    output = E0 / (1 + alpha * (1 - cos_theta))
-    return output, xp.isnan(output).any()
-
-
-@xrl_xrlnp("Energy must be strictly positive")
+@asarray()
 def ComptonEnergy(E0: ArrayLike, theta: ArrayLike) -> NDArray[float]:
     """
     Photon energy after Compton scattering (keV)
@@ -336,5 +264,7 @@ def ComptonEnergy(E0: ArrayLike, theta: ArrayLike) -> NDArray[float]:
     ValueError
         If energy is not strictly positive
     """
-
-    return _ComptonEnergy(E0, theta)
+    _e0 = E0.reshape((*E0.shape, *(1,) * theta.ndim))
+    cos_theta = xp.cos(theta).reshape((*(1,) * E0.ndim, *theta.shape))
+    alpha = xp.where(_e0 > 0.0, _e0 / MEC2, xp.nan)
+    return _e0 / (1 + alpha * (1 - cos_theta))
