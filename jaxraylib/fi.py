@@ -1,8 +1,6 @@
 """
 Anomalous Scattering Factor Fi
 """
-# TODO document shapes in docstring
-# TODO document error raising xrl xrl_np
 
 from __future__ import annotations
 import os
@@ -33,14 +31,5 @@ def Fi(Z: ArrayLike, E: ArrayLike) -> NDArray:
     -------
     array
         anomalous scattering factor fi
-
-    Raises
-    ------
-    ValueError
-        if Z < 1 or Z > 99
-    ValueError
-        if E < 0
-    ValueError
-        if E results in extrapolation
     """
     return _interpolate(_FI, Z, E, E)
