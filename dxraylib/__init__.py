@@ -6,6 +6,7 @@ __version__ = "0.0.1"
 from .atomiclevelwidth import AtomicLevelWidth
 from .atomicweight import AtomicWeight
 from .constants import AVOGNUM, KEV2ANGST, MEC2, RE2
+from .coskron import CosKronTransProb
 from .cross_sections import (
     CS_Compt,
     CS_Energy,
