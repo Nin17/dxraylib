@@ -1,8 +1,8 @@
----
+<!---
 header-includes:
  - \usepackage{fvextra}
  - \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,breakanywhere,commandchars=\\\{\}}
----
+-->
 
 # $\partial xraylib$
 
