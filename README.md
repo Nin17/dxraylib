@@ -1,3 +1,9 @@
+---
+header-includes:
+ - \usepackage{fvextra}
+ - \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,breakanywhere,commandchars=\\\{\}}
+---
+
 # $\partial xraylib$
 
 A differentiable python reimplementation of [xraylib](https://github.com/tschoonj/xraylib) using [JAX](https://github.com/google/jax).
