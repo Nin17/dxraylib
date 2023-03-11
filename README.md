@@ -1,6 +1,6 @@
-# JAXraylib
+# $\partial xraylib$
 
-A python implementation of [xraylib](https://github.com/tschoonj/xraylib) using [JAX](https://github.com/google/jax).
+A differentiable python reimplementation of [xraylib](https://github.com/tschoonj/xraylib) using [JAX](https://github.com/google/jax).
 
 ## Divergences from xraylib & xraylib_np
 
@@ -11,14 +11,14 @@ Errors are instead indicated by ```NaNs```:
 
 ```python
 import xraylib as xrl
-import jaxraylib as jxrl
+import dxraylib as dxrl
 Z = 69
 E = -69.
 try:
     print(xrl.Fi(Z, E))
 except ValueError as e:
     print(e)
-print(jxrl.Fi(Z, E))
+print(dxrl.Fi(Z, E))
 ```
 
 Results in:
@@ -29,7 +29,7 @@ nan
 ```
 
 In xraylib_np, errors aren't raised and are instead signalled by a value of ```0```.
-Therefore, to obtain the same result with jaxraylib, [jax.numpy.nan_to_num](https://jax.readthedocs.io/en/latest/_autosummary/jax.numpy.nan_to_num.html) or equivalent must be used:
+Therefore, to obtain the same result with $\partial xraylib$, [jax.numpy.nan_to_num](https://jax.readthedocs.io/en/latest/_autosummary/jax.numpy.nan_to_num.html) or equivalent must be used:
 
 ```python
 import numpy as np
@@ -37,8 +37,8 @@ import jax.numpy as jnp
 import xraylib_np as xrl_np
 Z = np.asarray([Z])
 E = np.asarray([E])
-print(jxrl.Fi(Z, E))
-print(jnp.nan_to_num(jxrl.Fi(Z, E)))
+print(dxrl.Fi(Z, E))
+print(jnp.nan_to_num(dxrl.Fi(Z, E)))
 print(xrl_np.Fi(Z, E))
 ```
 
@@ -53,7 +53,7 @@ Results in:
 #### Argument dtypes
 
 In xraylib_np, the arguments are required to have the correct dtype.
-In jaxraylib this requirement is relaxed, and arguments can take any numerical type - except for ```Z``` which is still required to have an integer or boolean type:
+In $\partial xraylib$ this requirement is relaxed, and arguments can take any numerical type - except for ```Z``` which is still required to have an integer or boolean type:
 
 ```python
 E = -E.astype(int)
@@ -61,14 +61,14 @@ try:
     print(xrl_np.Fi(Z, E))
 except ValueError as e:
     print(e)
-print(jxrl.Fi(Z, E))
+print(dxrl.Fi(Z, E))
 Z = Z.astype(float)
 try:
     print(xrl_np.Fi(Z, E))
 except ValueError as e:
     print(e)
 try:
-    print(jxrl.Fi(Z, E))
+    print(dxrl.Fi(Z, E))
 except TypeError as e:
     print(e)
 ```
@@ -85,7 +85,7 @@ Indexer must have integer or boolean type, got indexer with type float64 at posi
 #### Argument shapes & dimensions
 
 In xraylib_np arguments must be numpy arrays with ```ndim==1```, the output shape is the result of concatenating the input shapes.
-In jaxraylib, the output shape is still the result of concatenating the input shapes, but the requirement for 1d arguments is removed:
+In $\partial xraylib$, the output shape is still the result of concatenating the input shapes, but the requirement for 1d arguments is removed:
 
 ```python
 Z = np.atleast_2d(Z).astype(int)
@@ -93,7 +93,7 @@ try:
     print(xrl_np.Fi(Z, E))
 except ValueError as e:
     print(e)
-print(jxrl.Fi(Z, E), jxrl.Fi(Z, E).shape, Z.shape, E.shape)
+print(dxrl.Fi(Z, E), dxrl.Fi(Z, E).shape, Z.shape, E.shape)
 ```
 
 Results in:
@@ -105,7 +105,7 @@ Buffer has wrong number of dimensions (expected 1, got 2)
 
 ### Functions with string arguments
 
-Functions in xraylib that require an argument as a string are not supported in xraylib_np. In jaxraylib, all functions support arrays for all numerical arguments regardless of whether they also take string arguments.
+Functions in xraylib that require an argument as a string are not supported in xraylib_np. In $\partial xraylib$, all functions support arrays for all numerical arguments regardless of whether they also take string arguments.
 
 ```python
 C = "Tm"
@@ -115,7 +115,7 @@ try:
     print(xrl_np.Refractive_Index(C, E, D))
 except AttributeError as e:
     print(e)
-print(jxrl.Refractive_Index(C, E, D))
+print(dxrl.Refractive_Index(C, E, D))
 ```
 
 Results in:

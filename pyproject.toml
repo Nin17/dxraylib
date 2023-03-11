@@ -11,14 +11,14 @@ authors = [
 dependencies = ['jax', 'xraylib']
 description = "A python implementation of xraylib using JAX."
 dynamic = ["readme"]
-name = "JAXraylib"
+name = "dxraylib"
 version = "0.0.1"
 
 # requires-python = ">=3.x"
 
 # TODO possibly add cupy and cuda.jit the functions
 [project.optional-dependencies]
-jaxraylib = ["numpy",]
+dxraylib = ["numpy", "cupy"]
 
 [tool.setuptools.dynamic]
 readme = {file = ["README.md"]}
@@ -29,7 +29,7 @@ readme = {file = ["README.md"]}
 # "Bug Tracker" = "https://github.com/pypa/packaging.python.org/issues"
 
 [tool.setuptools]
-py-modules = ["JAXraylib"]
+py-modules = ["dxraylib"]
 
 # [tool.pytest.ini_options]
 # testpaths = ["JAXRAYLIB/tests/"]
