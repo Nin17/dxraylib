@@ -42,6 +42,7 @@ from .cs_cp import (
     DCSPb_Compt_CP,
 )
 from .densities import ElementDensity
+from .edges import EdgeEnergy
 from .fi import Fi
 from .fii import Fii
 from .fluor_yield import FluorYield
