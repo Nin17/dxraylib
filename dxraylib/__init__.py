@@ -44,6 +44,7 @@ from .cs_cp import (
 from .densities import ElementDensity
 from .fi import Fi
 from .fii import Fii
+from .fluor_yield import FluorYield
 from .polarized import DCSP_Compt, DCSP_KN, DCSP_Rayl, DCSP_Thoms
 from .refractive_indices import (
     Refractive_Index,
