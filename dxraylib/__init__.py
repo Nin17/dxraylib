@@ -3,6 +3,7 @@ dxraylib: differentiable X-ray-matter interactions
 """
 
 __version__ = "0.0.1"
+from .atomiclevelwidth import AtomicLevelWidth
 from .atomicweight import AtomicWeight
 from .constants import AVOGNUM, KEV2ANGST, MEC2, RE2
 from .cross_sections import (
