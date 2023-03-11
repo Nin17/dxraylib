@@ -7,6 +7,8 @@ import functools
 import jax
 
 from .config import xp
+from .xraylib_nist_compounds import GetCompoundDataNISTByName
+from .xraylib_parser import CompoundParser
 
 
 # TODO type hinting
@@ -34,7 +36,7 @@ def wrapped_partial(func, *args, **kwargs):
 # TODO sensible function names
 def asarray(argnums=(), argnames=()):
     def decorator(func):
-        func = jax.tree_util.Partial(func)
+        func = functools.update_wrapper(jax.tree_util.Partial(func), func)
 
         @functools.wraps(func)
         def wrapper(*args, **kwargs):
@@ -47,7 +49,7 @@ def asarray(argnums=(), argnames=()):
                 for k, v in kwargs.items()
             }
             # TODO
-            # FIXME to 
+            # FIXME to
             # total = sum(i.ndim for i in args if hasattr(i, "ndim"))
             # total += sum(i.ndim for i in kwargs.values() if hasattr(i, "ndim"))
             output = func(*args, **kwargs)
@@ -59,3 +61,21 @@ def asarray(argnums=(), argnames=()):
         return wrapper
 
     return decorator
+
+
+def _compound_data(compound):
+    try:
+        compound_dict = CompoundParser(compound)
+    except ValueError:
+        try:
+            compound_dict = GetCompoundDataNISTByName(compound)
+        except ValueError as error:
+            msg = """
+            Compound is not a valid chemical formula and is not
+             present in the NIST compound database
+            """
+            raise ValueError(
+                msg.replace("\n", "").replace("  ", "")
+            ) from error
+
+    return compound_dict
