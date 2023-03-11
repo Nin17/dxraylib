@@ -132,7 +132,6 @@ def DCS_Rayl(Z: ArrayLike, E: ArrayLike, theta: ArrayLike) -> NDArray:
     array
         Differential Rayleigh scattering cross section (cm2/g/sterad)
     """
-    # TODO broadcasting of arguments
     q = MomentTransf(E, theta)
     ff_rayl = FF_Rayl(Z, q)
     a_w = _AtomicWeight(Z).reshape((*Z.shape, *(1,) * (E.ndim + theta.ndim)))
