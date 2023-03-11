@@ -32,4 +32,4 @@ def JumpFactor(Z: ArrayLike, shell: ArrayLike) -> NDArray:
         _description_
     """
 
-    return _index2d(_JUMP, Z-1, shell)
+    return _index2d(_JUMP, Z - 1, shell)
