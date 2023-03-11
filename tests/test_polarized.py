@@ -1,51 +1,41 @@
 """_summary_
 """
 
-import unittest
-
 import numpy as np
+import pytest
 
-import xraylib as xrl
-import xraylib_np as xrl_np
-
-import jaxraylib as jxrl
-
-from tests.config import ATOL, RTOL
+from tests.test_atomicweight import AtomicWeight
+from tests.test_scattering import FF_Rayl, SF_Compt
+from tests.utilities import Analytic
 
 
-rng = np.random.default_rng()
+@pytest.mark.skip()
+class DCSP_Rayl(FF_Rayl, AtomicWeight):
+    """_summary_"""
+    # TODO actually implement some tests
 
 
-class TestDCSP_Rayl(unittest.TestCase):
-    ...
+class TestDCSP_Rayl(DCSP_Rayl):
+    """_summary_"""
 
 
-class TestDCSP_Compt(unittest.TestCase):
-    ...
+@pytest.mark.skip()
+class DCSP_Compt(SF_Compt, AtomicWeight):
+    """_summary_"""
+    # TODO actually implement some tests
 
 
-class TestDCSP_KN(unittest.TestCase):
-    def test_value_error(self):
-        self.assertRaises(
-            ValueError, jxrl.DCSP_KN, 0.0, rng.random(), rng.random()
-        )
+class TestDCSP_Compt(DCSP_Compt):
+    """_summary_"""
 
 
-class TestDCSP_Thoms(unittest.TestCase):
-    def test_xrl(self):
-        theta, phi = rng.random((2,))
-        np.testing.assert_allclose(
-            jxrl.DCSP_Thoms(theta, phi),
-            xrl.DCSP_Thoms(theta, phi),
-            rtol=RTOL,
-            atol=ATOL,
-        )
+class TestDCSP_KN(Analytic):
+    """_summary_"""
 
-    def test_xrlnp(self):
-        theta, phi = rng.random((2, 100))
-        np.testing.assert_allclose(
-            jxrl.DCSP_Thoms(theta[:, None], phi[None, :]),
-            xrl_np.DCSP_Thoms(theta, phi),
-            rtol=RTOL,
-            atol=ATOL
-        )
+    ab = ((0, 1000), (-2 * np.pi, 2 * np.pi), (-np.pi, np.pi))
+
+
+class TestDCSP_Thoms(Analytic):
+    """_summary_"""
+
+    ab = ((-2 * np.pi, 2 * np.pi), (-np.pi, np.pi))

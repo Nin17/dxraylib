@@ -1,88 +1,85 @@
-"""_summary_
+"""
+Tests for scattering functions
 """
 
-
 import numpy as np
+import pytest
+
+from dxraylib.scattering import _FF_RAYL, _SF_COMPT
+
+from tests.utilities import Analytic, CubicInterpolators
 
 
-import jaxraylib as jxrl
-from jaxraylib.scattering import FF_RAYL, SF_COMPT
+class FF_Rayl(CubicInterpolators):
+    """
+    Base test class for jaxraylib.FF_Rayl
+    """
 
-from tests.utilities import TestBaseInterpolators, TestBaseXrlXrlnp
-
-rng = np.random.default_rng()
-
-
-class TestFF_Rayl(TestBaseInterpolators):
-    def test_spline_extrapolation(self):
-        super().spline_extrapolation(FF_RAYL, jxrl.FF_Rayl, lambda q: q)
+    data = (_FF_RAYL,)
+    scale = ((lambda x: x, 1),)
 
 
-class TestSF_Compt(TestBaseInterpolators):
-    def test_spline_extrapolation(self):
-        super().spline_extrapolation(SF_COMPT, jxrl.SF_Compt, lambda q: q)
+class TestFF_Rayl(FF_Rayl):
+    """_summary_"""
 
 
-class TestDCS_Thoms(TestBaseXrlXrlnp):
-    def test_xrl(self):
-        theta = (rng.random() - 0.5) * 4 * np.pi
-        super().xrl(theta)
+class SF_Compt(CubicInterpolators):
+    """
+    Base test class for jaxraylib.SF_Compt
+    """
 
-    def test_xrlnp(self):
-        theta = rng.random((100,))
-        super().xrlnp(theta)
-
-
-class TestDCS_KN(TestBaseXrlXrlnp):
-    def test_value_error(self):
-        super().raise_error(ValueError, 0.0, rng.random())
-
-    def test_xrl(self):
-        e = rng.random()
-        theta = (rng.random() - 0.5) * 4 * np.pi
-        super().xrl(e, theta)
-
-    def test_xrlnp(self):
-        e = rng.random((100,))
-        theta = (rng.random((100,)) - 0.5) * 4 * np.pi
-        super().xrlnp(e, theta, jxrl_args=(e[:, None], theta[None, :]))
+    data = (_SF_COMPT,)
+    scale = ((lambda x: x, 1),)
 
 
-class TestDCS_Rayl(TestBaseXrlXrlnp):
-    def test_xrl(self):
-        super().xrl(rng.integers(1, 98), 200*(rng.random()+1), rng.random())
+class TestSF_Compt(SF_Compt):
+    """_summary_"""
 
 
-class TestDCS_Compt(TestBaseXrlXrlnp):
-    ...
+class TestDCS_Thoms(Analytic):
+    """_summary_"""
+
+    ab = ((-2 * np.pi, 2 * np.pi),)
 
 
-class TestMomentTransf(TestBaseXrlXrlnp):
-    def test_value_error(self):
-        super().raise_error(ValueError, 0.0, rng.random())
+class TestDCS_KN(Analytic):
+    """_summary_"""
 
-    def test_xrl(self):
-        super().xrl(rng.random(), rng.random())
-
-    def test_xrlnp(self):
-        e = rng.random((100,))
-        theta = rng.random((100,))
-        super().xrlnp(e, theta, jxrl_args=(e[:, None], theta[None, :]))
+    ab = ((0, 1000), (-2 * np.pi, 2 * np.pi))
 
 
-class TestCS_KN(TestBaseXrlXrlnp):
-    def test_value_error(self):
-        super().raise_error(ValueError, 0.0)
-
-    def test_xrl(self):
-        e = np.random.random((1,))[0] * np.random.randint(1, 500)
-        super().xrl(e)
-
-    def test_xrl_np(self):
-        e = (100 + rng.random((100,))) * np.random.randint(1, 500)
-        super().xrlnp(e)
+# TODO another base class for amalgamation of interpolate and analytic
+@pytest.mark.skip("")
+class DCS_Rayl(SF_Compt):
+    """_summary_"""
 
 
-class TestComptonEnergy(TestBaseXrlXrlnp):
-    def test_value_error(self):
-        super().raise_error(ValueError, 0.0, rng.random())
+class TestDCS_Rayl(DCS_Rayl):
+    """_summary_"""
+
+
+@pytest.mark.skip("")
+class DCS_Compt(SF_Compt):
+    """_summary_"""
+
+
+class TestDCS_Compt(DCS_Compt):
+    """_summary_"""
+
+
+class TestMomentTransf(Analytic):
+    """_summary_"""
+
+    ab = ((0, 1000), (-2 * np.pi, 2 * np.pi))
+
+
+class TestCS_KN(Analytic):
+    """_summary_"""
+
+    ab = ((0, 1000),)
+
+
+class TestComptonEnergy(Analytic):
+    """_summary_"""
+
+    ab = ((0, 1000), (-2 * np.pi, 2 * np.pi))

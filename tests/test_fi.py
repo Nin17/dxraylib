@@ -2,7 +2,7 @@
 Tests for jaxraylib.Fi
 """
 
-from jaxraylib.fi import FI
+from dxraylib.fi import _FI
 
 from tests.utilities import CubicInterpolators
 
@@ -12,7 +12,8 @@ class Fi(CubicInterpolators):
     Base test class for jaxraylib.Fi
     """
 
-    data = (FI,)
+    data = (_FI,)
+    scale = ((lambda x: x, 1),)
 
 
 class TestFi(Fi):
