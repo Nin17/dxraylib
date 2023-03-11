@@ -36,7 +36,7 @@ def barns(function: Callable) -> Callable:
     """
     # TODO jax.tree_util.partial
     # function = jax.tree_util.Partial(functools.wraps(function))
-    function = jax.tree_util.Partial(function)
+    function = functools.update_wrapper(jax.tree_util.Partial(function), function)
     # ??? do i need unwrap here
     @functools.wraps(function)
     def wrapper(Z, *args, **kwargs) -> NDArray:
