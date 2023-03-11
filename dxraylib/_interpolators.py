@@ -49,7 +49,7 @@ def _interpolate(
         data[xp.where((z >= 1) & (z <= data.shape[0]), z - 1, 0)], e
     )
     output = xp.where(
-        (_z >= 1) & (_z <= data.shape[0]) & (_e > 0), output, xp.nan
+        (_z >= 1) & (_z <= data.shape[0]) & (_e >= 0), output, xp.nan
     )
     return output
 
