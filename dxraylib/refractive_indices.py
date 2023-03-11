@@ -1,24 +1,14 @@
 """
 Refractive indices: real component, imagingary component and complex
 """
+# TODO docstrings
 
-import fuckit
-
-from ._utilities import asarray, wrapped_partial
+from ._utilities import asarray, _compound_data, wrapped_partial
 from .atomicweight import AtomicWeight as _AtomicWeight
 from .config import ArrayLike, jit, jit_kwargs, NDArray, xp
 from .constants import HC_4PI, KD
 from .cross_sections import CS_Total as _CS_Total
 from .fi import Fi as _Fi
-from .xraylib_nist_compounds import GetCompoundDataNISTByName
-from .xraylib_parser import CompoundParser
-
-
-@fuckit
-def _compound_data(compound):
-    compound_dict = CompoundParser(compound)
-    compound_dict = GetCompoundDataNISTByName(compound)
-    return compound_dict
 
 
 @wrapped_partial(jit, **(jit_kwargs | {"static_argnums": 0}))
