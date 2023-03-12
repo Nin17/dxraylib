@@ -1,8 +1,8 @@
-<!--
+---
 header-includes:
  - \usepackage{fvextra}
  - \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,breakanywhere,commandchars=\\\{\}}
--->
+---
 
 <!--  pandoc --pdf-engine=xelatex --highlight-style breezedark -V colorlinks README.md -o README.pdf -->
 
@@ -61,7 +61,7 @@ Results in:
 #### Argument dtypes
 
 In xraylib_np, the arguments are required to have the correct dtype.
-In $\partial xraylib$ this requirement is relaxed, and arguments can take any numerical type - except for ```Z``` which is still required to have an integer or boolean type:
+In $\partial xraylib$ this requirement is relaxed, and arguments can take any numerical type - except for ```Z```, ```shell``` & ```auger_trans``` which are still required to have an integer or boolean type:
 
 ```python
 E = -E.astype(int)
