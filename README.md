@@ -133,7 +133,10 @@ module 'xraylib_np' has no attribute 'Refractive_Index'
 
 ## Currently supported functions
 
+* AtomicLevelWidth
+* AtomicNumberToSymbol
 * AtomicWeight
+* AugerRate
 * CS_Compt
 * CS_Compt_CP
 * CS_Energy
@@ -155,6 +158,7 @@ module 'xraylib_np' has no attribute 'Refractive_Index'
 * CSb_Total_CP
 * CompoundParser
 * ComptonEnergy
+* CosKronTransProb
 * DCSP_Compt
 * DCSP_Compt_CP
 * DCSP_KN
@@ -175,10 +179,14 @@ module 'xraylib_np' has no attribute 'Refractive_Index'
 * DCSb_Compt_CP
 * DCSb_Rayl
 * DCSb_Rayl_CP
+* EdgeEnergy
 * ElementDensity
 * FF_Rayl
 * Fi
 * Fii
+* FluorYield
+* GetCompoundDataNISTByName
+* JumpFactor
 * MomentTransf
 * Refractive_Index
 * Refractive_Index_Im
