@@ -1,8 +1,10 @@
-<!---
+<!--
 header-includes:
  - \usepackage{fvextra}
  - \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,breakanywhere,commandchars=\\\{\}}
 -->
+
+<!--  pandoc --pdf-engine=xelatex --highlight-style breezedark -V colorlinks README.md -o README.pdf -->
 
 # $\partial xraylib$
 
@@ -131,12 +133,15 @@ module 'xraylib_np' has no attribute 'Refractive_Index'
 [[0.99999756+9.28136082e-08j]]
 ```
 
+Functions that take a single string argument or return a string such as: ```AtomicNumberToSymbol```, ```CompoundParser``` and ```GetCompoundDataNISTByName``` are just wrappers around the functions of the same name in xraylib and therefore don't accept arrays as arguments.
+
 ## Currently supported functions
 
 * AtomicLevelWidth
 * AtomicNumberToSymbol
 * AtomicWeight
 * AugerRate
+* AugerYield
 * CS_Compt
 * CS_Compt_CP
 * CS_Energy
