@@ -179,12 +179,15 @@ class TestBaseXrlXrlnp:
     def test_xrl(self, *args):
         """_summary_"""
         args = args or self.args0
-        xrl_output = getattr(xrl, self.func)(*args)
         dxrl_output = getattr(dxrl, self.func)(*args)
         assert dxrl_output.shape == ()
-        np.testing.assert_allclose(
-            xrl_output, dxrl_output, atol=ATOL, rtol=RTOL
-        )
+        try:
+            xrl_output = getattr(xrl, self.func)(*args)
+            np.testing.assert_allclose(
+                xrl_output, dxrl_output, atol=ATOL, rtol=RTOL
+            )
+        except ValueError:
+            assert np.isnan(dxrl_output).all()
 
     def test_xrlnp(self, *args):
         """_summary_
@@ -196,9 +199,7 @@ class TestBaseXrlXrlnp:
         """
         args = args or self.args
         xrlnp_output = getattr(xrl_np, self.func)(*args)
-        dxrl_output = np.nan_to_num(
-            getattr(dxrl, self.func)(*args)
-        )
+        dxrl_output = np.nan_to_num(getattr(dxrl, self.func)(*args))
         assert xrlnp_output.shape == dxrl_output.shape
         np.testing.assert_allclose(
             xrlnp_output, dxrl_output, atol=ATOL, rtol=RTOL
@@ -278,7 +279,7 @@ class CubicInterpolators(TestBaseXrlXrlnp):
         z = np.array([0])
         e = self.nanmin + (self.nanmax - self.nanmin) / 2
         super().test_xrlnp(z, e)
-    
+
     def test_0(self):
         z = np.arange(1, self.shape0)
         e = np.array([0.0])
@@ -296,7 +297,7 @@ class CubicInterpolators(TestBaseXrlXrlnp):
         super().test_xrlnp(z, unique)
 
 
-class Indexors(TestBaseXrlXrlnp):
+class Indexors1D(TestBaseXrlXrlnp):
     """_summary_
 
     Parameters
@@ -310,7 +311,8 @@ class Indexors(TestBaseXrlXrlnp):
         _description_
     """
 
-    # Must overwrite
+    # TODO out of bounds test
+
     size: int
 
     @functools.cached_property
@@ -322,8 +324,37 @@ class Indexors(TestBaseXrlXrlnp):
         NDArray[np.int64]
             _description_
         """
-        # ??? test out of bounds in separate test
-        return (np.arange(1, self.size + 1),)
+        return (np.arange(1, self.size),)
+
+
+class Indexors2D(TestBaseXrlXrlnp):
+    """_summary_
+
+    Parameters
+    ----------
+    TestBaseXrlXrlnp : _type_
+        _description_
+
+    Returns
+    -------
+    _type_
+        _description_
+    """
+
+    # TODO out of bounds tests
+
+    shape: tuple[int, int]
+
+    @functools.cached_property
+    def args(self) -> NDArray[np.int64]:
+        """
+
+        Returns
+        -------
+        NDArray[np.int64]
+            _description_
+        """
+        return np.arange(1, self.shape[0]), np.arange(1, self.shape[1])
 
 
 class Analytic(TestBaseXrlXrlnp):

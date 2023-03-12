@@ -4,10 +4,10 @@ Tests for jaxraylib.AtomicWeight
 
 from dxraylib.atomicweight import _AW
 
-from tests.utilities import Indexors
+from tests.utilities import Indexors1D
 
 
-class AtomicWeight(Indexors):
+class AtomicWeight(Indexors1D):
     """
     Base test class for jaxraylib.AtomicWeight
     """

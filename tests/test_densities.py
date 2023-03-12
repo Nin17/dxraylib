@@ -4,10 +4,10 @@ Tests for jaxraylib.ElementDensity
 
 from dxraylib.densities import _DEN
 
-from tests.utilities import Indexors
+from tests.utilities import Indexors1D
 
 
-class TestElementDensity(Indexors):
+class TestElementDensity(Indexors1D):
     """
     Test class for jaxraylib.ElementDensity
     """
