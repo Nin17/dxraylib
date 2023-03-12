@@ -1,6 +1,6 @@
 """
-Tests for jaxraylib.CS_Compt, jaxraylib.CS_Energy, jaxraylib.CS_Photo,
-jaxraylib.CS_Rayl and jaxraylib.CS_Total
+Tests for dxraylib.CS_Compt, dxraylib.CS_Energy, dxraylib.CS_Photo,
+dxraylib.CS_Rayl and dxraylib.CS_Total
 """
 
 import numpy as np
@@ -12,7 +12,7 @@ from tests.utilities import CubicInterpolators
 
 class CS_Compt(CubicInterpolators):
     """
-    Base test class for jaxraylib.CS_Compt
+    Base test class for dxraylib.CS_Compt
     """
 
     data: tuple = (_CS_COMPT,)
@@ -21,13 +21,13 @@ class CS_Compt(CubicInterpolators):
 
 class TestCS_Compt(CS_Compt):
     """
-    Test class for jaxraylib.CS_Compt
+    Test class for dxraylib.CS_Compt
     """
 
 
 class CS_Energy(CubicInterpolators):
     """
-    Base test class for jaxraylib.CS_Energy
+    Base test class for dxraylib.CS_Energy
     """
 
     data: tuple = (_CS_ENERGY,)
@@ -36,13 +36,13 @@ class CS_Energy(CubicInterpolators):
 
 class TestCS_Energy(CS_Energy):
     """
-    Test class for jaxraylib.CS_Energy
+    Test class for dxraylib.CS_Energy
     """
 
 
 class CS_Photo(CubicInterpolators):
     """
-    Base test class for jaxraylib.CS_Photo
+    Base test class for dxraylib.CS_Photo
     """
 
     data: tuple = (_CS_PHOTO,)
@@ -51,13 +51,13 @@ class CS_Photo(CubicInterpolators):
 
 class TestCS_Photo(CS_Photo):
     """
-    Test class for jaxraylib.CS_Photo
+    Test class for dxraylib.CS_Photo
     """
 
 
 class CS_Rayl(CubicInterpolators):
     """
-    Base test class for jaxraylib.CS_Rayl
+    Base test class for dxraylib.CS_Rayl
     """
 
     data: tuple = (_CS_RAYL,)
@@ -66,13 +66,13 @@ class CS_Rayl(CubicInterpolators):
 
 class TestCS_Rayl(CS_Rayl):
     """
-    Test class for jaxraylib.CS_Rayl
+    Test class for dxraylib.CS_Rayl
     """
 
 
 class CS_Total(CubicInterpolators):
     """
-    Base test class for jaxraylib.CS_Total
+    Base test class for dxraylib.CS_Total
     """
 
     data: tuple = _CS_COMPT, _CS_PHOTO, _CS_RAYL
@@ -81,5 +81,5 @@ class CS_Total(CubicInterpolators):
 
 class TestCS_Total(CS_Total):
     """
-    Test class for jaxraylib.CS_Total
+    Test class for dxraylib.CS_Total
     """

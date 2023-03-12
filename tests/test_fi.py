@@ -1,5 +1,5 @@
 """
-Tests for jaxraylib.Fi
+Tests for dxraylib.Fi
 """
 
 from dxraylib.fi import _FI
@@ -9,7 +9,7 @@ from tests.utilities import CubicInterpolators
 
 class Fi(CubicInterpolators):
     """
-    Base test class for jaxraylib.Fi
+    Base test class for dxraylib.Fi
     """
 
     data = (_FI,)
@@ -18,5 +18,5 @@ class Fi(CubicInterpolators):
 
 class TestFi(Fi):
     """
-    Test class for jaxraylib.Fi
+    Test class for dxraylib.Fi
     """

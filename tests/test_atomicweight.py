@@ -1,5 +1,5 @@
 """
-Tests for jaxraylib.AtomicWeight
+Tests for dxraylib.AtomicWeight
 """
 
 from dxraylib.atomicweight import _AW
@@ -9,7 +9,7 @@ from tests.utilities import Indexors1D
 
 class AtomicWeight(Indexors1D):
     """
-    Base test class for jaxraylib.AtomicWeight
+    Base test class for dxraylib.AtomicWeight
     """
 
     size = _AW.size
@@ -17,5 +17,5 @@ class AtomicWeight(Indexors1D):
 
 class TestAtomicWeight(AtomicWeight):
     """
-    Test class for jaxraylib.AtomicWeight
+    Test class for dxraylib.AtomicWeight
     """

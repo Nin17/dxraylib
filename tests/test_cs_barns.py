@@ -15,47 +15,47 @@ from tests.test_scattering import DCS_Compt, DCS_Rayl
 
 class TestCSb_Total(CS_Total, AtomicWeight):
     """
-    Test class for jaxraylib.CSb_Total
+    Test class for dxraylib.CSb_Total
     """
 
 
 class TestCSb_Photo(CS_Photo, AtomicWeight):
     """
-    Test class for jaxraylib.CSb_Photo
+    Test class for dxraylib.CSb_Photo
     """
 
 
 class TestCSb_Rayl(CS_Rayl, AtomicWeight):
     """
-    Test class for jaxraylib.CSb_Rayl
+    Test class for dxraylib.CSb_Rayl
     """
 
 
 class TestCSb_Compt(CS_Compt, AtomicWeight):
     """
-    Test class for jaxraylib.CSb_Compt
+    Test class for dxraylib.CSb_Compt
     """
 
 
 class TestDCSb_Rayl(DCS_Rayl, AtomicWeight):
     """
-    Test class for jaxraylib.DCSb_Rayl
+    Test class for dxraylib.DCSb_Rayl
     """
 
 
 class TestDCSb_Compt(DCS_Compt, AtomicWeight):
     """
-    Test class for jaxraylib.DCSb_Compt
+    Test class for dxraylib.DCSb_Compt
     """
 
 
 class TestDCSPb_Rayl(DCSP_Rayl, AtomicWeight):
     """
-    Test class for jaxraylib.DCSPb_Rayl
+    Test class for dxraylib.DCSPb_Rayl
     """
 
 
 class TestDCSPb_Compt(DCSP_Compt, AtomicWeight):
     """
-    Test class for jaxraylib.DCSPb_Compt
+    Test class for dxraylib.DCSPb_Compt
     """

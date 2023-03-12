@@ -95,117 +95,117 @@ def compound(cls):
 @compound
 class TestCS_Total_CP(CS_Total):
     """
-    Test class for jaxraylib.CS_Total_CP
+    Test class for dxraylib.CS_Total_CP
     """
 
 
 @compound
 class TestCS_Photo_CP(CS_Photo):
     """
-    Test class for jaxraylib.CS_Photo_CP
+    Test class for dxraylib.CS_Photo_CP
     """
 
 
 @compound
 class TestCS_Rayl_CP(CS_Rayl):
     """
-    Test class for jaxraylib.CS_Rayl_CP
+    Test class for dxraylib.CS_Rayl_CP
     """
 
 
 @compound
 class TestCS_Compt_CP(CS_Compt):
     """
-    Test class for jaxraylib.CS_Compt_CP
+    Test class for dxraylib.CS_Compt_CP
     """
 
 
 @compound
 class TestCSb_Total_CP(CS_Total):
     """
-    Test class for jaxraylib.CSb_Total_CP
+    Test class for dxraylib.CSb_Total_CP
     """
 
 
 @compound
 class TestCSb_Photo_CP(CS_Photo):
     """
-    Test class for jaxraylib.CSb_Photo_CP
+    Test class for dxraylib.CSb_Photo_CP
     """
 
 
 @compound
 class TestCSb_Rayl_CP(CS_Rayl):
     """
-    Test class for jaxraylib.CSb_Rayl_CP
+    Test class for dxraylib.CSb_Rayl_CP
     """
 
 
 @compound
 class TestCSb_Compt_CP(CS_Compt):
     """
-    Test class for jaxraylib.CSb_Compt_CP
+    Test class for dxraylib.CSb_Compt_CP
     """
 
 
 @compound
 class TestCS_Energy_CP(CS_Energy):
     """
-    Test class for jaxraylib.CS_Energy_CP
+    Test class for dxraylib.CS_Energy_CP
     """
 
 
 @compound
 class TestDCS_Rayl_CP(DCS_Rayl):
     """
-    Test class for jaxraylib.DCS_Rayl_CP
+    Test class for dxraylib.DCS_Rayl_CP
     """
 
 
 @compound
 class TestDCS_Compt_CP(DCS_Compt):
     """
-    Test class for jaxraylib.DCS_Compt_CP
+    Test class for dxraylib.DCS_Compt_CP
     """
 
 
 @compound
 class TestDCSb_Rayl_CP(DCS_Rayl):
     """
-    Test class for jaxraylib.DCSb_Rayl_CP
+    Test class for dxraylib.DCSb_Rayl_CP
     """
 
 
 @compound
 class TestDCSb_Compt_CP(DCS_Compt):
     """
-    Test class for jaxraylib.DCSb_Compt_CP
+    Test class for dxraylib.DCSb_Compt_CP
     """
 
 
 @compound
 class TestDCSP_Rayl_CP(DCSP_Rayl):
     """
-    Test class for jaxraylib.DCSP_Rayl_CP
+    Test class for dxraylib.DCSP_Rayl_CP
     """
 
 
 @compound
 class TestDCSP_Compt_CP(DCSP_Compt):
     """
-    Test class for jaxraylib.DCSP_Compt_CP
+    Test class for dxraylib.DCSP_Compt_CP
     """
 
 
 @compound
 class TestDCSPb_Rayl_CP(DCSP_Rayl):
     """
-    Test class for jaxraylib.DCSPb_Rayl_CP
+    Test class for dxraylib.DCSPb_Rayl_CP
     """
 
 
 @compound
 class TestDCSPb_Compt_CP(DCSP_Compt):
     """
-    Test class for jaxraylib.DCSPb_Compt_CP
+    Test class for dxraylib.DCSPb_Compt_CP
     """

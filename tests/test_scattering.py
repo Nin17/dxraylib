@@ -12,7 +12,7 @@ from tests.utilities import Analytic, CubicInterpolators
 
 class FF_Rayl(CubicInterpolators):
     """
-    Base test class for jaxraylib.FF_Rayl
+    Base test class for dxraylib.FF_Rayl
     """
 
     data = (_FF_RAYL,)
@@ -25,7 +25,7 @@ class TestFF_Rayl(FF_Rayl):
 
 class SF_Compt(CubicInterpolators):
     """
-    Base test class for jaxraylib.SF_Compt
+    Base test class for dxraylib.SF_Compt
     """
 
     data = (_SF_COMPT,)
