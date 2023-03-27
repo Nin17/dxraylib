@@ -1,5 +1,5 @@
 """
-Anomalous Scattering Factor Fii
+Anomalous Scattering Factor Δf''
 """
 
 from __future__ import annotations
@@ -7,7 +7,7 @@ import os
 
 from ._interpolators import _interpolate
 from ._utilities import asarray, wrapped_partial
-from .config import ArrayLike, jit, jit_kwargs, NDArray, xp
+from .config import Array, ArrayLike, jit, jit_kwargs, xp
 
 _DIRPATH = os.path.dirname(__file__)
 _FII_PATH = os.path.join(_DIRPATH, "data/fii.npy")
@@ -16,21 +16,21 @@ _FII = xp.load(_FII_PATH)
 
 @wrapped_partial(jit, **jit_kwargs)
 @asarray()
-def Fii(Z: ArrayLike, E: ArrayLike) -> NDArray:
+def Fii(Z: ArrayLike, E: ArrayLike) -> Array:
     """
-    Anomalous Scattering Factor Fii
+    Anomalous scattering factor Δf''.
 
     Parameters
     ----------
-    Z : ArrayLike
+    Z : array_like
         atomic number
-    E : ArrayLike
+    E : array_like
         energy (keV)
 
     Returns
     -------
-    NDArray
-        anomalous scattering factor fii
+    array
+        anomalous scattering factor Δf''
 
     """
     return _interpolate(_FII, Z, E, E)

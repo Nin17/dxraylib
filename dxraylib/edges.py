@@ -1,4 +1,5 @@
-"""_summary_
+"""
+Absorption edge energies.
 """
 # TODO docstring
 
@@ -7,7 +8,7 @@ import os
 
 from ._indexors import _index2d
 from ._utilities import asarray, wrapped_partial
-from .config import ArrayLike, jit, jit_kwargs, NDArray, xp
+from .config import Array, ArrayLike, jit, jit_kwargs, xp
 
 _DIRPATH = os.path.dirname(__file__)
 _ED_PATH = os.path.join(_DIRPATH, "data/edges.npy")
@@ -16,19 +17,20 @@ _ED = xp.load(_ED_PATH)
 
 @wrapped_partial(jit, **jit_kwargs)
 @asarray()
-def EdgeEnergy(Z: ArrayLike, shell: ArrayLike) -> NDArray:
-    """_summary_
+def EdgeEnergy(Z: ArrayLike, shell: ArrayLike) -> Array:
+    """
+    Absorption edge energy (keV).
 
     Parameters
     ----------
-    Z : ArrayLike
-        _description_
-    shell : ArrayLike
-        _description_
+    Z : array_like
+        atomic number
+    shell : array_like
+        shell-type macro
 
     Returns
     -------
-    NDArray
-        _description_
+    array
+        absorption edge energy (keV)
     """
     return _index2d(_ED, Z - 1, shell)

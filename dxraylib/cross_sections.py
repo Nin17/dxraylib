@@ -8,7 +8,7 @@ import os
 
 from ._interpolators import _interpolate
 from ._utilities import asarray, wrapped_partial
-from .config import ArrayLike, jit, jit_kwargs, NDArray, xp
+from .config import Array, ArrayLike, jit, jit_kwargs, xp
 
 _DIRPATH = os.path.dirname(__file__)
 
@@ -24,23 +24,21 @@ _CS_RAYL = xp.load(_CS_RAYL_PATH)
 
 
 @wrapped_partial(jit, **jit_kwargs)
-def CS_Total(Z: ArrayLike, E: ArrayLike) -> NDArray:
+def CS_Total(Z: ArrayLike, E: ArrayLike) -> Array:
     """
-    Total cross section  (cm2/g)
-    (Photoelectric + Compton + Rayleigh)
+    Total cross-section  (cm²/g): Photoelectric + Compton + Rayleigh.
 
     Parameters
     ----------
-    Z : ArrayLike
+    Z : array_like
         atomic number
-    E : ArrayLike
+    E : array_like
         energy (keV)
 
     Returns
     -------
-    NDArray
-        Total cross section  (cm2/g)
-        (Photoelectric + Compton + Rayleigh)
+    array
+        Total cross-section  (cm²/g): Photoelectric + Compton + Rayleigh.
     """
     compton = CS_Compt(Z, E)
     photo = CS_Photo(Z, E)
@@ -50,82 +48,83 @@ def CS_Total(Z: ArrayLike, E: ArrayLike) -> NDArray:
 
 @wrapped_partial(jit, **jit_kwargs)
 @asarray()
-def CS_Photo(Z: ArrayLike, E: ArrayLike) -> NDArray:
+def CS_Photo(Z: ArrayLike, E: ArrayLike) -> Array:
     """
-    Photoelectric absorption cross section  (cm2/g)
+    Photoelectric absorption cross-section (cm²/g).
 
     Parameters
     ----------
-    Z : ArrayLike
+    Z : array_like
         atomic number
-    E : ArrayLike
+    E : array_like
         energy (keV)
 
     Returns
     -------
-    NDArray
-        Photoelectric absorption cross section  (cm2/g)
+    array
+        Photoelectric absorption cross-section (cm²/g)
     """
     return xp.exp(_interpolate(_CS_PHOTO, Z, E, xp.log(E * 1000.0)))
 
 
 @wrapped_partial(jit, **jit_kwargs)
 @asarray()
-def CS_Rayl(Z: ArrayLike, E: ArrayLike) -> NDArray:
+def CS_Rayl(Z: ArrayLike, E: ArrayLike) -> Array:
     """
-    Rayleigh scattering cross section  (cm2/g)
+    Rayleigh scattering cross-section (cm²/g)
 
     Parameters
     ----------
-    Z : ArrayLike
+    Z : array_like
         atomic number
-    E : ArrayLike
+    E : array_like
         energy (keV)
 
     Returns
     -------
-    NDArray
-        Rayleigh scattering cross section  (cm2/g)
+    array
+        Rayleigh scattering cross-section (cm²/g)
     """
     return xp.exp(_interpolate(_CS_RAYL, Z, E, xp.log(E * 1000.0)))
 
 
 @wrapped_partial(jit, **jit_kwargs)
 @asarray()
-def CS_Compt(Z: ArrayLike, E: ArrayLike) -> NDArray:
+def CS_Compt(Z: ArrayLike, E: ArrayLike) -> Array:
     """
-    Compton scattering cross section  (cm2/g)
+    Compton scattering cross-section (cm²/g)
 
     Parameters
     ----------
-    Z : ArrayLike
+    Z : array_like
         atomic number
-    E : ArrayLike
+    E : array_like
         energy (keV)
 
     Returns
     -------
-    NDArray
-        Compton scattering cross section  (cm2/g)
+    array
+        Compton scattering cross-section (cm²/g)
     """
     return xp.exp(_interpolate(_CS_COMPT, Z, E, xp.log(E * 1000.0)))
 
 
 @wrapped_partial(jit, **jit_kwargs)
 @asarray()
-def CS_Energy(Z: ArrayLike, E: ArrayLike) -> NDArray:
-    """_summary_
+def CS_Energy(Z: ArrayLike, E: ArrayLike) -> Array:
+    """
+    Mass-energy absorption cross-section (cm²/g).
 
     Parameters
     ----------
-    Z : ArrayLike
+    Z : array_like
         atomic number
-    E : ArrayLike
+    E : array_like
         energy (keV)
 
     Returns
     -------
-    NDArray
-        _description_
+    array
+        Mass-energy absorption cross-section (cm²/g)
     """
     return xp.exp(_interpolate(_CS_ENERGY, Z, E, xp.log(E)))

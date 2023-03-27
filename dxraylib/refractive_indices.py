@@ -3,9 +3,10 @@ Refractive indices: real component, imagingary component and complex
 """
 # TODO docstrings
 
-from ._utilities import asarray, _compound_data, wrapped_partial
+from ._compounds import _compound_data
+from ._utilities import asarray, wrapped_partial
 from .atomicweight import AtomicWeight as _AtomicWeight
-from .config import ArrayLike, jit, jit_kwargs, NDArray, xp
+from .config import Array, ArrayLike, jit, jit_kwargs, xp
 from .constants import HC_4PI, KD
 from .cross_sections import CS_Total as _CS_Total
 from .fi import Fi as _Fi
@@ -15,22 +16,23 @@ from .fi import Fi as _Fi
 @asarray(argnums=(0,), argnames=("compound"))
 def Refractive_Index_Re(
     compound: str, E: ArrayLike, density: ArrayLike
-) -> NDArray:
-    """_summary_
+) -> Array:
+    """
+    Real component of the refractive index: 1 - 𝞭.
 
     Parameters
     ----------
     compound : str
-        _description_
+        chemical formula or NIST compound name
     E : array_like
-        _description_
+        energy (keV)
     density : array_like
-        _description_
+        density (g/cm³)
 
     Returns
     -------
     array
-        _description_
+        real component of the refractive index: 1 - 𝞭
     """
     compound_dict = _compound_data(compound)
 
@@ -60,22 +62,23 @@ def Refractive_Index_Re(
 @asarray(argnums=(0,), argnames=("compound"))
 def Refractive_Index_Im(
     compound: str, E: ArrayLike, density: ArrayLike
-) -> NDArray:
-    """_summary_
+) -> Array:
+    """
+    Imaginary component of the refractive index: β.
 
     Parameters
     ----------
     compound : str
-        _description_
+        chemical formula or NIST compound name
     E : array_like
-        _description_
+        energy (keV)
     density : array_like
-        _description_
+        density (g/cm³)
 
     Returns
     -------
     array
-        _description_
+        imaginary component of the refractive index: β
     """
     compound_dict = _compound_data(compound)
     elements = xp.atleast_1d(xp.asarray(compound_dict["Elements"]))
@@ -95,22 +98,23 @@ def Refractive_Index(
     compound: str,
     E: ArrayLike,
     density: ArrayLike,
-) -> NDArray:
-    """_summary_
+) -> Array:
+    """
+    Complex refractive index: 1 - 𝞭 + iβ.
 
     Parameters
     ----------
     compound : str
-        _description_
+        chemical formula or NIST compound name
     E : array_like
-        _description_
+        energy (keV)
     density : array_like
-        _description_
+        density (g/cm³)
 
     Returns
     -------
     array
-        _description_
+        complex refractive index: 1 - 𝞭 + iβ
     """
     rv_real = Refractive_Index_Re(compound, E, density)
     rv_imag = Refractive_Index_Im(compound, E, density)

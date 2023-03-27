@@ -7,7 +7,7 @@ import os
 from ._interpolators import _interpolate
 from ._utilities import asarray, wrapped_partial
 from .atomicweight import AtomicWeight as _AtomicWeight
-from .config import ArrayLike, jit, jit_kwargs, NDArray, xp
+from .config import Array, ArrayLike, jit, jit_kwargs, xp
 from .constants import AVOGNUM, KEV2ANGST, MEC2, PI, RE2
 
 _DIRPATH = os.path.dirname(__file__)
@@ -19,11 +19,12 @@ _SF_COMPT_PATH = os.path.join(_DIRPATH, "data/SF.npy")
 _SF_COMPT = xp.load(_SF_COMPT_PATH)
 
 
+# TODO fix small values ~finfo(float64) & test
 @wrapped_partial(jit, **jit_kwargs)
 @asarray()
-def FF_Rayl(Z: ArrayLike, q: ArrayLike) -> NDArray:
+def FF_Rayl(Z: ArrayLike, q: ArrayLike) -> Array:
     """
-    Atomic form factor for Rayleigh scattering
+    Atomic form factor for Rayleigh scattering.
 
     Parameters
     ----------
@@ -35,16 +36,16 @@ def FF_Rayl(Z: ArrayLike, q: ArrayLike) -> NDArray:
     Returns
     -------
     array
-        Atomic form factor for Rayleigh scattering
+        atomic form factor for Rayleigh scattering
     """
     return _interpolate(_FF_RAYL, Z, q, q)
 
 
 @wrapped_partial(jit, **jit_kwargs)
 @asarray()
-def SF_Compt(Z: ArrayLike, q: ArrayLike) -> NDArray:
+def SF_Compt(Z: ArrayLike, q: ArrayLike) -> Array:
     """
-    Incoherent scattering function for Compton scattering
+    Incoherent scattering function for Compton scattering.
 
     Parameters
     ----------
@@ -56,16 +57,16 @@ def SF_Compt(Z: ArrayLike, q: ArrayLike) -> NDArray:
     Returns
     -------
     array
-        Incoherent scattering function for Compton scattering
+        incoherent scattering function for Compton scattering
     """
     return _interpolate(_SF_COMPT, Z, q, q)
 
 
 @wrapped_partial(jit, **jit_kwargs)
 @asarray()
-def DCS_Thoms(theta: ArrayLike) -> NDArray:
+def DCS_Thoms(theta: ArrayLike) -> Array:
     """
-    Thomson differential scattering cross section (barn)
+    Thomson differential scattering cross-section (barn).
 
     Parameters
     ----------
@@ -75,7 +76,7 @@ def DCS_Thoms(theta: ArrayLike) -> NDArray:
     Returns
     -------
     array
-        Thomson differential scattering cross section (barn)
+        Thomson differential scattering cross-section (barn)
     """
     cos_theta = xp.cos(theta)
     return (RE2 / 2.0) * (1.0 + cos_theta * cos_theta)
@@ -83,9 +84,9 @@ def DCS_Thoms(theta: ArrayLike) -> NDArray:
 
 @wrapped_partial(jit, **jit_kwargs)
 @asarray()
-def DCS_KN(E: ArrayLike, theta: ArrayLike) -> NDArray:
+def DCS_KN(E: ArrayLike, theta: ArrayLike) -> Array:
     """
-    Klein-Nishina differential scattering cross section (barn)
+    Klein-Nishina differential scattering cross-section (barn).
 
     Parameters
     ----------
@@ -97,7 +98,7 @@ def DCS_KN(E: ArrayLike, theta: ArrayLike) -> NDArray:
     Returns
     -------
     array
-        Klein-Nishina differential scattering cross section (barn)
+        Klein-Nishina differential scattering cross-section (barn)
     """
     e = E.reshape((*E.shape, *(1,) * theta.ndim))
     cos_theta = xp.cos(theta).reshape((*(1,) * E.ndim, *theta.shape))
@@ -114,23 +115,23 @@ def DCS_KN(E: ArrayLike, theta: ArrayLike) -> NDArray:
 
 @wrapped_partial(jit, **jit_kwargs)
 @asarray()
-def DCS_Rayl(Z: ArrayLike, E: ArrayLike, theta: ArrayLike) -> NDArray:
+def DCS_Rayl(Z: ArrayLike, E: ArrayLike, theta: ArrayLike) -> Array:
     """
-    Differential Rayleigh scattering cross section (cm2/g/sterad)
+    Rayleigh differential scattering cross-section (cm²/g/sr).
 
     Parameters
     ----------
     Z : array_like
         atomic number
     E : array_like
-        Energy (keV)
+        energy (keV)
     theta : array_like
         scattering polar angle (rad)
 
     Returns
     -------
     array
-        Differential Rayleigh scattering cross section (cm2/g/sterad)
+        Rayleigh differential scattering cross-section (cm²/g/sr)
     """
     q = MomentTransf(E, theta)
     ff_rayl = FF_Rayl(Z, q)
@@ -143,23 +144,23 @@ def DCS_Rayl(Z: ArrayLike, E: ArrayLike, theta: ArrayLike) -> NDArray:
 
 @wrapped_partial(jit, **jit_kwargs)
 @asarray()
-def DCS_Compt(Z: ArrayLike, E: ArrayLike, theta: ArrayLike) -> NDArray:
+def DCS_Compt(Z: ArrayLike, E: ArrayLike, theta: ArrayLike) -> Array:
     """
-    Differential Compton scattering cross section (cm2/g/sterad)
+    Compton differential scattering cross-section (cm²/g/sr).
 
     Parameters
     ----------
     Z : array_like
         atomic number
     E : array_like
-        Energy (keV)
+        energy (keV)
     theta : array_like
         scattering polar angle (rad)
 
     Returns
     -------
     array
-        Differential Compton scattering cross section (cm2/g/sterad)
+        Compton differential scattering cross-section (cm²/g/sr)
     """
     q = MomentTransf(E, theta)
     sf_compt = SF_Compt(Z, q)
@@ -170,21 +171,21 @@ def DCS_Compt(Z: ArrayLike, E: ArrayLike, theta: ArrayLike) -> NDArray:
 
 @wrapped_partial(jit, **jit_kwargs)
 @asarray()
-def MomentTransf(E: ArrayLike, theta: ArrayLike) -> NDArray:
+def MomentTransf(E: ArrayLike, theta: ArrayLike) -> Array:
     """
-    Momentum transfer for X-ray photon scattering (Å⁻¹)
+    Momentum transfer for X-ray photon scattering (Å⁻¹).
 
     Parameters
     ----------
     E : array_like
-        Energy (keV)
+        energy (keV)
     theta : array_like
         scattering polar angle (rad)
 
     Returns
     -------
     array
-        Momentum transfer for X-ray photon scattering (Å⁻¹)
+        momentum transfer for X-ray photon scattering (Å⁻¹)
     """
     e = E.reshape((*E.shape, *(1,) * theta.ndim))
     sin_theta = xp.sin(theta / 2.0).reshape((*(1,) * E.ndim, *theta.shape))
@@ -193,20 +194,19 @@ def MomentTransf(E: ArrayLike, theta: ArrayLike) -> NDArray:
 
 @wrapped_partial(jit, **jit_kwargs)
 @asarray()
-def CS_KN(E: ArrayLike) -> NDArray:
+def CS_KN(E: ArrayLike) -> Array:
     """
-    Total klein-Nishina cross section (barn)
+    Total Klein-Nishina cross-section (barn).
 
     Parameters
     ----------
     E : array_like
-        Energy  (keV)
+        energy (keV)
 
     Returns
     -------
     array
-        Total klein-Nishina cross section (barn)
-
+        total Klein-Nishina cross-section (barn)
     """
     a = xp.where(E > 0.0, E / MEC2, xp.nan)
     a3 = a * a * a
@@ -228,22 +228,21 @@ def CS_KN(E: ArrayLike) -> NDArray:
 
 @wrapped_partial(jit, **jit_kwargs)
 @asarray()
-def ComptonEnergy(E0: ArrayLike, theta: ArrayLike) -> NDArray[float]:
+def ComptonEnergy(E0: ArrayLike, theta: ArrayLike) -> Array:
     """
-    Photon energy after Compton scattering (keV)
+    Photon energy after Compton scattering (keV).
 
     Parameters
     ----------
     E0 : array_like
-        Photon Energy before scattering (keV)
+        photon energy before scattering (keV)
     theta : array_like
         scattering polar angle (rad)
 
     Returns
     -------
     array
-        Photon energy after Compton scattering (keV)
-
+        photon energy after Compton scattering (keV)
     """
     _e0 = E0.reshape((*E0.shape, *(1,) * theta.ndim))
     cos_theta = xp.cos(theta).reshape((*(1,) * E0.ndim, *theta.shape))

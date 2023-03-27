@@ -7,7 +7,7 @@ import os
 
 from ._indexors import _index2d
 from ._utilities import asarray, wrapped_partial
-from .config import ArrayLike, jit, jit_kwargs, NDArray, xp
+from .config import Array, ArrayLike, jit, jit_kwargs, xp
 
 _DIRPATH = os.path.dirname(__file__)
 _AR_PATH = os.path.join(_DIRPATH, "data/auger_rates.npy")
@@ -18,39 +18,41 @@ _AY = xp.load(_AY_PATH)
 
 @wrapped_partial(jit, **jit_kwargs)
 @asarray()
-def AugerRate(Z: ArrayLike, auger_trans: ArrayLike) -> NDArray:
-    """_summary_
+def AugerRate(Z: ArrayLike, auger_trans: ArrayLike) -> Array:
+    """
+    Non-radiative rate.
 
     Parameters
     ----------
-    Z : ArrayLike
-        _description_
-    auger_trans : ArrayLike
-        _description_
+    Z : array_like
+        atomic number
+    auger_trans : array_like
+        Auger-type macro corresponding with the electrons involved
 
     Returns
     -------
-    NDArray
-        _description_
+    array
+        non-radiative rate
     """
     return _index2d(_AR, Z - 6, auger_trans)
 
 
 @wrapped_partial(jit, **jit_kwargs)
 @asarray()
-def AugerYield(Z: ArrayLike, shell: ArrayLike) -> NDArray:
-    """_summary_
+def AugerYield(Z: ArrayLike, shell: ArrayLike) -> Array:
+    """
+    Auger yield.
 
     Parameters
     ----------
-    Z : ArrayLike
-        _description_
-    shell : ArrayLike
-        _description_
+    Z : array_like
+        atomic number
+    shell : array_like
+        shell-type macro
 
     Returns
     -------
-    NDArray
-        _description_
+    array
+        auger yield
     """
     return _index2d(_AY, Z - 3, shell)
