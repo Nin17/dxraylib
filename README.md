@@ -1,8 +1,6 @@
----
-header-includes:
+<!-- header-includes:
  - \usepackage{fvextra}
- - \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,breakanywhere,commandchars=\\\{\}}
----
+ - \DefineVerbatimEnvironment{Highlighting}{Verbatim}{breaklines,breakanywhere,commandchars=\\\{\}} -->
 
 <!--  pandoc --pdf-engine=xelatex --highlight-style breezedark -V colorlinks README.md -o README.pdf -->
 
