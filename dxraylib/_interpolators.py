@@ -7,13 +7,13 @@ Base function for cubic spline interpolation of data using _splint
 
 from ._splint import _splint
 from ._utilities import wrapped_partial
-from .config import ArrayLike, jit, jit_kwargs, NDArray, xp
+from .config import Array, ArrayLike, jit, jit_kwargs, xp
 
 
 @wrapped_partial(jit, **jit_kwargs)
 def _args_splint(
     index: ArrayLike, value: ArrayLike, value_scaled: ArrayLike
-) -> tuple[NDArray, ...]:
+) -> tuple[Array, ...]:
     _index = xp.asarray(index)
     _value = xp.asarray(value)
     _value_scaled = xp.asarray(value_scaled)
@@ -24,13 +24,13 @@ def _args_splint(
 
 @wrapped_partial(jit, **jit_kwargs)
 def _interpolate(
-    data: NDArray, Z: ArrayLike, E: ArrayLike, E2: ArrayLike
-) -> NDArray:
+    data: Array, Z: ArrayLike, E: ArrayLike, E2: ArrayLike
+) -> Array:
     """_summary_
 
     Parameters
     ----------
-    data : NDArray
+    data : array
         _description_
     Z : ArrayLike
         _description_
@@ -41,10 +41,11 @@ def _interpolate(
 
     Returns
     -------
-    NDArray
+    array
         _description_
     """
     z, e, _z, _e = _args_splint(Z, E, E2)
+
     output = _splint(
         data[xp.where((z >= 1) & (z <= data.shape[0]), z - 1, 0)], e
     )
@@ -52,10 +53,3 @@ def _interpolate(
         (_z >= 1) & (_z <= data.shape[0]) & (_e >= 0), output, xp.nan
     )
     return output
-
-
-# TODO another implementation with inplace operations
-@wrapped_partial(jit, **jit_kwargs)
-def _interpolate2(data, Z, E, E2):
-    z, e, _z, _e = _args_splint(Z, E, E2)
-    ...
