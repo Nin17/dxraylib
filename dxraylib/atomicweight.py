@@ -7,7 +7,7 @@ import os
 
 from ._indexors import _index1d
 from ._utilities import asarray, wrapped_partial
-from .config import ArrayLike, jit, jit_kwargs, NDArray, xp
+from .config import Array, ArrayLike, jit, jit_kwargs, xp
 
 _DIRPATH = os.path.dirname(__file__)
 _AW_PATH = os.path.join(_DIRPATH, "data/atomic_weight.npy")
@@ -16,9 +16,9 @@ _AW = xp.load(_AW_PATH)
 
 @wrapped_partial(jit, **jit_kwargs)
 @asarray()
-def AtomicWeight(Z: ArrayLike) -> NDArray:
+def AtomicWeight(Z: ArrayLike) -> Array:
     """
-    Standard atomic weight
+    Standard atomic weight (g/mol).
 
     Parameters
     ----------
@@ -28,7 +28,6 @@ def AtomicWeight(Z: ArrayLike) -> NDArray:
     Returns
     -------
     array
-        atomic weight
-
+        standard atomic weight (g/mol)
     """
-    return _index1d(_AW, Z-1)
+    return _index1d(_AW, Z - 1)
