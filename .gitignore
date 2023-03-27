@@ -1,8 +1,9 @@
 **/__pycache__
-**/jaxraylib.egg-info
+**/dxraylib.egg-info
 **/*.DS_Store
 **/.pytest_cache
 **/.mypy_cache
 **/.vscode
 **/.ipynb_checkpoints
 **/htmlcov
+**/dev
