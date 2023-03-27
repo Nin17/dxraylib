@@ -6,23 +6,23 @@ Cubic spline interpolation from x, y & y'' data
 from __future__ import annotations
 
 from ._utilities import wrapped_partial
-from .config import ArrayLike, jit, jit_kwargs, NDArray, xp
+from .config import Array, ArrayLike, jit, jit_kwargs, xp
 
 
 @wrapped_partial(jit, **jit_kwargs)
-def _splint(data: NDArray, x: ArrayLike) -> NDArray:
+def _splint(data: Array, x: ArrayLike) -> Array:
     """_summary_
 
     Parameters
     ----------
-    data : NDArray
+    data : array
         _description_
-    x : ArrayLike
+    x : array_like
         _description_
 
     Returns
     -------
-    NDArray
+    array
         _description_
     """
     x = xp.asarray(x)
@@ -33,27 +33,26 @@ def _splint(data: NDArray, x: ArrayLike) -> NDArray:
     )  # "right" - 1 # TODO try out different combos
 
     indices = xp.indices(klo.shape)[: data.ndim - 2]
-    h = data[..., 0, :][(*indices, klo + 1)] - data[..., 0, :][(*indices, klo)]
+
+    # TODO check this doesn't change the results
+    # Prevent out of bounds index error with numpy
+    klo_0 = xp.where(klo < data.shape[-1] - 2, klo, 0)
+    klo_1 = xp.where(klo < data.shape[-1] - 1, klo + 1, 0)
+
+    h = data[..., 0, :][(*indices, klo_1)] - data[..., 0, :][(*indices, klo_0)]
     # ??? should i do this instead? avoid error warnings
     # h = xp.where(~xp.isnan(h), h, xp.nan)
-    a = (data[..., 0, :][(*indices, klo + 1)] - x) / h
-    b = (x - data[..., 0, :][(*indices, klo)]) / h
+    a = (data[..., 0, :][(*indices, klo_1)] - x) / h
+    b = (x - data[..., 0, :][(*indices, klo_0)]) / h
 
-    d1_b = data[..., 1, :][(*indices, klo)]
-    d1_a = data[..., 1, :][(*indices, klo + 1)]
+    d1_b = data[..., 1, :][(*indices, klo_0)]
+    d1_a = data[..., 1, :][(*indices, klo_1)]
 
-    d2_b = data[..., 2, :][(*indices, klo)]
-    d2_a = data[..., 2, :][(*indices, klo + 1)]
+    d2_b = data[..., 2, :][(*indices, klo_0)]
+    d2_a = data[..., 2, :][(*indices, klo_1)]
     output = (
         a * d1_b
         + b * d1_a
         + ((a * a * a - a) * d2_b + (b * b * b - b) * d2_a) * (h * h) / 6.0
     )
-    # TODO where h == 0
-    # return output
-    # TODO check this works
-    if xp.__name__ == "jax.numpy":
-        return xp.where(h != 0, output, (d1_a + d1_b) / 2)
-    output = xp.asarray(output)
-    output[h == 0] = (d1_a + d1_b) / 2
-    return output
+    return xp.where(h != 0, output, (d1_a + d1_b) / 2)
