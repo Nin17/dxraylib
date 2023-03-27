@@ -1,4 +1,7 @@
 xp = "jax.numpy"
 jit = "jax.jit"
-NDArray = "jax._src.typing.ArrayLike"
-double = true
+Array = "jax.Array"
+ArrayLike = "jax.typing.ArrayLike"
+double= true
+
+[kwargs.kwargs]
