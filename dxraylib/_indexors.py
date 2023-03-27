@@ -1,4 +1,5 @@
-"""_summary_
+"""
+helper functions to index 1D & 2D datasets
 """
 # TODO type hinting
 # TODO docstring
@@ -20,6 +21,6 @@ def _index2d(data, a, b):
     _a = xp.asarray(a).reshape((*a.shape, *(1,) * b.ndim))
     _b = xp.asarray(b).reshape((*(1,) * a.ndim, *b.shape))
     condition_a = (_a >= 0) & (_a < data.shape[0])
-    condition_b = (_b >= 0) & (b < data.shape[1])
+    condition_b = (_b >= 0) & (_b < data.shape[1])
     output = data[xp.where(condition_a, _a, 0), xp.where(condition_b, _b, 0)]
     return xp.where(condition_a & condition_b, output, xp.nan)
