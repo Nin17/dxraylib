@@ -51,6 +51,7 @@ from .fii import Fii
 from .fluor_yield import FluorYield
 from .jumpy import JumpFactor
 from .polarized import DCSP_Compt, DCSP_KN, DCSP_Rayl, DCSP_Thoms
+from .radrate import RadRate
 from .refractive_indices import (
     Refractive_Index,
     Refractive_Index_Im,
@@ -69,3 +70,8 @@ from .scattering import (
 )
 from .xraylib_nist_compounds import GetCompoundDataNISTByName
 from .xraylib_parser import CompoundParser, AtomicNumberToSymbol
+from .xraylib_radionuclides import (
+    GetRadioNuclideDataByIndex,
+    GetRadioNuclideDataByName,
+    GetRadioNuclideDataList,
+)
