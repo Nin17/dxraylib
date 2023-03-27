@@ -1,0 +1,89 @@
+\indexentry{AtomicWeight() (in module dxraylib)@\spxentry{AtomicWeight()}\spxextra{in module dxraylib}|hyperpage}{3}
+\indexentry{ElementDensity() (in module dxraylib)@\spxentry{ElementDensity()}\spxextra{in module dxraylib}|hyperpage}{3}
+\indexentry{CS\_Total() (in module dxraylib)@\spxentry{CS\_Total()}\spxextra{in module dxraylib}|hyperpage}{4}
+\indexentry{CS\_Photo() (in module dxraylib)@\spxentry{CS\_Photo()}\spxextra{in module dxraylib}|hyperpage}{4}
+\indexentry{CS\_Rayl() (in module dxraylib)@\spxentry{CS\_Rayl()}\spxextra{in module dxraylib}|hyperpage}{4}
+\indexentry{CS\_Compt() (in module dxraylib)@\spxentry{CS\_Compt()}\spxextra{in module dxraylib}|hyperpage}{5}
+\indexentry{CSb\_Total() (in module dxraylib)@\spxentry{CSb\_Total()}\spxextra{in module dxraylib}|hyperpage}{5}
+\indexentry{CSb\_Photo() (in module dxraylib)@\spxentry{CSb\_Photo()}\spxextra{in module dxraylib}|hyperpage}{5}
+\indexentry{CSb\_Rayl() (in module dxraylib)@\spxentry{CSb\_Rayl()}\spxextra{in module dxraylib}|hyperpage}{6}
+\indexentry{CSb\_Compt() (in module dxraylib)@\spxentry{CSb\_Compt()}\spxextra{in module dxraylib}|hyperpage}{6}
+\indexentry{CS\_KN() (in module dxraylib)@\spxentry{CS\_KN()}\spxextra{in module dxraylib}|hyperpage}{6}
+\indexentry{CS\_Energy() (in module dxraylib)@\spxentry{CS\_Energy()}\spxextra{in module dxraylib}|hyperpage}{6}
+\indexentry{CS\_Total\_CP() (in module dxraylib)@\spxentry{CS\_Total\_CP()}\spxextra{in module dxraylib}|hyperpage}{7}
+\indexentry{CS\_Photo\_CP() (in module dxraylib)@\spxentry{CS\_Photo\_CP()}\spxextra{in module dxraylib}|hyperpage}{7}
+\indexentry{CS\_Rayl\_CP() (in module dxraylib)@\spxentry{CS\_Rayl\_CP()}\spxextra{in module dxraylib}|hyperpage}{7}
+\indexentry{CS\_Compt\_CP() (in module dxraylib)@\spxentry{CS\_Compt\_CP()}\spxextra{in module dxraylib}|hyperpage}{8}
+\indexentry{CSb\_Total\_CP() (in module dxraylib)@\spxentry{CSb\_Total\_CP()}\spxextra{in module dxraylib}|hyperpage}{8}
+\indexentry{CSb\_Photo\_CP() (in module dxraylib)@\spxentry{CSb\_Photo\_CP()}\spxextra{in module dxraylib}|hyperpage}{8}
+\indexentry{CSb\_Rayl\_CP() (in module dxraylib)@\spxentry{CSb\_Rayl\_CP()}\spxextra{in module dxraylib}|hyperpage}{9}
+\indexentry{CSb\_Compt\_CP() (in module dxraylib)@\spxentry{CSb\_Compt\_CP()}\spxextra{in module dxraylib}|hyperpage}{9}
+\indexentry{CS\_Energy\_CP() (in module dxraylib)@\spxentry{CS\_Energy\_CP()}\spxextra{in module dxraylib}|hyperpage}{9}
+\indexentry{DCS\_Thoms() (in module dxraylib)@\spxentry{DCS\_Thoms()}\spxextra{in module dxraylib}|hyperpage}{10}
+\indexentry{DCS\_KN() (in module dxraylib)@\spxentry{DCS\_KN()}\spxextra{in module dxraylib}|hyperpage}{10}
+\indexentry{DCS\_Rayl() (in module dxraylib)@\spxentry{DCS\_Rayl()}\spxextra{in module dxraylib}|hyperpage}{10}
+\indexentry{DCSb\_Rayl() (in module dxraylib)@\spxentry{DCSb\_Rayl()}\spxextra{in module dxraylib}|hyperpage}{11}
+\indexentry{DCS\_Compt() (in module dxraylib)@\spxentry{DCS\_Compt()}\spxextra{in module dxraylib}|hyperpage}{11}
+\indexentry{DCSb\_Compt() (in module dxraylib)@\spxentry{DCSb\_Compt()}\spxextra{in module dxraylib}|hyperpage}{11}
+\indexentry{DCS\_Rayl\_CP() (in module dxraylib)@\spxentry{DCS\_Rayl\_CP()}\spxextra{in module dxraylib}|hyperpage}{12}
+\indexentry{DCS\_Compt\_CP() (in module dxraylib)@\spxentry{DCS\_Compt\_CP()}\spxextra{in module dxraylib}|hyperpage}{12}
+\indexentry{DCSb\_Rayl\_CP() (in module dxraylib)@\spxentry{DCSb\_Rayl\_CP()}\spxextra{in module dxraylib}|hyperpage}{13}
+\indexentry{DCSb\_Compt\_CP() (in module dxraylib)@\spxentry{DCSb\_Compt\_CP()}\spxextra{in module dxraylib}|hyperpage}{13}
+\indexentry{DCSP\_Thoms() (in module dxraylib)@\spxentry{DCSP\_Thoms()}\spxextra{in module dxraylib}|hyperpage}{13}
+\indexentry{DCSP\_KN() (in module dxraylib)@\spxentry{DCSP\_KN()}\spxextra{in module dxraylib}|hyperpage}{14}
+\indexentry{DCSP\_Rayl() (in module dxraylib)@\spxentry{DCSP\_Rayl()}\spxextra{in module dxraylib}|hyperpage}{14}
+\indexentry{DCSP\_Compt() (in module dxraylib)@\spxentry{DCSP\_Compt()}\spxextra{in module dxraylib}|hyperpage}{14}
+\indexentry{DCSPb\_Rayl() (in module dxraylib)@\spxentry{DCSPb\_Rayl()}\spxextra{in module dxraylib}|hyperpage}{15}
+\indexentry{DCSPb\_Compt() (in module dxraylib)@\spxentry{DCSPb\_Compt()}\spxextra{in module dxraylib}|hyperpage}{15}
+\indexentry{DCSP\_Rayl\_CP() (in module dxraylib)@\spxentry{DCSP\_Rayl\_CP()}\spxextra{in module dxraylib}|hyperpage}{16}
+\indexentry{DCSP\_Compt\_CP() (in module dxraylib)@\spxentry{DCSP\_Compt\_CP()}\spxextra{in module dxraylib}|hyperpage}{16}
+\indexentry{DCSPb\_Rayl\_CP() (in module dxraylib)@\spxentry{DCSPb\_Rayl\_CP()}\spxextra{in module dxraylib}|hyperpage}{16}
+\indexentry{DCSPb\_Compt\_CP() (in module dxraylib)@\spxentry{DCSPb\_Compt\_CP()}\spxextra{in module dxraylib}|hyperpage}{17}
+\indexentry{FF\_Rayl() (in module dxraylib)@\spxentry{FF\_Rayl()}\spxextra{in module dxraylib}|hyperpage}{18}
+\indexentry{SF\_Compt() (in module dxraylib)@\spxentry{SF\_Compt()}\spxextra{in module dxraylib}|hyperpage}{18}
+\indexentry{MomentTransf() (in module dxraylib)@\spxentry{MomentTransf()}\spxextra{in module dxraylib}|hyperpage}{18}
+\indexentry{Fi() (in module dxraylib)@\spxentry{Fi()}\spxextra{in module dxraylib}|hyperpage}{19}
+\indexentry{Fii() (in module dxraylib)@\spxentry{Fii()}\spxextra{in module dxraylib}|hyperpage}{19}
+\indexentry{FluorYield() (in module dxraylib)@\spxentry{FluorYield()}\spxextra{in module dxraylib}|hyperpage}{20}
+\indexentry{AugerYield() (in module dxraylib)@\spxentry{AugerYield()}\spxextra{in module dxraylib}|hyperpage}{20}
+\indexentry{CosKronTransProb() (in module dxraylib)@\spxentry{CosKronTransProb()}\spxextra{in module dxraylib}|hyperpage}{21}
+\indexentry{EdgeEnergy() (in module dxraylib)@\spxentry{EdgeEnergy()}\spxextra{in module dxraylib}|hyperpage}{21}
+\indexentry{JumpFactor() (in module dxraylib)@\spxentry{JumpFactor()}\spxextra{in module dxraylib}|hyperpage}{21}
+\indexentry{RadRate() (in module dxraylib)@\spxentry{RadRate()}\spxextra{in module dxraylib}|hyperpage}{22}
+\indexentry{AugerRate() (in module dxraylib)@\spxentry{AugerRate()}\spxextra{in module dxraylib}|hyperpage}{22}
+\indexentry{AtomicLevelWidth() (in module dxraylib)@\spxentry{AtomicLevelWidth()}\spxextra{in module dxraylib}|hyperpage}{23}
+\indexentry{ComptonEnergy() (in module dxraylib)@\spxentry{ComptonEnergy()}\spxextra{in module dxraylib}|hyperpage}{23}
+\indexentry{Refractive\_Index\_Re() (in module dxraylib)@\spxentry{Refractive\_Index\_Re()}\spxextra{in module dxraylib}|hyperpage}{23}
+\indexentry{Refractive\_Index\_Im() (in module dxraylib)@\spxentry{Refractive\_Index\_Im()}\spxextra{in module dxraylib}|hyperpage}{24}
+\indexentry{Refractive\_Index() (in module dxraylib)@\spxentry{Refractive\_Index()}\spxextra{in module dxraylib}|hyperpage}{24}
+\indexentry{compoundData (class in dxraylib.xraylib\_parser)@\spxentry{compoundData}\spxextra{class in dxraylib.xraylib\_parser}|hyperpage}{25}
+\indexentry{Elements (dxraylib.xraylib\_parser.compoundData attribute)@\spxentry{Elements}\spxextra{dxraylib.xraylib\_parser.compoundData attribute}|hyperpage}{25}
+\indexentry{massFractions (dxraylib.xraylib\_parser.compoundData attribute)@\spxentry{massFractions}\spxextra{dxraylib.xraylib\_parser.compoundData attribute}|hyperpage}{25}
+\indexentry{molarMass (dxraylib.xraylib\_parser.compoundData attribute)@\spxentry{molarMass}\spxextra{dxraylib.xraylib\_parser.compoundData attribute}|hyperpage}{25}
+\indexentry{nAtoms (dxraylib.xraylib\_parser.compoundData attribute)@\spxentry{nAtoms}\spxextra{dxraylib.xraylib\_parser.compoundData attribute}|hyperpage}{25}
+\indexentry{nAtomsAll (dxraylib.xraylib\_parser.compoundData attribute)@\spxentry{nAtomsAll}\spxextra{dxraylib.xraylib\_parser.compoundData attribute}|hyperpage}{25}
+\indexentry{nElements (dxraylib.xraylib\_parser.compoundData attribute)@\spxentry{nElements}\spxextra{dxraylib.xraylib\_parser.compoundData attribute}|hyperpage}{25}
+\indexentry{CompoundParser() (in module dxraylib)@\spxentry{CompoundParser()}\spxextra{in module dxraylib}|hyperpage}{26}
+\indexentry{AtomicNumberToSymbol() (in module dxraylib)@\spxentry{AtomicNumberToSymbol()}\spxextra{in module dxraylib}|hyperpage}{26}
+\indexentry{compoundDataNIST (class in dxraylib.xraylib\_nist\_compounds)@\spxentry{compoundDataNIST}\spxextra{class in dxraylib.xraylib\_nist\_compounds}|hyperpage}{26}
+\indexentry{Elements (dxraylib.xraylib\_nist\_compounds.compoundDataNIST attribute)@\spxentry{Elements}\spxextra{dxraylib.xraylib\_nist\_compounds.compoundDataNIST attribute}|hyperpage}{26}
+\indexentry{density (dxraylib.xraylib\_nist\_compounds.compoundDataNIST attribute)@\spxentry{density}\spxextra{dxraylib.xraylib\_nist\_compounds.compoundDataNIST attribute}|hyperpage}{26}
+\indexentry{massFractions (dxraylib.xraylib\_nist\_compounds.compoundDataNIST attribute)@\spxentry{massFractions}\spxextra{dxraylib.xraylib\_nist\_compounds.compoundDataNIST attribute}|hyperpage}{27}
+\indexentry{nElements (dxraylib.xraylib\_nist\_compounds.compoundDataNIST attribute)@\spxentry{nElements}\spxextra{dxraylib.xraylib\_nist\_compounds.compoundDataNIST attribute}|hyperpage}{27}
+\indexentry{name (dxraylib.xraylib\_nist\_compounds.compoundDataNIST attribute)@\spxentry{name}\spxextra{dxraylib.xraylib\_nist\_compounds.compoundDataNIST attribute}|hyperpage}{27}
+\indexentry{GetCompoundDataNISTByName() (in module dxraylib)@\spxentry{GetCompoundDataNISTByName()}\spxextra{in module dxraylib}|hyperpage}{27}
+\indexentry{radioNuclideData (class in dxraylib.xraylib\_radionuclides)@\spxentry{radioNuclideData}\spxextra{class in dxraylib.xraylib\_radionuclides}|hyperpage}{27}
+\indexentry{A (dxraylib.xraylib\_radionuclides.radioNuclideData attribute)@\spxentry{A}\spxextra{dxraylib.xraylib\_radionuclides.radioNuclideData attribute}|hyperpage}{27}
+\indexentry{GammaEnergies (dxraylib.xraylib\_radionuclides.radioNuclideData attribute)@\spxentry{GammaEnergies}\spxextra{dxraylib.xraylib\_radionuclides.radioNuclideData attribute}|hyperpage}{27}
+\indexentry{GammaIntensities (dxraylib.xraylib\_radionuclides.radioNuclideData attribute)@\spxentry{GammaIntensities}\spxextra{dxraylib.xraylib\_radionuclides.radioNuclideData attribute}|hyperpage}{27}
+\indexentry{N (dxraylib.xraylib\_radionuclides.radioNuclideData attribute)@\spxentry{N}\spxextra{dxraylib.xraylib\_radionuclides.radioNuclideData attribute}|hyperpage}{27}
+\indexentry{XrayIntensities (dxraylib.xraylib\_radionuclides.radioNuclideData attribute)@\spxentry{XrayIntensities}\spxextra{dxraylib.xraylib\_radionuclides.radioNuclideData attribute}|hyperpage}{27}
+\indexentry{XrayLines (dxraylib.xraylib\_radionuclides.radioNuclideData attribute)@\spxentry{XrayLines}\spxextra{dxraylib.xraylib\_radionuclides.radioNuclideData attribute}|hyperpage}{27}
+\indexentry{Z (dxraylib.xraylib\_radionuclides.radioNuclideData attribute)@\spxentry{Z}\spxextra{dxraylib.xraylib\_radionuclides.radioNuclideData attribute}|hyperpage}{27}
+\indexentry{Z\_xray (dxraylib.xraylib\_radionuclides.radioNuclideData attribute)@\spxentry{Z\_xray}\spxextra{dxraylib.xraylib\_radionuclides.radioNuclideData attribute}|hyperpage}{27}
+\indexentry{nGammas (dxraylib.xraylib\_radionuclides.radioNuclideData attribute)@\spxentry{nGammas}\spxextra{dxraylib.xraylib\_radionuclides.radioNuclideData attribute}|hyperpage}{28}
+\indexentry{nXrays (dxraylib.xraylib\_radionuclides.radioNuclideData attribute)@\spxentry{nXrays}\spxextra{dxraylib.xraylib\_radionuclides.radioNuclideData attribute}|hyperpage}{28}
+\indexentry{name (dxraylib.xraylib\_radionuclides.radioNuclideData attribute)@\spxentry{name}\spxextra{dxraylib.xraylib\_radionuclides.radioNuclideData attribute}|hyperpage}{28}
+\indexentry{GetRadioNuclideDataByName() (in module dxraylib)@\spxentry{GetRadioNuclideDataByName()}\spxextra{in module dxraylib}|hyperpage}{28}
+\indexentry{GetRadioNuclideDataByIndex() (in module dxraylib)@\spxentry{GetRadioNuclideDataByIndex()}\spxextra{in module dxraylib}|hyperpage}{28}
+\indexentry{GetRadioNuclideDataList() (in module dxraylib)@\spxentry{GetRadioNuclideDataList()}\spxextra{in module dxraylib}|hyperpage}{28}

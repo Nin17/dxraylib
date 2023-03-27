@@ -1,0 +1,286 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>Scattering factors &#8212; dxraylib 0.0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="X-ray fluorescence line energies" href="line_energies.html" />
+    <link rel="prev" title="Polarized differential scattering cross-sections" href="polarized.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="scattering-factors">
+<h1>Scattering factors<a class="headerlink" href="#scattering-factors" title="Permalink to this heading">¶</a></h1>
+<p><a class="reference external" href="https://github.com/tschoonj/xraylib/wiki/The-xraylib-API-list-of-all-functions#scattering-factors">Relevant section in the xraylib documentation</a>.</p>
+<p>Included from the xraylib documentation:
+In this section, we introduce the momentum transfer parameter q, which is used
+in several of the following functions. It should be noted that several
+definitions can be found of this parameter throughout the scientific
+literature, which vary mostly depending on the community where it is used. The
+crystallography and diffraction community for example, use the following
+definition:</p>
+<div class="math notranslate nohighlight">
+\[q = \frac{4\pi \times sin(\theta)}{\lambda}\]</div>
+<p>with θ the angle between the incident X-ray and the crystal scattering planes
+according to Bragg’s law, and λ the wavelength. xraylib (and dxraylib) uses
+however, a different definition, in which θ corresponds to the scattering angle
+, which in case of Bragg scattering is equal to twice the angle from the
+previous definition. This new definition has the advantage of being useful
+when working with amorphous materials, as well as with incoherent scattering.
+Furthermore, our definition drops the 4π scale factor, in line with the
+definition by Hubbell et al in Atomic form factors, incoherent scattering
+functions, and photon scattering cross-sections, J. Phys. Chem. Ref. Data,
+Vol.4, No. 3, 1975:</p>
+<div class="math notranslate nohighlight">
+\[q = Ehc \times sin(\frac{\theta}{2}) \times 10^{8}\]</div>
+<p>with E the energy of the photon, h Planck’s constant and c the speed of light.
+The unit of the returned momentum transfer is then Å⁻¹.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py" id="dxraylib.FF_Rayl">
+<span class="sig-prename descclassname"><span class="pre">dxraylib.</span></span><span class="sig-name descname"><span class="pre">FF_Rayl</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Z</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Array</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool_</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">number</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Array</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool_</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">number</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Array</span></span></span><a class="headerlink" href="#dxraylib.FF_Rayl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Atomic form factor for Rayleigh scattering.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Z</strong> (<em>array_like</em>) – atomic number</p></li>
+<li><p><strong>q</strong> (<em>array_like</em>) – momentum transfer (Å⁻¹)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>atomic form factor for Rayleigh scattering</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py" id="dxraylib.SF_Compt">
+<span class="sig-prename descclassname"><span class="pre">dxraylib.</span></span><span class="sig-name descname"><span class="pre">SF_Compt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Z</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Array</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool_</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">number</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">q</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Array</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool_</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">number</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Array</span></span></span><a class="headerlink" href="#dxraylib.SF_Compt" title="Permalink to this definition">¶</a></dt>
+<dd><p>Incoherent scattering function for Compton scattering.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Z</strong> (<em>array_like</em>) – atomic number</p></li>
+<li><p><strong>q</strong> (<em>array_like</em>) – momentum transfer  (Å⁻¹)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>incoherent scattering function for Compton scattering</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py" id="dxraylib.MomentTransf">
+<span class="sig-prename descclassname"><span class="pre">dxraylib.</span></span><span class="sig-name descname"><span class="pre">MomentTransf</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">E</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Array</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool_</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">number</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Array</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool_</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">number</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Array</span></span></span><a class="headerlink" href="#dxraylib.MomentTransf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Momentum transfer for X-ray photon scattering (Å⁻¹).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>E</strong> (<em>array_like</em>) – energy (keV)</p></li>
+<li><p><strong>theta</strong> (<em>array_like</em>) – scattering polar angle (rad)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>momentum transfer for X-ray photon scattering (Å⁻¹)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py" id="dxraylib.Fi">
+<span class="sig-prename descclassname"><span class="pre">dxraylib.</span></span><span class="sig-name descname"><span class="pre">Fi</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Z</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Array</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool_</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">number</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">E</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Array</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool_</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">number</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Array</span></span></span><a class="headerlink" href="#dxraylib.Fi" title="Permalink to this definition">¶</a></dt>
+<dd><p>Anomalous scattering factor Δf’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Z</strong> (<em>array_like</em>) – atomic number</p></li>
+<li><p><strong>E</strong> (<em>array_like</em>) – energy (keV)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>anomalous scattering factor Δf’</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+</dd></dl>
+
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<dl class="py function">
+<dt class="sig sig-object py" id="dxraylib.Fii">
+<span class="sig-prename descclassname"><span class="pre">dxraylib.</span></span><span class="sig-name descname"><span class="pre">Fii</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">Z</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Array</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool_</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">number</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">E</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">Array</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">ndarray</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool_</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">number</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">bool</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">complex</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Array</span></span></span><a class="headerlink" href="#dxraylib.Fii" title="Permalink to this definition">¶</a></dt>
+<dd><p>Anomalous scattering factor Δf’’.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Z</strong> (<em>array_like</em>) – atomic number</p></li>
+<li><p><strong>E</strong> (<em>array_like</em>) – energy (keV)</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>anomalous scattering factor Δf’’</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>array</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">dxraylib</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="atomic_weights.html">Atomic weights</a></li>
+<li class="toctree-l2"><a class="reference internal" href="element_densities.html">Element densities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cross_sections.html">Cross-sections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="unpolarized.html">Unpolarized differential scattering cross-sections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="polarized.html">Polarized differential scattering cross-sections</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Scattering factors</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#dxraylib.FF_Rayl"><code class="docutils literal notranslate"><span class="pre">FF_Rayl()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dxraylib.SF_Compt"><code class="docutils literal notranslate"><span class="pre">SF_Compt()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dxraylib.MomentTransf"><code class="docutils literal notranslate"><span class="pre">MomentTransf()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dxraylib.Fi"><code class="docutils literal notranslate"><span class="pre">Fi()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dxraylib.Fii"><code class="docutils literal notranslate"><span class="pre">Fii()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="line_energies.html">X-ray fluorescence line energies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fluorescence_yields.html">X-ray fluorescence yields</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auger_yields.html">Auger yields</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coster_kronig.html">Coster-Kronig transition probabilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="edge_energies.html">Absorption edge energies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jump_factors.html">Jump factors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fluorescence_cross_sections.html">X-ray fluorescence cross-sections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rad_rate.html">Radiative rates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="non_rad_rate.html">Non-radiative rates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="atomic_level_widths.html">Atomic level widths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compton_energy.html">Compton energy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="refractive_indices.html">Refractive indices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compton_profiles.html">Compton profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="electronic_configurations.html">Electronic configurations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="crystal_diffraction.html">Crystal diffraction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compound_parser.html">Compound parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nist.html">NIST compound catalogue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="radionuclides.html">Radionuclides</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants.html">Constants</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API</a><ul>
+      <li>Previous: <a href="polarized.html" title="previous chapter">Polarized differential scattering cross-sections</a></li>
+      <li>Next: <a href="line_energies.html" title="next chapter">X-ray fluorescence line energies</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Chris Ninham.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 6.0.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="../_sources/api/scattering_factors.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

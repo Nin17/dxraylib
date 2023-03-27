@@ -1,0 +1,334 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>API &#8212; dxraylib 0.0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/alabaster.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/doctools.js"></script>
+    <script src="_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Atomic weights" href="api/atomic_weights.html" />
+    <link rel="prev" title="Installation" href="install.html" />
+   
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="api">
+<h1>API<a class="headerlink" href="#api" title="Permalink to this heading">¶</a></h1>
+<p>The api closely follows that of xraylib, the documentation for which can be
+found <a class="reference external" href="https://github.com/tschoonj/xraylib/wiki">here</a>.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="api/atomic_weights.html">Atomic weights</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/atomic_weights.html#dxraylib.AtomicWeight"><code class="docutils literal notranslate"><span class="pre">AtomicWeight()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/element_densities.html">Element densities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/element_densities.html#dxraylib.ElementDensity"><code class="docutils literal notranslate"><span class="pre">ElementDensity()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/cross_sections.html">Cross-sections</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/cross_sections.html#dxraylib.CS_Total"><code class="docutils literal notranslate"><span class="pre">CS_Total()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/cross_sections.html#dxraylib.CS_Photo"><code class="docutils literal notranslate"><span class="pre">CS_Photo()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/cross_sections.html#dxraylib.CS_Rayl"><code class="docutils literal notranslate"><span class="pre">CS_Rayl()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/cross_sections.html#dxraylib.CS_Compt"><code class="docutils literal notranslate"><span class="pre">CS_Compt()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/cross_sections.html#dxraylib.CSb_Total"><code class="docutils literal notranslate"><span class="pre">CSb_Total()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/cross_sections.html#dxraylib.CSb_Photo"><code class="docutils literal notranslate"><span class="pre">CSb_Photo()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/cross_sections.html#dxraylib.CSb_Rayl"><code class="docutils literal notranslate"><span class="pre">CSb_Rayl()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/cross_sections.html#dxraylib.CSb_Compt"><code class="docutils literal notranslate"><span class="pre">CSb_Compt()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/cross_sections.html#dxraylib.CS_KN"><code class="docutils literal notranslate"><span class="pre">CS_KN()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/cross_sections.html#dxraylib.CS_Energy"><code class="docutils literal notranslate"><span class="pre">CS_Energy()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/cross_sections.html#dxraylib.CS_Total_CP"><code class="docutils literal notranslate"><span class="pre">CS_Total_CP()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/cross_sections.html#dxraylib.CS_Photo_CP"><code class="docutils literal notranslate"><span class="pre">CS_Photo_CP()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/cross_sections.html#dxraylib.CS_Rayl_CP"><code class="docutils literal notranslate"><span class="pre">CS_Rayl_CP()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/cross_sections.html#dxraylib.CS_Compt_CP"><code class="docutils literal notranslate"><span class="pre">CS_Compt_CP()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/cross_sections.html#dxraylib.CSb_Total_CP"><code class="docutils literal notranslate"><span class="pre">CSb_Total_CP()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/cross_sections.html#dxraylib.CSb_Photo_CP"><code class="docutils literal notranslate"><span class="pre">CSb_Photo_CP()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/cross_sections.html#dxraylib.CSb_Rayl_CP"><code class="docutils literal notranslate"><span class="pre">CSb_Rayl_CP()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/cross_sections.html#dxraylib.CSb_Compt_CP"><code class="docutils literal notranslate"><span class="pre">CSb_Compt_CP()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/cross_sections.html#dxraylib.CS_Energy_CP"><code class="docutils literal notranslate"><span class="pre">CS_Energy_CP()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/unpolarized.html">Unpolarized differential scattering cross-sections</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/unpolarized.html#dxraylib.DCS_Thoms"><code class="docutils literal notranslate"><span class="pre">DCS_Thoms()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/unpolarized.html#dxraylib.DCS_KN"><code class="docutils literal notranslate"><span class="pre">DCS_KN()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/unpolarized.html#dxraylib.DCS_Rayl"><code class="docutils literal notranslate"><span class="pre">DCS_Rayl()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/unpolarized.html#dxraylib.DCSb_Rayl"><code class="docutils literal notranslate"><span class="pre">DCSb_Rayl()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/unpolarized.html#dxraylib.DCS_Compt"><code class="docutils literal notranslate"><span class="pre">DCS_Compt()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/unpolarized.html#dxraylib.DCSb_Compt"><code class="docutils literal notranslate"><span class="pre">DCSb_Compt()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/unpolarized.html#dxraylib.DCS_Rayl_CP"><code class="docutils literal notranslate"><span class="pre">DCS_Rayl_CP()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/unpolarized.html#dxraylib.DCS_Compt_CP"><code class="docutils literal notranslate"><span class="pre">DCS_Compt_CP()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/unpolarized.html#dxraylib.DCSb_Rayl_CP"><code class="docutils literal notranslate"><span class="pre">DCSb_Rayl_CP()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/unpolarized.html#dxraylib.DCSb_Compt_CP"><code class="docutils literal notranslate"><span class="pre">DCSb_Compt_CP()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/polarized.html">Polarized differential scattering cross-sections</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/polarized.html#dxraylib.DCSP_Thoms"><code class="docutils literal notranslate"><span class="pre">DCSP_Thoms()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/polarized.html#dxraylib.DCSP_KN"><code class="docutils literal notranslate"><span class="pre">DCSP_KN()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/polarized.html#dxraylib.DCSP_Rayl"><code class="docutils literal notranslate"><span class="pre">DCSP_Rayl()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/polarized.html#dxraylib.DCSP_Compt"><code class="docutils literal notranslate"><span class="pre">DCSP_Compt()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/polarized.html#dxraylib.DCSPb_Rayl"><code class="docutils literal notranslate"><span class="pre">DCSPb_Rayl()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/polarized.html#dxraylib.DCSPb_Compt"><code class="docutils literal notranslate"><span class="pre">DCSPb_Compt()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/polarized.html#dxraylib.DCSP_Rayl_CP"><code class="docutils literal notranslate"><span class="pre">DCSP_Rayl_CP()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/polarized.html#dxraylib.DCSP_Compt_CP"><code class="docutils literal notranslate"><span class="pre">DCSP_Compt_CP()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/polarized.html#dxraylib.DCSPb_Rayl_CP"><code class="docutils literal notranslate"><span class="pre">DCSPb_Rayl_CP()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/polarized.html#dxraylib.DCSPb_Compt_CP"><code class="docutils literal notranslate"><span class="pre">DCSPb_Compt_CP()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/scattering_factors.html">Scattering factors</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/scattering_factors.html#dxraylib.FF_Rayl"><code class="docutils literal notranslate"><span class="pre">FF_Rayl()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/scattering_factors.html#dxraylib.SF_Compt"><code class="docutils literal notranslate"><span class="pre">SF_Compt()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/scattering_factors.html#dxraylib.MomentTransf"><code class="docutils literal notranslate"><span class="pre">MomentTransf()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/scattering_factors.html#dxraylib.Fi"><code class="docutils literal notranslate"><span class="pre">Fi()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/scattering_factors.html#dxraylib.Fii"><code class="docutils literal notranslate"><span class="pre">Fii()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/line_energies.html">X-ray fluorescence line energies</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/line_energies.html#not-yet-implemented">Not yet implemented!</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/fluorescence_yields.html">X-ray fluorescence yields</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/fluorescence_yields.html#dxraylib.FluorYield"><code class="docutils literal notranslate"><span class="pre">FluorYield()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/auger_yields.html">Auger yields</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/auger_yields.html#dxraylib.AugerYield"><code class="docutils literal notranslate"><span class="pre">AugerYield()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/coster_kronig.html">Coster-Kronig transition probabilities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/coster_kronig.html#dxraylib.CosKronTransProb"><code class="docutils literal notranslate"><span class="pre">CosKronTransProb()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/edge_energies.html">Absorption edge energies</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/edge_energies.html#dxraylib.EdgeEnergy"><code class="docutils literal notranslate"><span class="pre">EdgeEnergy()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/jump_factors.html">Jump factors</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/jump_factors.html#dxraylib.JumpFactor"><code class="docutils literal notranslate"><span class="pre">JumpFactor()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/fluorescence_cross_sections.html">X-ray fluorescence cross-sections</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/fluorescence_cross_sections.html#not-yet-implemented">Not yet implemented!</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/rad_rate.html">Radiative rates</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/rad_rate.html#dxraylib.RadRate"><code class="docutils literal notranslate"><span class="pre">RadRate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/non_rad_rate.html">Non-radiative rates</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/non_rad_rate.html#dxraylib.AugerRate"><code class="docutils literal notranslate"><span class="pre">AugerRate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/atomic_level_widths.html">Atomic level widths</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/atomic_level_widths.html#dxraylib.AtomicLevelWidth"><code class="docutils literal notranslate"><span class="pre">AtomicLevelWidth()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/compton_energy.html">Compton energy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/compton_energy.html#dxraylib.ComptonEnergy"><code class="docutils literal notranslate"><span class="pre">ComptonEnergy()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/refractive_indices.html">Refractive indices</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/refractive_indices.html#dxraylib.Refractive_Index_Re"><code class="docutils literal notranslate"><span class="pre">Refractive_Index_Re()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/refractive_indices.html#dxraylib.Refractive_Index_Im"><code class="docutils literal notranslate"><span class="pre">Refractive_Index_Im()</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/refractive_indices.html#dxraylib.Refractive_Index"><code class="docutils literal notranslate"><span class="pre">Refractive_Index()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/compton_profiles.html">Compton profiles</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/compton_profiles.html#not-yet-implemented">Not yet implemented!</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/electronic_configurations.html">Electronic configurations</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/electronic_configurations.html#not-yet-implemented">Not yet implemented!</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/crystal_diffraction.html">Crystal diffraction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/crystal_diffraction.html#not-yet-implemented">Not yet implemented!</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/compound_parser.html">Compound parser</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/compound_parser.html#dxraylib.xraylib_parser.compoundData"><code class="docutils literal notranslate"><span class="pre">compoundData</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/compound_parser.html#dxraylib.xraylib_parser.compoundData.Elements"><code class="docutils literal notranslate"><span class="pre">compoundData.Elements</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/compound_parser.html#dxraylib.xraylib_parser.compoundData.massFractions"><code class="docutils literal notranslate"><span class="pre">compoundData.massFractions</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/compound_parser.html#dxraylib.xraylib_parser.compoundData.molarMass"><code class="docutils literal notranslate"><span class="pre">compoundData.molarMass</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/compound_parser.html#dxraylib.xraylib_parser.compoundData.nAtoms"><code class="docutils literal notranslate"><span class="pre">compoundData.nAtoms</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/compound_parser.html#dxraylib.xraylib_parser.compoundData.nAtomsAll"><code class="docutils literal notranslate"><span class="pre">compoundData.nAtomsAll</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/compound_parser.html#dxraylib.xraylib_parser.compoundData.nElements"><code class="docutils literal notranslate"><span class="pre">compoundData.nElements</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/compound_parser.html#compoundparser">CompoundParser</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/compound_parser.html#dxraylib.CompoundParser"><code class="docutils literal notranslate"><span class="pre">CompoundParser()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/compound_parser.html#atomicnumbertosymbol">AtomicNumberToSymbol</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/compound_parser.html#dxraylib.AtomicNumberToSymbol"><code class="docutils literal notranslate"><span class="pre">AtomicNumberToSymbol()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/nist.html">NIST compound catalogue</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/nist.html#dxraylib.xraylib_nist_compounds.compoundDataNIST"><code class="docutils literal notranslate"><span class="pre">compoundDataNIST</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/nist.html#dxraylib.xraylib_nist_compounds.compoundDataNIST.Elements"><code class="docutils literal notranslate"><span class="pre">compoundDataNIST.Elements</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/nist.html#dxraylib.xraylib_nist_compounds.compoundDataNIST.density"><code class="docutils literal notranslate"><span class="pre">compoundDataNIST.density</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/nist.html#dxraylib.xraylib_nist_compounds.compoundDataNIST.massFractions"><code class="docutils literal notranslate"><span class="pre">compoundDataNIST.massFractions</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/nist.html#dxraylib.xraylib_nist_compounds.compoundDataNIST.nElements"><code class="docutils literal notranslate"><span class="pre">compoundDataNIST.nElements</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/nist.html#dxraylib.xraylib_nist_compounds.compoundDataNIST.name"><code class="docutils literal notranslate"><span class="pre">compoundDataNIST.name</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/nist.html#getcompounddatanistbyname">GetCompoundDataNISTByName</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/nist.html#dxraylib.GetCompoundDataNISTByName"><code class="docutils literal notranslate"><span class="pre">GetCompoundDataNISTByName()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/radionuclides.html">Radionuclides</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/radionuclides.html#dxraylib.xraylib_radionuclides.radioNuclideData"><code class="docutils literal notranslate"><span class="pre">radioNuclideData</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/radionuclides.html#dxraylib.xraylib_radionuclides.radioNuclideData.A"><code class="docutils literal notranslate"><span class="pre">radioNuclideData.A</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/radionuclides.html#dxraylib.xraylib_radionuclides.radioNuclideData.GammaEnergies"><code class="docutils literal notranslate"><span class="pre">radioNuclideData.GammaEnergies</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/radionuclides.html#dxraylib.xraylib_radionuclides.radioNuclideData.GammaIntensities"><code class="docutils literal notranslate"><span class="pre">radioNuclideData.GammaIntensities</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/radionuclides.html#dxraylib.xraylib_radionuclides.radioNuclideData.N"><code class="docutils literal notranslate"><span class="pre">radioNuclideData.N</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/radionuclides.html#dxraylib.xraylib_radionuclides.radioNuclideData.XrayIntensities"><code class="docutils literal notranslate"><span class="pre">radioNuclideData.XrayIntensities</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/radionuclides.html#dxraylib.xraylib_radionuclides.radioNuclideData.XrayLines"><code class="docutils literal notranslate"><span class="pre">radioNuclideData.XrayLines</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/radionuclides.html#dxraylib.xraylib_radionuclides.radioNuclideData.Z"><code class="docutils literal notranslate"><span class="pre">radioNuclideData.Z</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/radionuclides.html#dxraylib.xraylib_radionuclides.radioNuclideData.Z_xray"><code class="docutils literal notranslate"><span class="pre">radioNuclideData.Z_xray</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/radionuclides.html#dxraylib.xraylib_radionuclides.radioNuclideData.nGammas"><code class="docutils literal notranslate"><span class="pre">radioNuclideData.nGammas</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/radionuclides.html#dxraylib.xraylib_radionuclides.radioNuclideData.nXrays"><code class="docutils literal notranslate"><span class="pre">radioNuclideData.nXrays</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="api/radionuclides.html#dxraylib.xraylib_radionuclides.radioNuclideData.name"><code class="docutils literal notranslate"><span class="pre">radioNuclideData.name</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/radionuclides.html#getradionuclidedatabyname">GetRadioNuclideDataByName</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/radionuclides.html#dxraylib.GetRadioNuclideDataByName"><code class="docutils literal notranslate"><span class="pre">GetRadioNuclideDataByName()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/radionuclides.html#getradionuclidedatabyindex">GetRadioNuclideDataByIndex</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/radionuclides.html#dxraylib.GetRadioNuclideDataByIndex"><code class="docutils literal notranslate"><span class="pre">GetRadioNuclideDataByIndex()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api/radionuclides.html#getradionuclidedatalist">GetRadioNuclideDataList</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="api/radionuclides.html#dxraylib.GetRadioNuclideDataList"><code class="docutils literal notranslate"><span class="pre">GetRadioNuclideDataList()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api/constants.html">Constants</a></li>
+</ul>
+</div>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="index.html">dxraylib</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api/atomic_weights.html">Atomic weights</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/element_densities.html">Element densities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/cross_sections.html">Cross-sections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/unpolarized.html">Unpolarized differential scattering cross-sections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/polarized.html">Polarized differential scattering cross-sections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/scattering_factors.html">Scattering factors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/line_energies.html">X-ray fluorescence line energies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/fluorescence_yields.html">X-ray fluorescence yields</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/auger_yields.html">Auger yields</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/coster_kronig.html">Coster-Kronig transition probabilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/edge_energies.html">Absorption edge energies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/jump_factors.html">Jump factors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/fluorescence_cross_sections.html">X-ray fluorescence cross-sections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/rad_rate.html">Radiative rates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/non_rad_rate.html">Non-radiative rates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/atomic_level_widths.html">Atomic level widths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/compton_energy.html">Compton energy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/refractive_indices.html">Refractive indices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/compton_profiles.html">Compton profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/electronic_configurations.html">Electronic configurations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/crystal_diffraction.html">Crystal diffraction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/compound_parser.html">Compound parser</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/nist.html">NIST compound catalogue</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/radionuclides.html">Radionuclides</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api/constants.html">Constants</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="install.html" title="previous chapter">Installation</a></li>
+      <li>Next: <a href="api/atomic_weights.html" title="next chapter">Atomic weights</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Chris Ninham.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 6.0.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="_sources/api.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

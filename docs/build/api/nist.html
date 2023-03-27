@@ -1,0 +1,213 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.19: https://docutils.sourceforge.io/" />
+
+    <title>NIST compound catalogue &#8212; dxraylib 0.0.1 documentation</title>
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/alabaster.css" />
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Radionuclides" href="radionuclides.html" />
+    <link rel="prev" title="Compound parser" href="compound_parser.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <section id="nist-compound-catalogue">
+<h1>NIST compound catalogue<a class="headerlink" href="#nist-compound-catalogue" title="Permalink to this heading">¶</a></h1>
+<p><a class="reference external" href="https://github.com/tschoonj/xraylib/wiki/The-xraylib-API-list-of-all-functions#nist-compound-catalog">Relevant section in the xraylib documentation</a>.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="dxraylib.xraylib_nist_compounds.compoundDataNIST">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">dxraylib.xraylib_nist_compounds.</span></span><span class="sig-name descname"><span class="pre">compoundDataNIST</span></span><a class="headerlink" href="#dxraylib.xraylib_nist_compounds.compoundDataNIST" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">TypedDict</span></code></p>
+<p>A NIST compound dataset.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dxraylib.xraylib_nist_compounds.compoundDataNIST.Elements">
+<span class="sig-name descname"><span class="pre">Elements</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#dxraylib.xraylib_nist_compounds.compoundDataNIST.Elements" title="Permalink to this definition">¶</a></dt>
+<dd><p>a tuple (length = nElements) containing the elements, in ascending order</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dxraylib.xraylib_nist_compounds.compoundDataNIST.density">
+<span class="sig-name descname"><span class="pre">density</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">float</span></em><a class="headerlink" href="#dxraylib.xraylib_nist_compounds.compoundDataNIST.density" title="Permalink to this definition">¶</a></dt>
+<dd><p>the density of the compound, expressed in g/cm³</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dxraylib.xraylib_nist_compounds.compoundDataNIST.massFractions">
+<span class="sig-name descname"><span class="pre">massFractions</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="p"><span class="pre">...</span></span><span class="p"><span class="pre">]</span></span></em><a class="headerlink" href="#dxraylib.xraylib_nist_compounds.compoundDataNIST.massFractions" title="Permalink to this definition">¶</a></dt>
+<dd><p>a tuple (length = nElements) containg the mass fractions of the elements
+in Elements</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dxraylib.xraylib_nist_compounds.compoundDataNIST.nElements">
+<span class="sig-name descname"><span class="pre">nElements</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">int</span></em><a class="headerlink" href="#dxraylib.xraylib_nist_compounds.compoundDataNIST.nElements" title="Permalink to this definition">¶</a></dt>
+<dd><p>number of different elements in the compound</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="dxraylib.xraylib_nist_compounds.compoundDataNIST.name">
+<span class="sig-name descname"><span class="pre">name</span></span><em class="property"><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="pre">str</span></em><a class="headerlink" href="#dxraylib.xraylib_nist_compounds.compoundDataNIST.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>a string containing the full name of the compound, as retrieved from the
+NIST database</p>
+</dd></dl>
+
+</dd></dl>
+
+<section id="getcompounddatanistbyname">
+<h2>GetCompoundDataNISTByName<a class="headerlink" href="#getcompounddatanistbyname" title="Permalink to this heading">¶</a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="dxraylib.GetCompoundDataNISTByName">
+<span class="sig-prename descclassname"><span class="pre">dxraylib.</span></span><span class="sig-name descname"><span class="pre">GetCompoundDataNISTByName</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">compoundString</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#dxraylib.xraylib_nist_compounds.compoundDataNIST" title="dxraylib.xraylib_nist_compounds.compoundDataNIST"><span class="pre">compoundDataNIST</span></a></span></span><a class="headerlink" href="#dxraylib.GetCompoundDataNISTByName" title="Permalink to this definition">¶</a></dt>
+<dd><p>_summary_</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>compoundString</strong> (<em>str</em>) – _description_</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>_description_</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#dxraylib.xraylib_nist_compounds.compoundDataNIST" title="dxraylib.xraylib_nist_compounds.compoundDataNIST">compoundDataNIST</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">dxraylib</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="atomic_weights.html">Atomic weights</a></li>
+<li class="toctree-l2"><a class="reference internal" href="element_densities.html">Element densities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cross_sections.html">Cross-sections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="unpolarized.html">Unpolarized differential scattering cross-sections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="polarized.html">Polarized differential scattering cross-sections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scattering_factors.html">Scattering factors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="line_energies.html">X-ray fluorescence line energies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fluorescence_yields.html">X-ray fluorescence yields</a></li>
+<li class="toctree-l2"><a class="reference internal" href="auger_yields.html">Auger yields</a></li>
+<li class="toctree-l2"><a class="reference internal" href="coster_kronig.html">Coster-Kronig transition probabilities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="edge_energies.html">Absorption edge energies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="jump_factors.html">Jump factors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="fluorescence_cross_sections.html">X-ray fluorescence cross-sections</a></li>
+<li class="toctree-l2"><a class="reference internal" href="rad_rate.html">Radiative rates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="non_rad_rate.html">Non-radiative rates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="atomic_level_widths.html">Atomic level widths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compton_energy.html">Compton energy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="refractive_indices.html">Refractive indices</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compton_profiles.html">Compton profiles</a></li>
+<li class="toctree-l2"><a class="reference internal" href="electronic_configurations.html">Electronic configurations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="crystal_diffraction.html">Crystal diffraction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="compound_parser.html">Compound parser</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">NIST compound catalogue</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#dxraylib.xraylib_nist_compounds.compoundDataNIST"><code class="docutils literal notranslate"><span class="pre">compoundDataNIST</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dxraylib.xraylib_nist_compounds.compoundDataNIST.Elements"><code class="docutils literal notranslate"><span class="pre">compoundDataNIST.Elements</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dxraylib.xraylib_nist_compounds.compoundDataNIST.density"><code class="docutils literal notranslate"><span class="pre">compoundDataNIST.density</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dxraylib.xraylib_nist_compounds.compoundDataNIST.massFractions"><code class="docutils literal notranslate"><span class="pre">compoundDataNIST.massFractions</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dxraylib.xraylib_nist_compounds.compoundDataNIST.nElements"><code class="docutils literal notranslate"><span class="pre">compoundDataNIST.nElements</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dxraylib.xraylib_nist_compounds.compoundDataNIST.name"><code class="docutils literal notranslate"><span class="pre">compoundDataNIST.name</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#getcompounddatanistbyname">GetCompoundDataNISTByName</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dxraylib.GetCompoundDataNISTByName"><code class="docutils literal notranslate"><span class="pre">GetCompoundDataNISTByName()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="radionuclides.html">Radionuclides</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constants.html">Constants</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../api.html">API</a><ul>
+      <li>Previous: <a href="compound_parser.html" title="previous chapter">Compound parser</a></li>
+      <li>Next: <a href="radionuclides.html" title="next chapter">Radionuclides</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2023, Chris Ninham.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 6.0.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.13</a>
+      
+      |
+      <a href="../_sources/api/nist.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
