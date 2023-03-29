@@ -68,8 +68,16 @@ from .scattering import (
     MomentTransf,
     SF_Compt,
 )
-from .xraylib_nist_compounds import GetCompoundDataNISTByName
-from .xraylib_parser import CompoundParser, AtomicNumberToSymbol
+from .xraylib_nist_compounds import (
+    GetCompoundDataNISTByIndex,
+    GetCompoundDataNISTByName,
+    GetCompoundDataNISTList,
+)
+from .xraylib_parser import (
+    CompoundParser,
+    AtomicNumberToSymbol,
+    SymbolToAtomicNumber,
+)
 from .xraylib_radionuclides import (
     GetRadioNuclideDataByIndex,
     GetRadioNuclideDataByName,
