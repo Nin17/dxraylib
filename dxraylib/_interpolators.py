@@ -1,53 +1,42 @@
 """
-Base function for cubic spline interpolation of data using _splint
+Cubic spline interpolation of data using _splint, respecting validity of
+atomic numbers and energies.
 """
-# TODO summary
-# TODO docstring
-# TODO type hinting
 
 from ._splint import _splint
 from ._utilities import wrapped_partial
-from .config import Array, ArrayLike, jit, jit_kwargs, xp
+from .config import Array, jit, jit_kwargs, xp
 
 
 @wrapped_partial(jit, **jit_kwargs)
-def _args_splint(
-    index: ArrayLike, value: ArrayLike, value_scaled: ArrayLike
-) -> tuple[Array, ...]:
-    _index = xp.asarray(index)
-    _value = xp.asarray(value)
-    _value_scaled = xp.asarray(value_scaled)
-    __index = xp.expand_dims(_index, tuple(range(-1, -_value.ndim - 1, -1)))
-    __value = xp.expand_dims(_value, tuple(range(_index.ndim)))
-    return _index, _value_scaled, __index, __value
-
-
-@wrapped_partial(jit, **jit_kwargs)
-def _interpolate(
-    data: Array, Z: ArrayLike, E: ArrayLike, E2: ArrayLike
-) -> Array:
-    """_summary_
+def _interpolate(data: Array, Z: Array, E: Array, E2: Array) -> Array:
+    """
+    Apply _splint to a dataset at valid atomic numbers and energies, NaN
+    otherwise.
 
     Parameters
     ----------
-    data : array
-        _description_
-    Z : ArrayLike
-        _description_
-    E : ArrayLike
-        _description_
-    E2 : ArrayLike
-        _description_
+    data : Array
+        cubic spline dataset of shape (NZ, 3, NE) where NZ is the number of
+        elements Z, NE is the number of energies (possibly scaled)
+        x, y and y'' are stacked on the second axis
+    Z : Array
+        atomic number
+    E : Array
+        energy (keV)
+    E2 : Array
+        energy scaled to same units as the energy in y (data[:, 1, :])
 
     Returns
     -------
-    array
-        _description_
+    Array
+        interpolated value at valid atomic numbers and energies, NaN otherwise
     """
-    z, e, _z, _e = _args_splint(Z, E, E2)
+    _z = Z.reshape(Z.shape + (1,) * E.ndim)
+    _e = E.reshape((1,) * Z.ndim + E.shape)
 
     output = _splint(
-        data[xp.where((z >= 1) & (z <= data.shape[0]), z - 1, 0)], e
+        data[xp.where((Z >= 1) & (Z <= data.shape[0]), Z - 1, 0)], E2
     )
     output = xp.where(
         (_z >= 1) & (_z <= data.shape[0]) & (_e >= 0), output, xp.nan
