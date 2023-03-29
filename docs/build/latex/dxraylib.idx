@@ -65,25 +65,28 @@
 \indexentry{nElements (dxraylib.xraylib\_parser.compoundData attribute)@\spxentry{nElements}\spxextra{dxraylib.xraylib\_parser.compoundData attribute}|hyperpage}{25}
 \indexentry{CompoundParser() (in module dxraylib)@\spxentry{CompoundParser()}\spxextra{in module dxraylib}|hyperpage}{26}
 \indexentry{AtomicNumberToSymbol() (in module dxraylib)@\spxentry{AtomicNumberToSymbol()}\spxextra{in module dxraylib}|hyperpage}{26}
-\indexentry{compoundDataNIST (class in dxraylib.xraylib\_nist\_compounds)@\spxentry{compoundDataNIST}\spxextra{class in dxraylib.xraylib\_nist\_compounds}|hyperpage}{26}
-\indexentry{Elements (dxraylib.xraylib\_nist\_compounds.compoundDataNIST attribute)@\spxentry{Elements}\spxextra{dxraylib.xraylib\_nist\_compounds.compoundDataNIST attribute}|hyperpage}{26}
-\indexentry{density (dxraylib.xraylib\_nist\_compounds.compoundDataNIST attribute)@\spxentry{density}\spxextra{dxraylib.xraylib\_nist\_compounds.compoundDataNIST attribute}|hyperpage}{26}
+\indexentry{SymbolToAtomicNumber() (in module dxraylib)@\spxentry{SymbolToAtomicNumber()}\spxextra{in module dxraylib}|hyperpage}{26}
+\indexentry{compoundDataNIST (class in dxraylib.xraylib\_nist\_compounds)@\spxentry{compoundDataNIST}\spxextra{class in dxraylib.xraylib\_nist\_compounds}|hyperpage}{27}
+\indexentry{Elements (dxraylib.xraylib\_nist\_compounds.compoundDataNIST attribute)@\spxentry{Elements}\spxextra{dxraylib.xraylib\_nist\_compounds.compoundDataNIST attribute}|hyperpage}{27}
+\indexentry{density (dxraylib.xraylib\_nist\_compounds.compoundDataNIST attribute)@\spxentry{density}\spxextra{dxraylib.xraylib\_nist\_compounds.compoundDataNIST attribute}|hyperpage}{27}
 \indexentry{massFractions (dxraylib.xraylib\_nist\_compounds.compoundDataNIST attribute)@\spxentry{massFractions}\spxextra{dxraylib.xraylib\_nist\_compounds.compoundDataNIST attribute}|hyperpage}{27}
 \indexentry{nElements (dxraylib.xraylib\_nist\_compounds.compoundDataNIST attribute)@\spxentry{nElements}\spxextra{dxraylib.xraylib\_nist\_compounds.compoundDataNIST attribute}|hyperpage}{27}
 \indexentry{name (dxraylib.xraylib\_nist\_compounds.compoundDataNIST attribute)@\spxentry{name}\spxextra{dxraylib.xraylib\_nist\_compounds.compoundDataNIST attribute}|hyperpage}{27}
 \indexentry{GetCompoundDataNISTByName() (in module dxraylib)@\spxentry{GetCompoundDataNISTByName()}\spxextra{in module dxraylib}|hyperpage}{27}
-\indexentry{radioNuclideData (class in dxraylib.xraylib\_radionuclides)@\spxentry{radioNuclideData}\spxextra{class in dxraylib.xraylib\_radionuclides}|hyperpage}{27}
-\indexentry{A (dxraylib.xraylib\_radionuclides.radioNuclideData attribute)@\spxentry{A}\spxextra{dxraylib.xraylib\_radionuclides.radioNuclideData attribute}|hyperpage}{27}
-\indexentry{GammaEnergies (dxraylib.xraylib\_radionuclides.radioNuclideData attribute)@\spxentry{GammaEnergies}\spxextra{dxraylib.xraylib\_radionuclides.radioNuclideData attribute}|hyperpage}{27}
-\indexentry{GammaIntensities (dxraylib.xraylib\_radionuclides.radioNuclideData attribute)@\spxentry{GammaIntensities}\spxextra{dxraylib.xraylib\_radionuclides.radioNuclideData attribute}|hyperpage}{27}
-\indexentry{N (dxraylib.xraylib\_radionuclides.radioNuclideData attribute)@\spxentry{N}\spxextra{dxraylib.xraylib\_radionuclides.radioNuclideData attribute}|hyperpage}{27}
-\indexentry{XrayIntensities (dxraylib.xraylib\_radionuclides.radioNuclideData attribute)@\spxentry{XrayIntensities}\spxextra{dxraylib.xraylib\_radionuclides.radioNuclideData attribute}|hyperpage}{27}
-\indexentry{XrayLines (dxraylib.xraylib\_radionuclides.radioNuclideData attribute)@\spxentry{XrayLines}\spxextra{dxraylib.xraylib\_radionuclides.radioNuclideData attribute}|hyperpage}{27}
-\indexentry{Z (dxraylib.xraylib\_radionuclides.radioNuclideData attribute)@\spxentry{Z}\spxextra{dxraylib.xraylib\_radionuclides.radioNuclideData attribute}|hyperpage}{27}
-\indexentry{Z\_xray (dxraylib.xraylib\_radionuclides.radioNuclideData attribute)@\spxentry{Z\_xray}\spxextra{dxraylib.xraylib\_radionuclides.radioNuclideData attribute}|hyperpage}{27}
-\indexentry{nGammas (dxraylib.xraylib\_radionuclides.radioNuclideData attribute)@\spxentry{nGammas}\spxextra{dxraylib.xraylib\_radionuclides.radioNuclideData attribute}|hyperpage}{28}
-\indexentry{nXrays (dxraylib.xraylib\_radionuclides.radioNuclideData attribute)@\spxentry{nXrays}\spxextra{dxraylib.xraylib\_radionuclides.radioNuclideData attribute}|hyperpage}{28}
-\indexentry{name (dxraylib.xraylib\_radionuclides.radioNuclideData attribute)@\spxentry{name}\spxextra{dxraylib.xraylib\_radionuclides.radioNuclideData attribute}|hyperpage}{28}
-\indexentry{GetRadioNuclideDataByName() (in module dxraylib)@\spxentry{GetRadioNuclideDataByName()}\spxextra{in module dxraylib}|hyperpage}{28}
-\indexentry{GetRadioNuclideDataByIndex() (in module dxraylib)@\spxentry{GetRadioNuclideDataByIndex()}\spxextra{in module dxraylib}|hyperpage}{28}
-\indexentry{GetRadioNuclideDataList() (in module dxraylib)@\spxentry{GetRadioNuclideDataList()}\spxextra{in module dxraylib}|hyperpage}{28}
+\indexentry{GetCompoundDataNISTByIndex() (in module dxraylib)@\spxentry{GetCompoundDataNISTByIndex()}\spxextra{in module dxraylib}|hyperpage}{28}
+\indexentry{GetCompoundDataNISTList() (in module dxraylib)@\spxentry{GetCompoundDataNISTList()}\spxextra{in module dxraylib}|hyperpage}{28}
+\indexentry{radioNuclideData (class in dxraylib.xraylib\_radionuclides)@\spxentry{radioNuclideData}\spxextra{class in dxraylib.xraylib\_radionuclides}|hyperpage}{28}
+\indexentry{A (dxraylib.xraylib\_radionuclides.radioNuclideData attribute)@\spxentry{A}\spxextra{dxraylib.xraylib\_radionuclides.radioNuclideData attribute}|hyperpage}{28}
+\indexentry{GammaEnergies (dxraylib.xraylib\_radionuclides.radioNuclideData attribute)@\spxentry{GammaEnergies}\spxextra{dxraylib.xraylib\_radionuclides.radioNuclideData attribute}|hyperpage}{28}
+\indexentry{GammaIntensities (dxraylib.xraylib\_radionuclides.radioNuclideData attribute)@\spxentry{GammaIntensities}\spxextra{dxraylib.xraylib\_radionuclides.radioNuclideData attribute}|hyperpage}{28}
+\indexentry{N (dxraylib.xraylib\_radionuclides.radioNuclideData attribute)@\spxentry{N}\spxextra{dxraylib.xraylib\_radionuclides.radioNuclideData attribute}|hyperpage}{28}
+\indexentry{XrayIntensities (dxraylib.xraylib\_radionuclides.radioNuclideData attribute)@\spxentry{XrayIntensities}\spxextra{dxraylib.xraylib\_radionuclides.radioNuclideData attribute}|hyperpage}{28}
+\indexentry{XrayLines (dxraylib.xraylib\_radionuclides.radioNuclideData attribute)@\spxentry{XrayLines}\spxextra{dxraylib.xraylib\_radionuclides.radioNuclideData attribute}|hyperpage}{28}
+\indexentry{Z (dxraylib.xraylib\_radionuclides.radioNuclideData attribute)@\spxentry{Z}\spxextra{dxraylib.xraylib\_radionuclides.radioNuclideData attribute}|hyperpage}{28}
+\indexentry{Z\_xray (dxraylib.xraylib\_radionuclides.radioNuclideData attribute)@\spxentry{Z\_xray}\spxextra{dxraylib.xraylib\_radionuclides.radioNuclideData attribute}|hyperpage}{28}
+\indexentry{nGammas (dxraylib.xraylib\_radionuclides.radioNuclideData attribute)@\spxentry{nGammas}\spxextra{dxraylib.xraylib\_radionuclides.radioNuclideData attribute}|hyperpage}{29}
+\indexentry{nXrays (dxraylib.xraylib\_radionuclides.radioNuclideData attribute)@\spxentry{nXrays}\spxextra{dxraylib.xraylib\_radionuclides.radioNuclideData attribute}|hyperpage}{29}
+\indexentry{name (dxraylib.xraylib\_radionuclides.radioNuclideData attribute)@\spxentry{name}\spxextra{dxraylib.xraylib\_radionuclides.radioNuclideData attribute}|hyperpage}{29}
+\indexentry{GetRadioNuclideDataByName() (in module dxraylib)@\spxentry{GetRadioNuclideDataByName()}\spxextra{in module dxraylib}|hyperpage}{29}
+\indexentry{GetRadioNuclideDataByIndex() (in module dxraylib)@\spxentry{GetRadioNuclideDataByIndex()}\spxextra{in module dxraylib}|hyperpage}{29}
+\indexentry{GetRadioNuclideDataList() (in module dxraylib)@\spxentry{GetRadioNuclideDataList()}\spxextra{in module dxraylib}|hyperpage}{29}

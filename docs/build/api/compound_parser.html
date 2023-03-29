@@ -132,6 +132,36 @@ element for atomic number Z. If an error occurred, the NULL string is returned.<
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
 </dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – if Z is an invalid atomic number: Z&lt;1 ^ Z&gt;107</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="symboltoatomicnumber">
+<h2>SymbolToAtomicNumber<a class="headerlink" href="#symboltoatomicnumber" title="Permalink to this heading">¶</a></h2>
+<p>The SymbolToAtomicNumber function returns the atomic number that corresponds
+with element symbol. If the element does not exist, 0 is returned.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="dxraylib.SymbolToAtomicNumber">
+<span class="sig-prename descclassname"><span class="pre">dxraylib.</span></span><span class="sig-name descname"><span class="pre">SymbolToAtomicNumber</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">symbol</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#dxraylib.SymbolToAtomicNumber" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper around xraylib.SymbolToAtomicNumber</p>
+<p>Return the atomic number for the elemtent with symbol: symbol.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>symbol</strong> (<em>str</em>) – element symbol</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>atomic number</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>ValueError</strong> – if symbol is an invalid element symbol or corresponds to an element
+    with Z&gt;107</p>
+</dd>
 </dl>
 </dd></dl>
 
@@ -197,6 +227,10 @@ element for atomic number Z. If an error occurred, the NULL string is returned.<
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#atomicnumbertosymbol">AtomicNumberToSymbol</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#dxraylib.AtomicNumberToSymbol"><code class="docutils literal notranslate"><span class="pre">AtomicNumberToSymbol()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#symboltoatomicnumber">SymbolToAtomicNumber</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dxraylib.SymbolToAtomicNumber"><code class="docutils literal notranslate"><span class="pre">SymbolToAtomicNumber()</span></code></a></li>
 </ul>
 </li>
 </ul>

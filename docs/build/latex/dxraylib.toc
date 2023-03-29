@@ -31,11 +31,14 @@
 \contentsline {section}{\numberline {3.22}Compound parser}{25}{section.3.22}%
 \contentsline {subsection}{\numberline {3.22.1}CompoundParser}{26}{subsection.3.22.1}%
 \contentsline {subsection}{\numberline {3.22.2}AtomicNumberToSymbol}{26}{subsection.3.22.2}%
-\contentsline {section}{\numberline {3.23}NIST compound catalogue}{26}{section.3.23}%
+\contentsline {subsection}{\numberline {3.22.3}SymbolToAtomicNumber}{26}{subsection.3.22.3}%
+\contentsline {section}{\numberline {3.23}NIST compound catalogue}{27}{section.3.23}%
 \contentsline {subsection}{\numberline {3.23.1}GetCompoundDataNISTByName}{27}{subsection.3.23.1}%
-\contentsline {section}{\numberline {3.24}Radionuclides}{27}{section.3.24}%
-\contentsline {subsection}{\numberline {3.24.1}GetRadioNuclideDataByName}{28}{subsection.3.24.1}%
-\contentsline {subsection}{\numberline {3.24.2}GetRadioNuclideDataByIndex}{28}{subsection.3.24.2}%
-\contentsline {subsection}{\numberline {3.24.3}GetRadioNuclideDataList}{28}{subsection.3.24.3}%
-\contentsline {section}{\numberline {3.25}Constants}{29}{section.3.25}%
-\contentsline {chapter}{Index}{30}{section*.92}%
+\contentsline {subsection}{\numberline {3.23.2}GetCompoundDataNISTByIndex}{28}{subsection.3.23.2}%
+\contentsline {subsection}{\numberline {3.23.3}GetCompoundDataNISTList}{28}{subsection.3.23.3}%
+\contentsline {section}{\numberline {3.24}Radionuclides}{28}{section.3.24}%
+\contentsline {subsection}{\numberline {3.24.1}GetRadioNuclideDataByName}{29}{subsection.3.24.1}%
+\contentsline {subsection}{\numberline {3.24.2}GetRadioNuclideDataByIndex}{29}{subsection.3.24.2}%
+\contentsline {subsection}{\numberline {3.24.3}GetRadioNuclideDataList}{29}{subsection.3.24.3}%
+\contentsline {section}{\numberline {3.25}Constants}{30}{section.3.25}%
+\contentsline {chapter}{Index}{31}{section*.95}%

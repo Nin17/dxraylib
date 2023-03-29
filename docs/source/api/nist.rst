@@ -14,4 +14,16 @@ GetCompoundDataNISTByName
 -------------------------
 
 .. autofunction:: dxraylib.GetCompoundDataNISTByName
+
+
+GetCompoundDataNISTByIndex
+--------------------------
+
+.. autofunction:: dxraylib.GetCompoundDataNISTByIndex
+
+
+GetCompoundDataNISTList
+-----------------------
+
+.. autofunction:: dxraylib.GetCompoundDataNISTList
     

@@ -73,7 +73,7 @@
 
 
 \title{dxraylib}
-\date{Mar 27, 2023}
+\date{Mar 29, 2023}
 \release{0.0.1}
 \author{Chris Ninham}
 \newcommand{\sphinxlogo}{\vbox{}}
@@ -2696,6 +2696,51 @@ element symbol
 \sphinxAtStartPar
 str
 
+\sphinxlineitem{Raises}
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{ValueError}} \textendash{} if Z is an invalid atomic number: Z\textless{}1 \textasciicircum{} Z\textgreater{}107
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
+
+
+\subsection{SymbolToAtomicNumber}
+\label{\detokenize{api/compound_parser:symboltoatomicnumber}}
+\sphinxAtStartPar
+The SymbolToAtomicNumber function returns the atomic number that corresponds
+with element symbol. If the element does not exist, 0 is returned.
+\index{SymbolToAtomicNumber() (in module dxraylib)@\spxentry{SymbolToAtomicNumber()}\spxextra{in module dxraylib}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{api/compound_parser:dxraylib.SymbolToAtomicNumber}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxcode{\sphinxupquote{dxraylib.}}\sphinxbfcode{\sphinxupquote{SymbolToAtomicNumber}}}{\emph{\DUrole{n}{symbol}\DUrole{p}{:}\DUrole{w}{  }\DUrole{n}{str}}}{{ $\rightarrow$ int}}
+\pysigstopsignatures
+\sphinxAtStartPar
+Wrapper around xraylib.SymbolToAtomicNumber
+
+\sphinxAtStartPar
+Return the atomic number for the elemtent with symbol: symbol.
+\begin{quote}\begin{description}
+\sphinxlineitem{Parameters}
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{symbol}} (\sphinxstyleliteralemphasis{\sphinxupquote{str}}) \textendash{} element symbol
+
+\sphinxlineitem{Returns}
+\sphinxAtStartPar
+atomic number
+
+\sphinxlineitem{Return type}
+\sphinxAtStartPar
+int
+
+\sphinxlineitem{Raises}
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{ValueError}} \textendash{} if symbol is an invalid element symbol or corresponds to an element
+    with Z\textgreater{}107
+
 \end{description}\end{quote}
 
 \end{fulllineitems}
@@ -2809,6 +2854,60 @@ NIST database
 \sphinxlineitem{Return type}
 \sphinxAtStartPar
 {\hyperref[\detokenize{api/nist:dxraylib.xraylib_nist_compounds.compoundDataNIST}]{\sphinxcrossref{compoundDataNIST}}}
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
+
+
+\subsection{GetCompoundDataNISTByIndex}
+\label{\detokenize{api/nist:getcompounddatanistbyindex}}\index{GetCompoundDataNISTByIndex() (in module dxraylib)@\spxentry{GetCompoundDataNISTByIndex()}\spxextra{in module dxraylib}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{api/nist:dxraylib.GetCompoundDataNISTByIndex}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxcode{\sphinxupquote{dxraylib.}}\sphinxbfcode{\sphinxupquote{GetCompoundDataNISTByIndex}}}{\emph{\DUrole{n}{compoundIndex}\DUrole{p}{:}\DUrole{w}{  }\DUrole{n}{int}}}{{ $\rightarrow$ {\hyperref[\detokenize{api/nist:dxraylib.xraylib_nist_compounds.compoundDataNIST}]{\sphinxcrossref{compoundDataNIST}}}}}
+\pysigstopsignatures
+\sphinxAtStartPar
+\_summary\_
+\begin{quote}\begin{description}
+\sphinxlineitem{Parameters}
+\sphinxAtStartPar
+\sphinxstyleliteralstrong{\sphinxupquote{compoundIndex}} (\sphinxstyleliteralemphasis{\sphinxupquote{int}}) \textendash{} \_description\_
+
+\sphinxlineitem{Returns}
+\sphinxAtStartPar
+\_description\_
+
+\sphinxlineitem{Return type}
+\sphinxAtStartPar
+{\hyperref[\detokenize{api/nist:dxraylib.xraylib_nist_compounds.compoundDataNIST}]{\sphinxcrossref{compoundDataNIST}}}
+
+\end{description}\end{quote}
+
+\end{fulllineitems}
+
+
+
+\subsection{GetCompoundDataNISTList}
+\label{\detokenize{api/nist:getcompounddatanistlist}}\index{GetCompoundDataNISTList() (in module dxraylib)@\spxentry{GetCompoundDataNISTList()}\spxextra{in module dxraylib}}
+
+\begin{fulllineitems}
+\phantomsection\label{\detokenize{api/nist:dxraylib.GetCompoundDataNISTList}}
+\pysigstartsignatures
+\pysiglinewithargsret{\sphinxcode{\sphinxupquote{dxraylib.}}\sphinxbfcode{\sphinxupquote{GetCompoundDataNISTList}}}{}{{ $\rightarrow$ tuple\DUrole{p}{{[}}str\DUrole{p}{,}\DUrole{w}{  }\DUrole{p}{...}\DUrole{p}{{]}}}}
+\pysigstopsignatures
+\sphinxAtStartPar
+\_summary\_
+\begin{quote}\begin{description}
+\sphinxlineitem{Returns}
+\sphinxAtStartPar
+\_description\_
+
+\sphinxlineitem{Return type}
+\sphinxAtStartPar
+tuple{[}str, …{]}
 
 \end{description}\end{quote}
 

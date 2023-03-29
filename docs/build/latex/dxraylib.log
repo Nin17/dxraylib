@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2022/dev) (preloaded format=pdflatex 2022.4.2)  27 MAR 2023 17:59
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2022/dev) (preloaded format=pdflatex 2022.4.2)  29 MAR 2023 16:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -874,7 +874,7 @@ LaTeX Font Info:    Trying to load font information for TS1+qtm on input line 2
 File: ts1qtm.fd 2009/09/25 v1.2 font definition file for TS1/qtm
 ) [4] [5]
 [6] [7] [8] [9] [10] [11] [12] [13] [14] [15] [16] [17] [18] [19] [20] [21]
-[22] [23] [24] [25] [26] [27] [28] (./dxraylib.ind [29]
+[22] [23] [24] [25] [26] [27] [28] [29] (./dxraylib.ind [30]
 Underfull \hbox (badness 10000) in paragraph at lines 19--21
 []\T1/txtt/m/n/10 compoundDataNIST \T1/qtm/m/n/10 (\T1/qtm/m/it/10 class in
  []
@@ -910,94 +910,100 @@ ylib_radionuclides.radioNuclideData
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 92--93
+Underfull \hbox (badness 10000) in paragraph at lines 91--92
+[]\T1/txtt/m/n/10 GetCompoundDataNISTByIndex() \T1/qtm/m/n/10 (\T1/qtm/m/it/10 
+in mod-ule
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 94--95
 []\T1/txtt/m/n/10 GetRadioNuclideDataByIndex() \T1/qtm/m/n/10 (\T1/qtm/m/it/10 
 in mod-ule
  []
 
-[30
+[31
 
 
 ]
-Overfull \hbox (61.2523pt too wide) in paragraph at lines 102--104
+Overfull \hbox (61.2523pt too wide) in paragraph at lines 104--106
 []\T1/txtt/m/n/10 massFractions \T1/qtm/m/n/10 (\T1/qtm/m/it/10 dxraylib.xrayli
 b_nist_compounds.compoundDataNIST
  []
 
 
-Overfull \hbox (1.05232pt too wide) in paragraph at lines 104--106
+Overfull \hbox (1.05232pt too wide) in paragraph at lines 106--108
 []\T1/txtt/m/n/10 massFractions \T1/qtm/m/n/10 (\T1/qtm/m/it/10 dxraylib.xrayli
 b_parser.compoundData
  []
 
 
-Overfull \hbox (14.00244pt too wide) in paragraph at lines 114--116
+Overfull \hbox (14.00244pt too wide) in paragraph at lines 116--118
 []\T1/txtt/m/n/10 name \T1/qtm/m/n/10 (\T1/qtm/m/it/10 dxraylib.xraylib_nist_co
 mpounds.compoundDataNIST
  []
 
 
-Underfull \hbox (badness 7433) in paragraph at lines 116--118
+Underfull \hbox (badness 7433) in paragraph at lines 118--120
 []\T1/txtt/m/n/10 name \T1/qtm/m/n/10 (\T1/qtm/m/it/10 dxraylib.xraylib_radionu
 clides.radioNuclideData
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 118--119
+Underfull \hbox (badness 10000) in paragraph at lines 120--121
 []\T1/txtt/m/n/10 nAtoms \T1/qtm/m/n/10 (\T1/qtm/m/it/10 dxraylib.xraylib_parse
 r.compoundData at-
  []
 
 
-Overfull \hbox (40.25237pt too wide) in paragraph at lines 121--123
+Overfull \hbox (40.25237pt too wide) in paragraph at lines 123--125
 []\T1/txtt/m/n/10 nElements \T1/qtm/m/n/10 (\T1/qtm/m/it/10 dxraylib.xraylib_ni
 st_compounds.compoundDataNIST
  []
 
 
-Overfull \hbox (9.6624pt too wide) in paragraph at lines 125--127
+Overfull \hbox (9.6624pt too wide) in paragraph at lines 127--129
 []\T1/txtt/m/n/10 nGammas \T1/qtm/m/n/10 (\T1/qtm/m/it/10 dxraylib.xraylib_radi
 onuclides.radioNuclideData
  []
 
 
-Overfull \hbox (4.41241pt too wide) in paragraph at lines 127--129
+Overfull \hbox (4.41241pt too wide) in paragraph at lines 129--131
 []\T1/txtt/m/n/10 nXrays \T1/qtm/m/n/10 (\T1/qtm/m/it/10 dxraylib.xraylib_radio
 nuclides.radioNuclideData
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 132--134
+Underfull \hbox (badness 10000) in paragraph at lines 134--136
 []\T1/txtt/m/n/10 radioNuclideData \T1/qtm/m/n/10 (\T1/qtm/m/it/10 class in
  []
 
 
-Overfull \hbox (51.66228pt too wide) in paragraph at lines 145--147
+Overfull \hbox (51.66228pt too wide) in paragraph at lines 148--150
 []\T1/txtt/m/n/10 XrayIntensities \T1/qtm/m/n/10 (\T1/qtm/m/it/10 dxraylib.xray
 lib_radionuclides.radioNuclideData
  []
 
 
-Overfull \hbox (20.16237pt too wide) in paragraph at lines 147--149
+Overfull \hbox (20.16237pt too wide) in paragraph at lines 150--152
 []\T1/txtt/m/n/10 XrayLines \T1/qtm/m/n/10 (\T1/qtm/m/it/10 dxraylib.xraylib_ra
 dionuclides.radioNuclideData
  []
 
 
-Overfull \hbox (4.41241pt too wide) in paragraph at lines 154--156
+Overfull \hbox (4.41241pt too wide) in paragraph at lines 157--159
 []\T1/txtt/m/n/10 Z_xray \T1/qtm/m/n/10 (\T1/qtm/m/it/10 dxraylib.xraylib_radio
 nuclides.radioNuclideData
  []
 
-[31]) (./dxraylib.aux)
+[32]) (./dxraylib.aux)
 Package rerunfilecheck Info: File `dxraylib.out' has not changed.
-(rerunfilecheck)             Checksum: 3EE406551374E36895C04FC8693944B2;6429.
+(rerunfilecheck)             Checksum: 4F0245263AF223A0C15AE950A5630050;6966.
  ) 
 Here is how much of TeX's memory you used:
- 15760 strings out of 478276
- 262927 string characters out of 5846491
- 577541 words of memory out of 5000000
- 33422 multiletter control sequences out of 15000+600000
+ 15776 strings out of 478276
+ 263328 string characters out of 5846491
+ 577883 words of memory out of 5000000
+ 33431 multiletter control sequences out of 15000+600000
  525915 words of font info for 70 fonts, out of 8000000 for 9000
  1142 hyphenation exceptions out of 8191
  70i,15n,76p,1493b,619s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1017,10 +1023,10 @@ c/tex-gyre/qtmri.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/txf
 onts/t1xbtt.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/txfonts/
 t1xtt.pfb></usr/local/texlive/2021/texmf-dist/fonts/type1/public/txfonts/t1xtt.
 pfb>
-Output written on dxraylib.pdf (34 pages, 253494 bytes).
+Output written on dxraylib.pdf (35 pages, 254961 bytes).
 PDF statistics:
- 671 PDF objects out of 1000 (max. 8388607)
- 607 compressed objects within 7 object streams
- 165 named destinations out of 1000 (max. 500000)
- 341 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 699 PDF objects out of 1000 (max. 8388607)
+ 634 compressed objects within 7 object streams
+ 172 named destinations out of 1000 (max. 500000)
+ 365 words of extra memory for PDF output out of 10000 (max. 10000000)
 

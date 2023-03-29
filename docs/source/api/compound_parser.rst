@@ -30,3 +30,11 @@ The AtomicNumberToSymbol function returns a pointer to a string containing the
 element for atomic number Z. If an error occurred, the NULL string is returned. 
 
 .. autofunction:: dxraylib.AtomicNumberToSymbol
+
+SymbolToAtomicNumber
+--------------------
+
+The SymbolToAtomicNumber function returns the atomic number that corresponds
+with element symbol. If the element does not exist, 0 is returned.
+
+.. autofunction:: dxraylib.SymbolToAtomicNumber
