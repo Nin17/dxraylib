@@ -2,7 +2,6 @@
 """
 
 # TODO docstring
-# TODO type hint dict
 
 from __future__ import annotations
 import typing
@@ -79,5 +78,35 @@ def AtomicNumberToSymbol(Z: int) -> str:
     -------
     str
         element symbol
+
+    Raises
+    ------
+    ValueError
+        if Z is an invalid atomic number: Z<1 ^ Z>107
     """
     return xraylib.AtomicNumberToSymbol(Z)
+
+
+def SymbolToAtomicNumber(symbol: str) -> int:
+    """
+    Wrapper around xraylib.SymbolToAtomicNumber
+
+    Return the atomic number for the elemtent with symbol: symbol.
+
+    Parameters
+    ----------
+    symbol : str
+        element symbol
+
+    Returns
+    -------
+    int
+        atomic number
+
+    Raises
+    ------
+    ValueError
+        if symbol is an invalid element symbol or corresponds to an element
+        with Z>107
+    """
+    xraylib.SymbolToAtomicNumber(symbol)

@@ -32,6 +32,22 @@ class compoundDataNIST(typing.TypedDict):
     density: float
 
 
+def GetCompoundDataNISTByIndex(compoundIndex: int) -> compoundDataNIST:
+    """_summary_
+
+    Parameters
+    ----------
+    compoundIndex : int
+        _description_
+
+    Returns
+    -------
+    compoundDataNIST
+        _description_
+    """
+    return xraylib.GetCompoundDataNISTByIndex(compoundIndex)
+
+
 def GetCompoundDataNISTByName(compoundString: str) -> compoundDataNIST:
     """_summary_
 
@@ -46,3 +62,14 @@ def GetCompoundDataNISTByName(compoundString: str) -> compoundDataNIST:
         _description_
     """
     return xraylib.GetCompoundDataNISTByName(compoundString)
+
+
+def GetCompoundDataNISTList() -> tuple[str, ...]:
+    """_summary_
+
+    Returns
+    -------
+    tuple[str, ...]
+        _description_
+    """
+    return xraylib.GetCompoundDataNISTList()
