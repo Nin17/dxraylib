@@ -56,8 +56,8 @@ def _index2d(data: Array, a: Array, b: Array) -> Array:
         indices (a & b) broadcast and indexed from data for valid values, NaN
         otherwise
     """
-    _a = a.reshape(a.shape + ((1,) * b.ndim))
-    _b = b.reshape(((1,) * a.ndim) + b.shape)
+    _a = a.reshape(a.shape + (1,) * b.ndim)
+    _b = b.reshape((1,) * a.ndim + b.shape)
     condition_a = (_a >= 0) & (_a < data.shape[0])
     condition_b = (_b >= 0) & (_b < data.shape[1])
     output = data[xp.where(condition_a, _a, 0), xp.where(condition_b, _b, 0)]
