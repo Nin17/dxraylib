@@ -3,15 +3,13 @@ Jump factors.
 """
 
 from __future__ import annotations
-import os
 
 from ._indexors import _index2d
+from ._load import _load
 from ._utilities import asarray, wrapped_partial
-from .config import Array, ArrayLike, jit, jit_kwargs, xp
+from .config import Array, ArrayLike, jit, jit_kwargs
 
-_DIRPATH = os.path.dirname(__file__)
-_JUMP_PATH = os.path.join(_DIRPATH, "data/jump.npy")
-_JUMP = xp.load(_JUMP_PATH)
+_JUMP = _load("jump")
 
 
 @wrapped_partial(jit, **jit_kwargs)

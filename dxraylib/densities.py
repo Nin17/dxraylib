@@ -3,15 +3,13 @@ Element Densities
 """
 
 from __future__ import annotations
-import os
 
 from ._indexors import _index1d
+from ._load import _load
 from ._utilities import asarray, wrapped_partial
-from .config import Array, ArrayLike, jit, jit_kwargs, xp
+from .config import Array, ArrayLike, jit, jit_kwargs
 
-_DIRPATH = os.path.dirname(__file__)
-_DEN_PATH = os.path.join(_DIRPATH, "data/densities.npy")
-_DEN = xp.load(_DEN_PATH)
+_DEN = _load("densities")
 
 
 @wrapped_partial(jit, **jit_kwargs)

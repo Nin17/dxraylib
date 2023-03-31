@@ -3,15 +3,13 @@ Atomic level widths
 """
 
 from __future__ import annotations
-import os
 
 from ._indexors import _index2d
+from ._load import _load
 from ._utilities import asarray, wrapped_partial
-from .config import Array, ArrayLike, jit, jit_kwargs, xp
+from .config import Array, ArrayLike, jit, jit_kwargs
 
-_DIRPATH = os.path.dirname(__file__)
-_ALW_PATH = os.path.join(_DIRPATH, "data/atomic_level_width.npy")
-_ALW = xp.load(_ALW_PATH)
+_ALW = _load("atomic_level_width")
 
 
 @wrapped_partial(jit, **jit_kwargs)

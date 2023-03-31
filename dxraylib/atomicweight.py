@@ -3,15 +3,13 @@ Standard Atomic Weight
 """
 
 from __future__ import annotations
-import os
 
 from ._indexors import _index1d
+from ._load import _load
 from ._utilities import asarray, wrapped_partial
-from .config import Array, ArrayLike, jit, jit_kwargs, xp
+from .config import Array, ArrayLike, jit, jit_kwargs
 
-_DIRPATH = os.path.dirname(__file__)
-_AW_PATH = os.path.join(_DIRPATH, "data/atomic_weight.npy")
-_AW = xp.load(_AW_PATH)
+_AW = _load("atomic_weight")
 
 
 @wrapped_partial(jit, **jit_kwargs)

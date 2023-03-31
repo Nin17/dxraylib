@@ -3,15 +3,13 @@ Fluorescence yield.
 """
 
 from __future__ import annotations
-import os
 
 from ._indexors import _index2d
+from ._load import _load
 from ._utilities import asarray, wrapped_partial
-from .config import Array, ArrayLike, jit, jit_kwargs, xp
+from .config import Array, ArrayLike, jit, jit_kwargs
 
-_DIRPATH = os.path.dirname(__file__)
-_FY_PATH = os.path.join(_DIRPATH, "data/fluor_yield.npy")
-_FY = xp.load(_FY_PATH)
+_FY = _load("fluor_yield")
 
 
 @wrapped_partial(jit, **jit_kwargs)

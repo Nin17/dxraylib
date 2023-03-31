@@ -1,26 +1,20 @@
 """_summary_
 """
+# TODO summary
 # TODO issue with E = 1
 # TODO docstrings
 
 from __future__ import annotations
-import os
 
 from ._interpolators import _interpolate
+from ._load import _load
 from ._utilities import asarray, wrapped_partial
 from .config import Array, ArrayLike, jit, jit_kwargs, xp
 
-_DIRPATH = os.path.dirname(__file__)
-
-_CS_COMPT_PATH = os.path.join(_DIRPATH, "data/cs_compt.npy")
-_CS_ENERGY_PATH = os.path.join(_DIRPATH, "data/cs_energy.npy")
-_CS_PHOTO_PATH = os.path.join(_DIRPATH, "data/cs_photo.npy")
-_CS_RAYL_PATH = os.path.join(_DIRPATH, "data/cs_rayl.npy")
-
-_CS_COMPT = xp.load(_CS_COMPT_PATH)
-_CS_ENERGY = xp.load(_CS_ENERGY_PATH)
-_CS_PHOTO = xp.load(_CS_PHOTO_PATH)
-_CS_RAYL = xp.load(_CS_RAYL_PATH)
+_CS_COMPT = _load("cs_compt")
+_CS_ENERGY = _load("cs_energy")
+_CS_PHOTO = _load("cs_photo")
+_CS_RAYL = _load("cs_rayl")
 
 
 @wrapped_partial(jit, **jit_kwargs)

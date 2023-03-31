@@ -1,22 +1,18 @@
 """_summary_
 """
+# TODO summary
 # TODO sensible variable names
 from __future__ import annotations
-import os
 
 from ._interpolators import _interpolate
+from ._load import _load
 from ._utilities import asarray, wrapped_partial
 from .atomicweight import AtomicWeight as _AtomicWeight
 from .config import Array, ArrayLike, jit, jit_kwargs, xp
 from .constants import AVOGNUM, KEV2ANGST, MEC2, PI, RE2
 
-_DIRPATH = os.path.dirname(__file__)
-
-_FF_RAYL_PATH = os.path.join(_DIRPATH, "data/FF.npy")
-_FF_RAYL = xp.load(_FF_RAYL_PATH)
-
-_SF_COMPT_PATH = os.path.join(_DIRPATH, "data/SF.npy")
-_SF_COMPT = xp.load(_SF_COMPT_PATH)
+_FF_RAYL = _load("FF")
+_SF_COMPT = _load("SF")
 
 
 # TODO fix small values ~finfo(float64) & test

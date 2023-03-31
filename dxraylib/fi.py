@@ -3,15 +3,13 @@ Anomalous Scattering Factor Δf'
 """
 
 from __future__ import annotations
-import os
 
 from ._interpolators import _interpolate
+from ._load import _load
 from ._utilities import asarray, wrapped_partial
-from .config import Array, ArrayLike, jit, jit_kwargs, xp
+from .config import Array, ArrayLike, jit, jit_kwargs
 
-_DIRPATH = os.path.dirname(__file__)
-_FI_PATH = os.path.join(_DIRPATH, "data/fi.npy")
-_FI = xp.load(_FI_PATH)
+_FI = _load("fi")
 
 
 @wrapped_partial(jit, **jit_kwargs)
