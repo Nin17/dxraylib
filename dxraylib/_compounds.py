@@ -2,6 +2,7 @@
 helper function to parse a compound as a chemical formula and then as NIST
 compounds if that failed
 """
+from __future__ import annotations
 
 from .xraylib_nist_compounds import compoundDataNIST, GetCompoundDataNISTByName
 from .xraylib_parser import compoundData, CompoundParser
