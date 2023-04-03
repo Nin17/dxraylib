@@ -188,10 +188,17 @@ Functions that take a single string argument or return a string such as: ```Atom
 * Fi
 * Fii
 * FluorYield
+* GetCompoundDataNISTByIndex
 * GetCompoundDataNISTByName
+* GetCompoundDataNISTList
+* GetRadioNuclideDataByIndex
+* GetRadioNuclideDataByName
+* GetRadioNuclideDataList
 * JumpFactor
 * MomentTransf
+* RadRate
 * Refractive_Index
 * Refractive_Index_Im
 * Refractive_Index_Re
 * SF_Compt
+* SymbolToAtomicNumber
