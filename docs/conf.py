@@ -9,8 +9,8 @@
 import os
 import sys
 
-sys.path.insert(0, os.path.abspath("../../dxraylib"))
-sys.path.insert(1, os.path.abspath("../../dxraylib/_utilities.py"))
+sys.path.insert(0, os.path.abspath("../dxraylib"))
+sys.path.insert(1, os.path.abspath("../dxraylib/_utilities.py"))
 # print(sys.path)
 
 project = "dxraylib"
