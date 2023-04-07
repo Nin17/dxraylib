@@ -21,7 +21,7 @@ release = "0.0.1"
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = ['sphinx.ext.autodoc', 'sphinx.ext.viewcode']
+extensions = ["sphinx.ext.napoleon", 'sphinx.ext.autodoc', 'sphinx.ext.viewcode']
 
 templates_path = ["_templates"]
 exclude_patterns = []
@@ -31,7 +31,7 @@ exclude_patterns = []
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#options-for-html-output
 
 html_theme = "sphinx_book_theme"
-# html_static_path = ["_static"]
+html_static_path = []
 
 latex_engine = "pdflatex"
 latex_elements = {
@@ -84,3 +84,11 @@ pygments_style = 'sphinx'
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.
 todo_include_todos = False
+
+
+html_context = {
+  'display_github': True,
+  'github_user': 'Nin17',
+  'github_repo': 'dxraylib',
+  'github_version': 'main',
+}
