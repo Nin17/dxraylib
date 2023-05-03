@@ -5,8 +5,7 @@ dxraylib.CS_Rayl and dxraylib.CS_Total
 
 import numpy as np
 
-from dxraylib.cross_sections import _CS_COMPT, _CS_PHOTO, _CS_RAYL, _CS_ENERGY
-
+from dxraylib._load import load
 from tests.utilities import CubicInterpolators
 
 
@@ -15,7 +14,7 @@ class CS_Compt(CubicInterpolators):
     Base test class for dxraylib.CS_Compt
     """
 
-    data: tuple = (_CS_COMPT,)
+    data: tuple = (load("cs_compt"),)
     scale = ((np.exp, 1000),)
 
 
@@ -30,7 +29,7 @@ class CS_Energy(CubicInterpolators):
     Base test class for dxraylib.CS_Energy
     """
 
-    data: tuple = (_CS_ENERGY,)
+    data: tuple = (load("cs_energy"),)
     scale = ((np.exp, 1),)
 
 
@@ -45,7 +44,7 @@ class CS_Photo(CubicInterpolators):
     Base test class for dxraylib.CS_Photo
     """
 
-    data: tuple = (_CS_PHOTO,)
+    data: tuple = (load("cs_photo"),)
     scale = ((np.exp, 1000),)
 
 
@@ -60,7 +59,7 @@ class CS_Rayl(CubicInterpolators):
     Base test class for dxraylib.CS_Rayl
     """
 
-    data: tuple = (_CS_RAYL,)
+    data: tuple = (load("cs_rayl"),)
     scale = ((np.exp, 1000),)
 
 
@@ -75,7 +74,7 @@ class CS_Total(CubicInterpolators):
     Base test class for dxraylib.CS_Total
     """
 
-    data: tuple = _CS_COMPT, _CS_PHOTO, _CS_RAYL
+    data: tuple = load("cs_compt"), load("cs_photo"), load("cs_rayl")
     scale = ((np.exp, 1000),)
 
 

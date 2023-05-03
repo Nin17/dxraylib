@@ -2,8 +2,7 @@
 Tests for dxraylib.AtomicWeight
 """
 
-from dxraylib.atomicweight import _AW
-
+from dxraylib._load import load
 from tests.utilities import Indexors1D
 
 
@@ -12,7 +11,7 @@ class AtomicWeight(Indexors1D):
     Base test class for dxraylib.AtomicWeight
     """
 
-    size = _AW.size
+    size = load("atomic_weight").size
 
 
 class TestAtomicWeight(AtomicWeight):

@@ -1,13 +1,14 @@
 """
+Tests for dxraylib.AtomicLevelWidth
 """
-# TODO docstrings
 
-from dxraylib.atomiclevelwidth import _ALW
-
+from dxraylib._load import load
 from tests.utilities import Indexors2D
 
 
 class TestAtomicLevelWidth(Indexors2D):
-    """ """
+    """
+    Test class for dxraylib.AtomicLevelWidth
+    """
 
-    shape = _ALW.shape
+    shape = load("atomic_level_width").shape

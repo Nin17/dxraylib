@@ -2,8 +2,7 @@
 Tests for dxraylib.Fi
 """
 
-from dxraylib.fi import _FI
-
+from dxraylib._load import load
 from tests.utilities import CubicInterpolators
 
 
@@ -12,7 +11,7 @@ class Fi(CubicInterpolators):
     Base test class for dxraylib.Fi
     """
 
-    data = (_FI,)
+    data = (load("fi"),)
     scale = ((lambda x: x, 1),)
 
 

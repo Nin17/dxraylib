@@ -1,13 +1,14 @@
-"""_summary_
 """
-# TODO docstrings
+Tests for dxraylib.EdgeEnergy
+"""
 
-from dxraylib.edges import _ED
-
+from dxraylib._load import load
 from tests.utilities import Indexors2D
 
 
 class TestEdgeEnergy(Indexors2D):
-    """_summary_"""
+    """
+    Test class for dxraylib.EdgeEnergy
+    """
 
-    shape = _ED.shape
+    shape = load("edges").shape

@@ -1,13 +1,14 @@
-"""_summary_
 """
-# TODO docstrings
+Tests for dxraylib.JumpFactor
+"""
 
-from dxraylib.jumpy import _JUMP
-
+from dxraylib._load import load
 from tests.utilities import Indexors2D
 
 
 class TestJumpFactor(Indexors2D):
-    """_summary_"""
+    """
+    Test class for dxraylib.JumpFactor
+    """
 
-    shape = _JUMP.shape
+    shape = load("jump").shape

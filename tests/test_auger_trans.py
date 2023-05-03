@@ -1,19 +1,22 @@
-"""_summary_
 """
-# TODO docstrings
+Tests for dxraylib.AugerRate and dxraylib.AugerYield
+"""
 
-from dxraylib.auger_trans import _AR, _AY
-
+from dxraylib._load import load
 from tests.utilities import Indexors2D
 
 
 class TestAugerRate(Indexors2D):
-    """ """
+    """
+    Test class for dxraylib.AugerRate
+    """
 
-    shape = _AR.shape
+    shape = load("auger_rates").shape
 
 
 class TestAugerYield(Indexors2D):
-    """ """
+    """
+    Test class for dxraylib.AugerYield
+    """
 
-    shape = _AY.shape
+    shape = load("auger_yields").shape

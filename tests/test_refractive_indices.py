@@ -1,15 +1,13 @@
-"""_summary_
+"""
+Tests for dxraylib.Refractive_Index_Re, dxraylib.Refractive_Index_Im and
+dxraylib.Refractive_Index
 """
 
-
+import numpy as np
 import pytest
 
-import numpy as np
 
-from dxraylib.cross_sections import _CS_COMPT, _CS_PHOTO, _CS_RAYL
-from dxraylib.fi import _FI
-
-from tests.config import N
+from dxraylib._load import load
 from tests.utilities import (
     random_formula,
     CubicInterpolators,
@@ -36,6 +34,7 @@ def refractive_index(cls):
     _type_
         _description_
     """
+
     @property
     def args0(self):
         compound = random_formula(3)
@@ -85,6 +84,10 @@ def refractive_index(cls):
     def test_0(_):
         ...
 
+    @pytest.mark.skip("")
+    def test_out_of_range(_):
+        ...
+
     cls.args0 = args0
     cls.test_xrlnp = test_xrlnp
     cls.test_data_points = test_data_points
@@ -94,23 +97,29 @@ def refractive_index(cls):
     cls.test_extrapolate_2big = test_extrapolate_2big
     cls.test_extrapolate_2small = test_extrapolate_2small
     cls.test_0 = test_0
+    cls.test_out_of_range = test_out_of_range
     return cls
-
 
 
 @refractive_index
 class TestRefractive_Index_Re(Fi, AtomicWeight):
-    """_summary_"""
+    """
+    Test class for dxraylib.Refractive_Index_Re
+    """
 
 
 @refractive_index
 class TestRefractive_Index_Im(CS_Total):
-    """_summary_"""
+    """
+    Test class for dxraylib.Refractive_Index_Im
+    """
 
 
 @refractive_index
 class TestRefractive_Index(CubicInterpolators, AtomicWeight):
-    """_summary_"""
+    """
+    Test class for dxraylib.Refractive_Index
+    """
 
-    data = _CS_RAYL, _CS_COMPT, _CS_PHOTO, _FI
+    data = load("cs_rayl"), load("cs_compt"), load("cs_photo"), load("fi")
     scale = (*((np.exp, 1000),) * 3, (lambda x: x, 1))

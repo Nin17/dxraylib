@@ -1,5 +1,6 @@
 """_summary_
 """
+# TODO summary
 
 import functools
 
@@ -20,6 +21,7 @@ from tests.test_polarized import DCSP_Compt, DCSP_Rayl
 from tests.test_scattering import DCS_Compt, DCS_Rayl
 
 rng = np.random.default_rng()
+
 
 # TODO this is basically the same as in test_refractive_index
 def compound(cls):

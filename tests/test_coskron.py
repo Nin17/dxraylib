@@ -1,13 +1,14 @@
-"""_summary_
 """
-# TODO docstrings
+Tests for dxraylib.CosKronTransProb
+"""
 
-from dxraylib.coskron import _CK
-
+from dxraylib._load import load
 from tests.utilities import Indexors2D
 
 
 class TestCosKronTransProb(Indexors2D):
-    """_summary_"""
+    """
+    Test class for dxraylib.CosKronTransProb
+    """
 
-    shape = _CK.shape
+    shape = load("coskron").shape

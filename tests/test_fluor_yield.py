@@ -1,13 +1,14 @@
-"""_summary_
 """
-# TODO docstrings
+Tests for dxraylib.FluorYield
+"""
 
-from dxraylib.fluor_yield import _FY
-
+from dxraylib._load import load
 from tests.utilities import Indexors2D
 
 
 class TestFluorYield(Indexors2D):
-    """_summary_"""
+    """
+    Test class for dxraylib.FluorYield
+    """
 
-    shape = _FY.shape
+    shape = load("fluor_yield").shape
