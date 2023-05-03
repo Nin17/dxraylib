@@ -1,0 +1,21 @@
+name: dxraylib3.11
+channels:
+  - conda-forge
+dependencies:
+  - autograd
+  - black
+  - flake8
+  - ipykernel
+  - jax
+  - numpy
+  - pip
+  - pylint
+  - pytest
+  - python=3.11.*
+  - pytorch
+  - sphinx
+  - xraylib
+  - pip:
+      - mygrad
+      - tensorflow
+      - sphinx-book-theme
