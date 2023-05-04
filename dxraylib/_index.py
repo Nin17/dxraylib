@@ -2,12 +2,12 @@
 helper functions to index 1D & 2D datasets
 """
 
-from ._utilities import wrapped_partial
-from .config import Array, jit, jit_kwargs, xp
+from __future__ import annotations
+
+from . import config as cfg
 
 
-@wrapped_partial(jit, **jit_kwargs)
-def _index1d(data: Array, a: Array) -> Array:
+def index1d(data: cfg.Array, a: cfg.Array) -> cfg.Array:
     """
     Index valid integer indices (a) from a 1d data array (data).
     NaN for invalid indices: those larger than or equal to data.size or less
@@ -27,13 +27,18 @@ def _index1d(data: Array, a: Array) -> Array:
     Array
         indices (a) indexed from data for valid values, NaN otherwise
     """
-    condition = (a >= 0) & (a < data.size)
-    output = data[xp.where(condition, a, 0)]
-    return xp.where(condition, output, xp.nan)
+    # TODO can probably do this in a uniform way between modules
+    assert data.ndim == 1
+    condition = (a >= 0) & (a < data.shape[0])
+    # if cfg.xp.__name__ != "torch":
+    #     condition = (a >= 0) & (a < data.size)
+    # else:
+    #     condition = (a >= 0) & (a < data.size(dim=0))
+    output = data[cfg.xp.where(condition, a, 0)]
+    return cfg.xp.where(condition, output, cfg.xp.nan)
 
 
-@wrapped_partial(jit, **jit_kwargs)
-def _index2d(data: Array, a: Array, b: Array) -> Array:
+def index2d(data: cfg.Array, a: cfg.Array, b: cfg.Array) -> cfg.Array:
     """
     Index valid integer indices (a & b) from a 2d data array (data).
     NaN for invalid indices: those larger than or equal to the shape of data
@@ -56,9 +61,12 @@ def _index2d(data: Array, a: Array, b: Array) -> Array:
         indices (a & b) broadcast and indexed from data for valid values, NaN
         otherwise
     """
+    assert data.ndim == 2
     _a = a.reshape(a.shape + (1,) * b.ndim)
     _b = b.reshape((1,) * a.ndim + b.shape)
     condition_a = (_a >= 0) & (_a < data.shape[0])
     condition_b = (_b >= 0) & (_b < data.shape[1])
-    output = data[xp.where(condition_a, _a, 0), xp.where(condition_b, _b, 0)]
-    return xp.where(condition_a & condition_b, output, xp.nan)
+    output = data[
+        cfg.xp.where(condition_a, _a, 0), cfg.xp.where(condition_b, _b, 0)
+    ]
+    return cfg.xp.where(condition_a & condition_b, output, cfg.xp.nan)
