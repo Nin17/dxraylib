@@ -1,15 +1,16 @@
-"""Atomic level widths."""
+"""Jump factors."""
 
 from __future__ import annotations
 
-__all__: list[str] = ["AtomicLevelWidth"]
+__all__: list[str] = ["JumpFactor"]
 
 from typing import TYPE_CHECKING
 
 from array_api_compat import array_namespace
 
+from dxraylib._load import _load
+
 from ._index import index2d
-from ._load import _load
 
 if TYPE_CHECKING:
     from types import ModuleType
@@ -17,11 +18,12 @@ if TYPE_CHECKING:
     from numpy import float64, floating, integer
     from numpy.typing import NDArray
 
-ATOMICLEVELWIDTH_DATA: NDArray[float64] = _load("atomic_level_width")
+
+JUMPFACTOR_DATA: NDArray[float64] = _load("jump")
 
 
-def AtomicLevelWidth(Z: NDArray[integer], shell: NDArray[integer]) -> NDArray[floating]:
-    """Atomic level width (keV).
+def JumpFactor(Z: NDArray[integer], shell: NDArray[integer]) -> NDArray[floating]:
+    """Jump factor.
 
     Parameters
     ----------
@@ -33,9 +35,9 @@ def AtomicLevelWidth(Z: NDArray[integer], shell: NDArray[integer]) -> NDArray[fl
     Returns
     -------
     NDArray[floating]
-        atomic level width (keV)
+        jump factor
 
     """
     xp: ModuleType = array_namespace(Z, shell)
-    data: NDArray[floating] = xp.asarray(ATOMICLEVELWIDTH_DATA)
-    return index2d(data, Z - 10, shell)
+    data: NDArray[floating] = xp.asarray(JUMPFACTOR_DATA)
+    return index2d(data, Z - 1, shell)
