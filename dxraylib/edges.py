@@ -5,7 +5,7 @@ Absorption edge energies.
 from __future__ import annotations
 import os
 
-from ._indexors import _index2d
+from ._index import index2d
 from ._load import _load
 from ._utilities import asarray, wrapped_partial
 from .config import Array, ArrayLike, jit, jit_kwargs, xp
@@ -31,4 +31,4 @@ def EdgeEnergy(Z: ArrayLike, shell: ArrayLike) -> Array:
     array
         absorption edge energy (keV)
     """
-    return _index2d(_ED, Z - 1, shell)
+    return index2d(_ED, Z - 1, shell)

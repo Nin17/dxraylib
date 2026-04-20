@@ -4,7 +4,7 @@ Atomic level widths
 
 from __future__ import annotations
 
-from ._indexors import _index2d
+from ._index import index2d
 from ._load import _load
 from ._utilities import asarray, wrapped_partial
 from .config import Array, ArrayLike, jit, jit_kwargs
@@ -31,4 +31,4 @@ def AtomicLevelWidth(Z: ArrayLike, shell: ArrayLike) -> Array:
         atomic level width (keV)
     """
 
-    return _index2d(_ALW, Z - 10, shell)
+    return index2d(_ALW, Z - 10, shell)

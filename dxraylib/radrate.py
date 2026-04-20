@@ -4,7 +4,7 @@ Radiative rates.
 
 from __future__ import annotations
 
-from ._indexors import _index2d
+from ._index import index2d
 from ._load import _load
 from ._utilities import asarray, wrapped_partial
 from .config import Array, ArrayLike, jit, jit_kwargs
@@ -30,4 +30,4 @@ def RadRate(Z: ArrayLike, line: ArrayLike) -> Array:
     array
         radiative rate
     """
-    return _index2d(_RAD, Z - 5, line)
+    return index2d(_RAD, Z - 5, line)

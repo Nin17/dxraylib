@@ -4,7 +4,7 @@ Standard Atomic Weight
 
 from __future__ import annotations
 
-from ._indexors import _index1d
+from ._index import index1d
 from ._load import _load
 from ._utilities import asarray, wrapped_partial
 from .config import Array, ArrayLike, jit, jit_kwargs
@@ -28,4 +28,4 @@ def AtomicWeight(Z: ArrayLike) -> Array:
     array
         standard atomic weight (g/mol)
     """
-    return _index1d(_AW, Z - 1)
+    return index1d(_AW, Z - 1)
