@@ -43,31 +43,34 @@ _DATA["kissel_pe"] = np.load(
 
 
 # TODO remove to here
+from numpy.typing import NDArray
+def _load(file: str) -> NDArray[np.float64]:
+    return _DATA[file]
 
 
 # Not functools.cache for compatibility with python 3.8
-@functools.lru_cache(maxsize=None)
-def _load(file, xp=cfg.xp):
-    # TODO new functions here and then incoporate in data.npz
+# @functools.lru_cache(maxsize=None)
+# def _load(file, xp=cfg.xp):
+#     # TODO new functions here and then incoporate in data.npz
 
-    if xp.__name__ == "mygrad":  # ???
-        return _DATA[file]
-    if xp.__name__ == "torch":
-        # torch.searchsorted doesn't like nans
-        # FIXME need to keep nans if it is indexing not interpolating
-        # TODO think of condition, maybe axis[-2] of size 3
-        return xp.nan_to_num(xp.tensor(_DATA[file]), nan=float("inf"))
+#     if xp.__name__ == "mygrad":  # ???
+#         return _DATA[file]
+#     if xp.__name__ == "torch":
+#         # torch.searchsorted doesn't like nans
+#         # FIXME need to keep nans if it is indexing not interpolating
+#         # TODO think of condition, maybe axis[-2] of size 3
+#         return xp.nan_to_num(xp.tensor(_DATA[file]), nan=float("inf"))
+#     # TODO(nin17): don't convert array here
+#     return xp.asarray(_DATA[file])
+#     # return (
+#     #     xp.asarray(_DATA[file])
+#     #     if xp.__name__ != "mygrad"
+#     #     else xp.tensor(_DATA[file])
+#     # )
 
-    return xp.asarray(_DATA[file])
-    # return (
-    #     xp.asarray(_DATA[file])
-    #     if xp.__name__ != "mygrad"
-    #     else xp.tensor(_DATA[file])
-    # )
 
-
-def load(file):
-    return _load(file, cfg.xp)
+# def load(file):
+#     return _load(file, cfg.xp)
 
 
 # def _load(file):

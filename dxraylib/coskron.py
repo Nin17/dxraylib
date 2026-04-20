@@ -1,34 +1,44 @@
-"""
-Coster-Kronig transition probabilities.
-"""
+"""Coster-Kronig transition probabilities."""
 
 from __future__ import annotations
 
+__all__: list[str] = ["CosKronTransProb"]
+
+from typing import TYPE_CHECKING
+
+from array_api_compat import array_namespace
+from numpy import float64
+
 from ._index import index2d
 from ._load import _load
-from ._utilities import asarray, wrapped_partial
-from .config import Array, ArrayLike, jit, jit_kwargs
 
-_CK = _load("coskron")
+if TYPE_CHECKING:
+    from types import ModuleType
+
+    from numpy import float64, floating, integer
+    from numpy.typing import NDArray
 
 
-@wrapped_partial(jit, **jit_kwargs)
-@asarray()
-def CosKronTransProb(Z: ArrayLike, trans: ArrayLike) -> Array:
-    """
-    Coster-Kronig transition probability.
+COSKRON_DATA: NDArray[float64] = _load("coskron")
+
+
+def CosKronTransProb(Z: NDArray[integer], trans: NDArray[integer]) -> NDArray[floating]:
+    """Coster-Kronig transition probability.
 
     Parameters
     ----------
-    Z : array_like
+    Z : NDArray[integer]
         atomic number
-    trans : array_like
+    trans : NDArray[integer]
         Coster-Kronig transition macro
 
     Returns
     -------
-    array
+    NDArray[floating]
         Coster-Kronig transition probability
-    """
 
-    return index2d(_CK, Z - 1, trans)
+    """
+    xp: ModuleType = array_namespace(Z, trans)
+    data: NDArray[floating] = xp.asarray(COSKRON_DATA)
+
+    return index2d(data, Z - 1, trans)

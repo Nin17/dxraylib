@@ -1,33 +1,43 @@
-"""
-Radiative rates.
-"""
+"""Fractional Radiative Rate."""
 
 from __future__ import annotations
 
+__all__: list[str] = ["RadRate"]
+
+from typing import TYPE_CHECKING
+
+from array_api_compat import array_namespace
+
 from ._index import index2d
 from ._load import _load
-from ._utilities import asarray, wrapped_partial
-from .config import Array, ArrayLike, jit, jit_kwargs
 
-_RAD = _load("rad_rate")
+if TYPE_CHECKING:
+    from types import ModuleType
+
+    from numpy import float64, floating, integer
+    from numpy.typing import NDArray
 
 
-@wrapped_partial(jit, **jit_kwargs)
-@asarray()
-def RadRate(Z: ArrayLike, line: ArrayLike) -> Array:
-    """
-    Radiative rate.
+RADRATE_DATA: NDArray[float64] = _load("rad_rate")
+
+
+def RadRate(Z: NDArray[integer], line: NDArray[integer]) -> NDArray[floating]:
+    # TODO(nin17): FIXME incorrect for negative lines
+    """Radiative rate.
 
     Parameters
     ----------
-    Z : array_like
+    Z : NDArray[integer]
         atomic number
-    line : array_like
+    line : NDArray[integer]
         line-type macro
 
     Returns
     -------
-    array
+    NDArray[floating]
         radiative rate
+
     """
-    return index2d(_RAD, Z - 5, line)
+    xp: ModuleType = array_namespace(Z, line)
+    data: NDArray[floating] = xp.asarray(RADRATE_DATA)
+    return index2d(data, Z - 5, line)

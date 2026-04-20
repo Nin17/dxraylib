@@ -1,31 +1,39 @@
-"""
-Standard Atomic Weight
-"""
+"""Standard Atomic Weight."""
 
 from __future__ import annotations
 
+__all__: list[str] = ["AtomicWeight"]
+
+from typing import TYPE_CHECKING
+
+from array_api_compat import array_namespace
+
 from ._index import index1d
 from ._load import _load
-from ._utilities import asarray, wrapped_partial
-from .config import Array, ArrayLike, jit, jit_kwargs
 
-_AW = _load("atomic_weight")
+if TYPE_CHECKING:
+    from types import ModuleType
+
+    from numpy import float64, floating, integer
+    from numpy.typing import NDArray
+
+ATOMICWEIGHT_DATA: NDArray[float64] = _load("atomic_weight")
 
 
-@wrapped_partial(jit, **jit_kwargs)
-@asarray()
-def AtomicWeight(Z: ArrayLike) -> Array:
-    """
-    Standard atomic weight (g/mol).
+def AtomicWeight(Z: NDArray[integer]) -> NDArray[floating]:
+    """Standard atomic weight (g/mol).
 
     Parameters
     ----------
-    Z : array_like
+    Z : NDArray[integer]
         atomic number
 
     Returns
     -------
-    array
+    NDArray[floating]
         standard atomic weight (g/mol)
-    """
-    return index1d(_AW, Z - 1)
+
+    """  # noqa: D401 # TODO(nin17): put this in pyproject.toml instead
+    xp: ModuleType = array_namespace(Z)
+    data: NDArray[floating] = xp.asarray(ATOMICWEIGHT_DATA)
+    return index1d(data, Z - 1)

@@ -1,34 +1,41 @@
-"""
-Absorption edge energies.
-"""
+"""Absorption edge energies."""
 
 from __future__ import annotations
-import os
+
+__all__: list[str] = ["EdgeEnergy"]
+
+from typing import TYPE_CHECKING
+
+from array_api_compat import array_namespace
 
 from ._index import index2d
 from ._load import _load
-from ._utilities import asarray, wrapped_partial
-from .config import Array, ArrayLike, jit, jit_kwargs, xp
 
-_ED = _load("edges")
+if TYPE_CHECKING:
+    from types import ModuleType
+
+    from numpy import floating, integer
+    from numpy.typing import NDArray
+
+EDGEENERGY_DATA: NDArray = _load("edges")
 
 
-@wrapped_partial(jit, **jit_kwargs)
-@asarray()
-def EdgeEnergy(Z: ArrayLike, shell: ArrayLike) -> Array:
-    """
-    Absorption edge energy (keV).
+def EdgeEnergy(Z: NDArray[integer], shell: NDArray[integer]) -> NDArray[floating]:
+    """Absorption edge energy (keV).
 
     Parameters
     ----------
-    Z : array_like
+    Z : NDArray[integer]
         atomic number
-    shell : array_like
+    shell : NDArray[integer]
         shell-type macro
 
     Returns
     -------
-    array
+    NDArray[floating]
         absorption edge energy (keV)
+
     """
-    return index2d(_ED, Z - 1, shell)
+    xp: ModuleType = array_namespace(Z, shell)
+    data: NDArray[floating] = xp.asarray(EDGEENERGY_DATA)
+    return index2d(data, Z - 1, shell)

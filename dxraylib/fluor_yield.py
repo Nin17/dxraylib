@@ -1,33 +1,41 @@
-"""
-Fluorescence yield.
-"""
+"""Fluorescence yield."""
 
 from __future__ import annotations
 
+__all__: list[str] = ["FluorYield"]
+
+from typing import TYPE_CHECKING
+
+from array_api_compat import array_namespace
+
 from ._index import index2d
 from ._load import _load
-from ._utilities import asarray, wrapped_partial
-from .config import Array, ArrayLike, jit, jit_kwargs
 
-_FY = _load("fluor_yield")
+if TYPE_CHECKING:
+    from types import ModuleType
+
+    from numpy import float64, floating, integer
+    from numpy.typing import NDArray
+
+FLUORYIELD_DATA: NDArray[float64] = _load("fluor_yield")
 
 
-@wrapped_partial(jit, **jit_kwargs)
-@asarray()
-def FluorYield(Z: ArrayLike, shell: ArrayLike) -> Array:
-    """
-    Fluoresence yield.
+def FluorYield(Z: NDArray[integer], shell: NDArray[integer]) -> NDArray[floating]:
+    """Fluoresence yield.
 
     Parameters
     ----------
-    Z : array_like
+    Z : NDArray[integer]
         atomic number
-    shell : array_like
+    shell : NDArray[integer]
         shell-type macro
 
     Returns
     -------
-    array
+    NDArray[floating]
         fluorescence yield
+
     """
-    return index2d(_FY, Z - 3, shell)
+    xp: ModuleType = array_namespace(Z, shell)
+    data: NDArray[floating] = xp.asarray(FLUORYIELD_DATA)
+    return index2d(data, Z - 3, shell)

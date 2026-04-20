@@ -1,55 +1,64 @@
-"""
-Auger rates and yields.
-"""
+"""Fractional non Radiative Rates and Auger Yields."""
 
 from __future__ import annotations
 
-from ._indexors import _index2d
+from dxraylib._src._utils import array_namespace
+
+__all__: list[str] = ["AugerRate", "AugerYield"]
+
+
+from typing import TYPE_CHECKING
+
+from ._index import index2d
 from ._load import _load
-from ._utilities import asarray, wrapped_partial
-from .config import Array, ArrayLike, jit, jit_kwargs
 
-_AR = _load("auger_rates")
-_AY = _load("auger_yields")
+if TYPE_CHECKING:
+    from types import ModuleType
+
+    from numpy import float64, floating, integer
+    from numpy.typing import NDArray
+
+AUGERRATE_DATA: NDArray[float64] = _load("auger_rates")
+AUGERYIELD_DATA: NDArray[float64] = _load("auger_yields")
 
 
-@wrapped_partial(jit, **jit_kwargs)
-@asarray()
-def AugerRate(Z: ArrayLike, auger_trans: ArrayLike) -> Array:
-    """
-    Non-radiative rate.
+def AugerRate(Z: NDArray[integer], auger_trans: NDArray[integer]) -> NDArray[floating]:
+    """Non-radiative rate.
 
     Parameters
     ----------
-    Z : array_like
+    Z : NDArray[integer]
         atomic number
-    auger_trans : array_like
+    auger_trans : NDArray[integer]
         Auger-type macro corresponding with the electrons involved
 
     Returns
     -------
-    array
+    NDArray[floating]
         non-radiative rate
+
     """
-    return _index2d(_AR, Z - 6, auger_trans)
+    xp: ModuleType = array_namespace(Z, auger_trans)
+    data: NDArray[floating] = xp.asarray(AUGERRATE_DATA)
+    return index2d(data, Z - 6, auger_trans)
 
 
-@wrapped_partial(jit, **jit_kwargs)
-@asarray()
-def AugerYield(Z: ArrayLike, shell: ArrayLike) -> Array:
-    """
-    Auger yield.
+def AugerYield(Z: NDArray[integer], shell: NDArray[integer]) -> NDArray[floating]:
+    """Auger yield.
 
     Parameters
     ----------
-    Z : array_like
+    Z : NDArray[integer]
         atomic number
-    shell : array_like
+    shell : NDArray[integer]
         shell-type macro
 
     Returns
     -------
-    array
+    NDArray[floating]
         auger yield
+
     """
-    return _index2d(_AY, Z - 3, shell)
+    xp: ModuleType = array_namespace(Z, shell)
+    data: NDArray[floating] = xp.asarray(AUGERYIELD_DATA)
+    return index2d(data, Z - 3, shell)
