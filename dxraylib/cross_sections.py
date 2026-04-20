@@ -6,7 +6,7 @@
 
 from __future__ import annotations
 
-from ._interpolators import _interpolate
+from ._interpolate import interpolate1d
 from ._load import _load
 from ._utilities import asarray, wrapped_partial
 from .config import Array, ArrayLike, jit, jit_kwargs, xp
@@ -58,7 +58,7 @@ def CS_Photo(Z: ArrayLike, E: ArrayLike) -> Array:
     array
         Photoelectric absorption cross-section (cm²/g)
     """
-    return xp.exp(_interpolate(_CS_PHOTO, Z, E, xp.log(E * 1000.0)))
+    return xp.exp(interpolate1d(_CS_PHOTO, Z, E, xp.log(E * 1000.0)))
 
 
 @wrapped_partial(jit, **jit_kwargs)
@@ -79,7 +79,7 @@ def CS_Rayl(Z: ArrayLike, E: ArrayLike) -> Array:
     array
         Rayleigh scattering cross-section (cm²/g)
     """
-    return xp.exp(_interpolate(_CS_RAYL, Z, E, xp.log(E * 1000.0)))
+    return xp.exp(interpolate1d(_CS_RAYL, Z, E, xp.log(E * 1000.0)))
 
 
 @wrapped_partial(jit, **jit_kwargs)
@@ -100,7 +100,7 @@ def CS_Compt(Z: ArrayLike, E: ArrayLike) -> Array:
     array
         Compton scattering cross-section (cm²/g)
     """
-    return xp.exp(_interpolate(_CS_COMPT, Z, E, xp.log(E * 1000.0)))
+    return xp.exp(interpolate1d(_CS_COMPT, Z, E, xp.log(E * 1000.0)))
 
 
 @wrapped_partial(jit, **jit_kwargs)
@@ -121,4 +121,4 @@ def CS_Energy(Z: ArrayLike, E: ArrayLike) -> Array:
     array
         Mass-energy absorption cross-section (cm²/g)
     """
-    return xp.exp(_interpolate(_CS_ENERGY, Z, E, xp.log(E)))
+    return xp.exp(interpolate1d(_CS_ENERGY, Z, E, xp.log(E)))
