@@ -4,7 +4,7 @@
 # TODO sensible variable names
 from __future__ import annotations
 
-from ._interpolators import _interpolate
+from ._interpolate import interpolate1d
 from ._load import _load
 from ._utilities import asarray, wrapped_partial
 from .atomicweight import AtomicWeight as _AtomicWeight
@@ -34,7 +34,7 @@ def FF_Rayl(Z: ArrayLike, q: ArrayLike) -> Array:
     array
         atomic form factor for Rayleigh scattering
     """
-    return _interpolate(_FF_RAYL, Z, q, q)
+    return interpolate1d(_FF_RAYL, Z, q, q)
 
 
 @wrapped_partial(jit, **jit_kwargs)
@@ -55,7 +55,7 @@ def SF_Compt(Z: ArrayLike, q: ArrayLike) -> Array:
     array
         incoherent scattering function for Compton scattering
     """
-    return _interpolate(_SF_COMPT, Z, q, q)
+    return interpolate1d(_SF_COMPT, Z, q, q)
 
 
 @wrapped_partial(jit, **jit_kwargs)

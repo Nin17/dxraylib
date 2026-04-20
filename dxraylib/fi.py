@@ -4,7 +4,7 @@ Anomalous Scattering Factor Δf'
 
 from __future__ import annotations
 
-from ._interpolators import _interpolate
+from ._interpolate import interpolate1d
 from ._load import _load
 from ._utilities import asarray, wrapped_partial
 from .config import Array, ArrayLike, jit, jit_kwargs
@@ -30,4 +30,4 @@ def Fi(Z: ArrayLike, E: ArrayLike) -> Array:
     array
         anomalous scattering factor Δf'
     """
-    return _interpolate(_FI, Z, E, E)
+    return interpolate1d(_FI, Z, E, E)
