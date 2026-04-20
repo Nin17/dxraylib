@@ -36,7 +36,7 @@ def interpolate1d(
     _z = Z.reshape(Z.shape + (1,) * E.ndim)
     _e = E.reshape((1,) * Z.ndim + E.shape)
 
-    output = _splint.splint(
+    output = _splint._splint(
         data[cfg.xp.where((Z >= 1) & (Z <= data.shape[0]), Z - 1, 0)], E2
     )
     output = cfg.xp.where(
@@ -79,7 +79,7 @@ def interpolate2d(
     _z2 = Z.reshape(Z.shape + (1,) * shell.ndim)
     _shell2 = shell.reshape((1,) * Z.ndim + shell.shape)
 
-    output = _splint.splint(
+    output = _splint._splint(
         data[
             cfg.xp.where((_z2 >= 1) & (_z2 <= data.shape[0]), _z2 - 1, 0),
             cfg.xp.where(
