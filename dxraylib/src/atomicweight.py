@@ -34,7 +34,7 @@ def AtomicWeight(Z: NDArray[integer]) -> NDArray[floating]:
     NDArray[floating]
         standard atomic weight (g/mol)
 
-    """  # noqa: D401 # TODO(nin17): put this in pyproject.toml instead
+    """
     xp: ModuleType = array_namespace(Z)
     data: NDArray[floating] = xp.asarray(ATOMICWEIGHT_DATA)
     return index1d(data, Z - 1)
