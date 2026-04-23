@@ -1,102 +1,109 @@
-"""
-Cubic spline interpolation of data using _splint, respecting validity of
-atomic numbers and energies.
+"""Cubic spline interpolation of data using _splint.
+
+Respects validity of atomic numbers and energies.
 """
 
 from __future__ import annotations
 
-from . import _splint, config as cfg
+from typing import TYPE_CHECKING
+
+from ._splint import _splint
+
+if TYPE_CHECKING:
+    from types import ModuleType
+
+    from numpy import floating, integer
+    from numpy.typing import NDArray
 
 
 def interpolate1d(
-    data: cfg.Array, Z: cfg.Array, E: cfg.Array, E2: cfg.Array
-) -> cfg.Array:
-    """
-    Apply _splint to a dataset at valid atomic numbers and energies, NaN
-    otherwise.
+    data: NDArray[floating],
+    Z: NDArray[integer],
+    E: NDArray[floating],
+    E2: NDArray[floating],
+    /,
+    *,
+    xp: ModuleType,
+) -> NDArray[floating]:
+    """Apply _splint to a dataset at valid Z & E, NaN otherwise.
 
     Parameters
     ----------
-    data : array
+    data : NDArray[floating]
         cubic spline dataset of shape (NZ, 3, NE) where NZ is the number of
         elements Z, NE is the number of energies (possibly scaled)
         x, y and y'' are stacked on the second axis
-    Z : array
+    Z : NDArray[integer]
         atomic number
-    E : array
+    E : NDArray[floating]
         energy (keV)
-    E2 : array
+    E2 : NDArray[floating]
         energy scaled to same units as the energy in y (data[:, 1, :])
+    xp : ModuleType
+        array namespace of data, Z, E & E2
 
     Returns
     -------
-    Array
+    NDArray[floating]
         interpolated value at valid atomic numbers and energies, NaN otherwise
-    """
-    _z = Z.reshape(Z.shape + (1,) * E.ndim)
-    _e = E.reshape((1,) * Z.ndim + E.shape)
 
-    output = _splint._splint(
-        data[cfg.xp.where((Z >= 1) & (Z <= data.shape[0]), Z - 1, 0)], E2
-    )
-    output = cfg.xp.where(
-        (_z >= 1) & (_z <= data.shape[0]) & (_e >= 0), output, cfg.xp.nan
-    )
-    return output
+    """  # !!! possibly returns inf as well
+    dims = (*range(Z.ndim + E.ndim),)
+    e = xp.expand_dims(E, dims[: Z.ndim])
+    valid_z = (Z >= 1) & (Z <= data.shape[0])  # noqa: SIM300
+    # TODO(nin17): pre-pad arrays to avoid - 1 issue
+    output = _splint(data[xp.where(valid_z, Z - 1, 0)], E2, xp=xp)
+    valid_z = xp.expand_dims(valid_z, dims[Z.ndim :])
+    return xp.where(valid_z & (e >= 0), output, xp.nan)
 
 
-def interpolate2d(
-    data: cfg.Array,
-    Z: cfg.Array,
-    shell: cfg.Array,
-    E: cfg.Array,
-    E2: cfg.Array,
-) -> cfg.Array:
-    """_summary_
+def interpolate2d(  # noqa: PLR0913
+    data: NDArray[floating],
+    Z: NDArray[integer],
+    shell: NDArray[integer],
+    E: NDArray[floating],
+    E2: NDArray[floating],
+    /,
+    *,
+    xp: ModuleType,
+) -> NDArray[floating]:
+    """Apply _splint to dataset at valid Z, shell & E, NaN otherwise.
 
     Parameters
     ----------
-    data : Array
-        _description_
-    Z : Array
-        _description_
-    shell : Array
-        _description_
-    E : Array
-        _description_
-    E2 : Array
-        _description_
+    data : NDArray[floating]
+        cubic spline dataset of shape (NZ, NSHELL, 3, NE) where NZ is the number of
+        elements Z, NSHELL is the number of shells, NE is the number of energies
+        (possibly scaled)
+        x, y and y'' are stacked on the third axis
+    Z : NDArray[integer]
+        atomic number
+    shell : NDArray[floating]
+        shell number
+    E : NDArray[floating]
+        energy (keV)
+    E2 : NDArray[floating]
+        energy scaled to same units as the energy in y (data[:, :, 1, :])
+    xp : ModuleType
+        array namespace of data, Z, shell, E & E2
 
     Returns
     -------
-    Array
-        _description_
-    """
-    _z = Z.reshape(Z.shape + (1,) * (shell.ndim + E.ndim))
-    _shell = shell.reshape((1,) * Z.ndim + shell.shape + (1,) * E.ndim)
-    _e = E.reshape((1,) * (Z.ndim + shell.ndim) + E.shape)
+    NDArray[floating]
+        interpolated value at valid atomic numbers, shells and energies, NaN otherwise
 
-    _z2 = Z.reshape(Z.shape + (1,) * shell.ndim)
-    _shell2 = shell.reshape((1,) * Z.ndim + shell.shape)
+    """  # !!! possibly returns inf as well
+    dims = (*range(Z.ndim + shell.ndim + E.ndim),)
 
-    output = _splint._splint(
-        data[
-            cfg.xp.where((_z2 >= 1) & (_z2 <= data.shape[0]), _z2 - 1, 0),
-            cfg.xp.where(
-                (_shell2 >= 0) & (_shell2 < data.shape[1]), _shell2, 0
-            ),
-        ],
-        E2,
-    )
+    z = xp.expand_dims(Z, dims[Z.ndim : -E.ndim])
+    _shell = xp.expand_dims(shell, dims[: Z.ndim])
 
-    output = cfg.xp.where(
-        (_z >= 1)
-        & (_z <= data.shape[0])
-        & (_shell >= 0)
-        & (_shell < data.shape[1])
-        & (_e > 0),
-        output,
-        cfg.xp.nan,
-    )
-
-    return output
+    valid_z = (z >= 1) & (z <= data.shape[0])
+    valid_shell = (_shell >= 0) & (_shell < data.shape[1])
+    # TODO(nin17): pre-pad array to avoid - 1
+    valid_data = data[xp.where(valid_z, z - 1, 0), xp.where(valid_shell, _shell, 0)]
+    output = _splint(valid_data, E2, xp=xp)
+    valid_z = xp.expand_dims(valid_z, dims[-E.ndim :])
+    valid_shell = xp.expand_dims(valid_shell, dims[-E.ndim :])
+    valid_e = xp.expand_dims(E > 0, dims[: -E.ndim])
+    return xp.where(valid_z & valid_shell & valid_e, output, xp.nan)
