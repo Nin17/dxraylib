@@ -20,6 +20,7 @@ TWO_D = 2
 def index1d(
     data: NDArray,
     a: NDArray[integer],
+    /,
     *,
     xp: ModuleType,
 ) -> NDArray:
@@ -57,6 +58,7 @@ def index2d(
     data: NDArray,
     a: NDArray[integer],
     b: NDArray[integer],
+    /,
     *,
     xp: ModuleType,
 ) -> NDArray:
