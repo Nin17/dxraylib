@@ -1,17 +1,13 @@
-"""
-helper function to parse a compound as a chemical formula and then as NIST
-compounds if that failed
-"""
+"""Parse a compound as a chemical formula or NIST compound if that failed."""
+
 from __future__ import annotations
 
-from .xraylib_nist_compounds import compoundDataNIST, GetCompoundDataNISTByName
-from .xraylib_parser import compoundData, CompoundParser
+from .xraylib_nist_compounds import GetCompoundDataNISTByName, compoundDataNIST
+from .xraylib_parser import CompoundParser, compoundData
 
 
 def _compound_data(compound: str) -> compoundData | compoundDataNIST:
-    """
-    Helper function to try parsing a compound as a chemical formula and then as
-    a NIST compound if that fails.
+    """Parse compound as a chemical formula and then as a NIST compound if that fails.
 
     Parameters
     ----------
@@ -28,6 +24,7 @@ def _compound_data(compound: str) -> compoundData | compoundDataNIST:
     ValueError
         if compound is neither a valid chemical formula nor a valid NIST
         compound
+
     """
     try:
         compound_dict = CompoundParser(compound)
@@ -40,7 +37,7 @@ def _compound_data(compound: str) -> compoundData | compoundDataNIST:
              present in the NIST compound database
             """
             raise ValueError(
-                msg.replace("\n", "").replace("  ", "")
+                msg.replace("\n", "").replace("  ", ""),
             ) from error
 
     return compound_dict
