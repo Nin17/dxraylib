@@ -41,4 +41,4 @@ def RadRate(Z: NDArray[integer], line: NDArray[integer]) -> NDArray[floating]:
     """
     xp: ModuleType = array_namespace(Z, line)
     data: NDArray[floating] = xp.asarray(RADRATE_DATA)
-    return index2d(data, Z - 5, line)
+    return index2d(data, Z - 5, line, xp=xp)

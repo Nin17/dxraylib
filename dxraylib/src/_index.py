@@ -6,8 +6,6 @@ __all__: list[str] = ["index1d", "index2d"]
 
 from typing import TYPE_CHECKING
 
-from array_api_compat import array_namespace
-
 if TYPE_CHECKING:
     from types import ModuleType
 
@@ -19,7 +17,13 @@ ONE_D = 1
 TWO_D = 2
 
 
-def index1d(data: NDArray, a: NDArray[integer]) -> NDArray:
+# TODO(nin17): take xp as parameter
+def index1d(
+    data: NDArray,
+    a: NDArray[integer],
+    *,
+    xp: ModuleType,
+) -> NDArray:
     """Index valid integer indices (a) from a 1d data array (data).
 
     NaN for invalid indices: those larger than or equal to data.size or less
@@ -33,6 +37,8 @@ def index1d(data: NDArray, a: NDArray[integer]) -> NDArray:
         array to index
     a : NDArray[integer]
         integer indices to select
+    xp : ModuleType
+        array namespace of data & a
 
     Returns
     -------
@@ -41,7 +47,6 @@ def index1d(data: NDArray, a: NDArray[integer]) -> NDArray:
 
     """
     # TODO(nin17): can probably do this in a uniform way between modules
-    xp: ModuleType = array_namespace(data, a)
     if data.ndim != ONE_D:
         msg = f"data is {data.ndim}D but must be 1D."
         raise ValueError(msg)
@@ -54,7 +59,13 @@ def index1d(data: NDArray, a: NDArray[integer]) -> NDArray:
     return xp.where(condition, output, xp.nan)
 
 
-def index2d(data: NDArray, a: NDArray[integer], b: NDArray[integer]) -> NDArray:
+def index2d(
+    data: NDArray,
+    a: NDArray[integer],
+    b: NDArray[integer],
+    *,
+    xp: ModuleType,
+) -> NDArray:
     """Index valid integer indices (a & b) from a 2d data array (data).
 
     NaN for invalid indices: those larger than or equal to the shape of data
@@ -70,6 +81,8 @@ def index2d(data: NDArray, a: NDArray[integer], b: NDArray[integer]) -> NDArray:
         integer indices to select on 0th axis of data
     b : NDArray[integer]
         integer indices to select on 1st axis of data
+    xp : ModuleType
+        array namespace of data, a & b
 
     Returns
     -------
@@ -78,7 +91,6 @@ def index2d(data: NDArray, a: NDArray[integer], b: NDArray[integer]) -> NDArray:
         otherwise
 
     """
-    xp: ModuleType = array_namespace(data, a, b)
     if data.ndim != TWO_D:
         msg = f"data is {data.ndim}D but must be 2D."
         raise ValueError(msg)

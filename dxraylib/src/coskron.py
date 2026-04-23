@@ -42,4 +42,4 @@ def CosKronTransProb(Z: NDArray[integer], trans: NDArray[integer]) -> NDArray[fl
     xp: ModuleType = array_namespace(Z, trans)
     data: NDArray[floating] = xp.asarray(COSKRON_DATA)
 
-    return index2d(data, Z - 1, trans)
+    return index2d(data, Z - 1, trans, xp=xp)

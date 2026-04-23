@@ -39,4 +39,4 @@ def AtomicLevelWidth(Z: NDArray[integer], shell: NDArray[integer]) -> NDArray[fl
     """
     xp: ModuleType = array_namespace(Z, shell)
     data: NDArray[floating] = xp.asarray(ATOMICLEVELWIDTH_DATA)
-    return index2d(data, Z - 10, shell)
+    return index2d(data, Z - 10, shell, xp=xp)

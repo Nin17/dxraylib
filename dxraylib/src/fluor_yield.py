@@ -39,4 +39,4 @@ def FluorYield(Z: NDArray[integer], shell: NDArray[integer]) -> NDArray[floating
     """
     xp: ModuleType = array_namespace(Z, shell)
     data: NDArray[floating] = xp.asarray(FLUORYIELD_DATA)
-    return index2d(data, Z - 3, shell)
+    return index2d(data, Z - 3, shell, xp=xp)

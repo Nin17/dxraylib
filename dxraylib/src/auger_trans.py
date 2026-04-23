@@ -41,7 +41,7 @@ def AugerRate(Z: NDArray[integer], auger_trans: NDArray[integer]) -> NDArray[flo
     """
     xp: ModuleType = array_namespace(Z, auger_trans)
     data: NDArray[floating] = xp.asarray(AUGERRATE_DATA)
-    return index2d(data, Z - 6, auger_trans)
+    return index2d(data, Z - 6, auger_trans, xp=xp)
 
 
 def AugerYield(Z: NDArray[integer], shell: NDArray[integer]) -> NDArray[floating]:
@@ -62,4 +62,4 @@ def AugerYield(Z: NDArray[integer], shell: NDArray[integer]) -> NDArray[floating
     """
     xp: ModuleType = array_namespace(Z, shell)
     data: NDArray[floating] = xp.asarray(AUGERYIELD_DATA)
-    return index2d(data, Z - 3, shell)
+    return index2d(data, Z - 3, shell, xp=xp)

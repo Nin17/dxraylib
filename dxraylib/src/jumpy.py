@@ -40,4 +40,4 @@ def JumpFactor(Z: NDArray[integer], shell: NDArray[integer]) -> NDArray[floating
     """
     xp: ModuleType = array_namespace(Z, shell)
     data: NDArray[floating] = xp.asarray(JUMPFACTOR_DATA)
-    return index2d(data, Z - 1, shell)
+    return index2d(data, Z - 1, shell, xp=xp)
