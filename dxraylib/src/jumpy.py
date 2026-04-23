@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-__all__: list[str] = ["JumpFactor"]
+__all__ = ["JumpFactor"]
 
 from typing import TYPE_CHECKING
 
@@ -13,11 +13,11 @@ from dxraylib._load import _load
 from ._index import index2d
 
 if TYPE_CHECKING:
-    from numpy import float64, floating, integer
+    from numpy import floating, integer
     from numpy.typing import NDArray
 
 
-JUMPFACTOR_DATA: NDArray[float64] = _load("jump")
+JUMPFACTOR_DATA = _load("jump")
 
 
 def JumpFactor(Z: NDArray[integer], shell: NDArray[integer]) -> NDArray[floating]:

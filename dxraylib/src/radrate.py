@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-__all__: list[str] = ["RadRate"]
+__all__ = ["RadRate"]
 
 from typing import TYPE_CHECKING
 
@@ -13,11 +13,11 @@ from dxraylib._load import _load
 from ._index import index2d
 
 if TYPE_CHECKING:
-    from numpy import float64, floating, integer
+    from numpy import floating, integer
     from numpy.typing import NDArray
 
 
-RADRATE_DATA: NDArray[float64] = _load("rad_rate")
+RADRATE_DATA = _load("rad_rate")
 
 
 def RadRate(Z: NDArray[integer], line: NDArray[integer]) -> NDArray[floating]:

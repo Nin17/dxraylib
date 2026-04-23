@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dxraylib._src._utils import array_namespace
 
-__all__: list[str] = ["AugerRate", "AugerYield"]
+__all__ = ["AugerRate", "AugerYield"]
 
 
 from typing import TYPE_CHECKING
@@ -14,11 +14,11 @@ from dxraylib._load import _load
 from ._index import index2d
 
 if TYPE_CHECKING:
-    from numpy import float64, floating, integer
+    from numpy import floating, integer
     from numpy.typing import NDArray
 
-AUGERRATE_DATA: NDArray[float64] = _load("auger_rates")
-AUGERYIELD_DATA: NDArray[float64] = _load("auger_yields")
+AUGERRATE_DATA = _load("auger_rates")
+AUGERYIELD_DATA = _load("auger_yields")
 
 
 def AugerRate(Z: NDArray[integer], auger_trans: NDArray[integer]) -> NDArray[floating]:

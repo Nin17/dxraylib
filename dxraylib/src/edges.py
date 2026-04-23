@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-__all__: list[str] = ["EdgeEnergy"]
+__all__ = ["EdgeEnergy"]
 
 from typing import TYPE_CHECKING
 
@@ -16,7 +16,7 @@ if TYPE_CHECKING:
     from numpy import floating, integer
     from numpy.typing import NDArray
 
-EDGEENERGY_DATA: NDArray = _load("edges")
+EDGEENERGY_DATA = _load("edges")
 
 
 def EdgeEnergy(Z: NDArray[integer], shell: NDArray[integer]) -> NDArray[floating]:

@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-__all__: list[str] = ["ElementDensity"]
+__all__ = ["ElementDensity"]
 
 from typing import TYPE_CHECKING
 
@@ -13,11 +13,11 @@ from dxraylib._load import _load
 from ._index import index1d
 
 if TYPE_CHECKING:
-    from numpy import float64, floating, integer
+    from numpy import floating, integer
     from numpy.typing import NDArray
 
 
-ELEMENTDENSITY_DATA: NDArray[float64] = _load("densities")
+ELEMENTDENSITY_DATA = _load("densities")
 
 
 def ElementDensity(Z: NDArray[integer]) -> NDArray[floating]:

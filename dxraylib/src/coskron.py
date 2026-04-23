@@ -2,23 +2,22 @@
 
 from __future__ import annotations
 
-__all__: list[str] = ["CosKronTransProb"]
+__all__ = ["CosKronTransProb"]
 
 from typing import TYPE_CHECKING
 
 from array_api_compat import array_namespace
-from numpy import float64
 
 from dxraylib._load import _load
 
 from ._index import index2d
 
 if TYPE_CHECKING:
-    from numpy import float64, floating, integer
+    from numpy import floating, integer
     from numpy.typing import NDArray
 
 
-COSKRON_DATA: NDArray[float64] = _load("coskron")
+COSKRON_DATA = _load("coskron")
 
 
 def CosKronTransProb(Z: NDArray[integer], trans: NDArray[integer]) -> NDArray[floating]:

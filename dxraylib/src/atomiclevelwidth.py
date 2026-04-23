@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-__all__: list[str] = ["AtomicLevelWidth"]
+__all__ = ["AtomicLevelWidth"]
 
 from typing import TYPE_CHECKING
 
@@ -13,10 +13,10 @@ from dxraylib._load import _load
 from ._index import index2d
 
 if TYPE_CHECKING:
-    from numpy import float64, floating, integer
+    from numpy import floating, integer
     from numpy.typing import NDArray
 
-ATOMICLEVELWIDTH_DATA: NDArray[float64] = _load("atomic_level_width")
+ATOMICLEVELWIDTH_DATA = _load("atomic_level_width")
 
 
 def AtomicLevelWidth(Z: NDArray[integer], shell: NDArray[integer]) -> NDArray[floating]:
