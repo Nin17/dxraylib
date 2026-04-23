@@ -7,9 +7,9 @@ __all__ = ["DCSP_KN", "DCSP_Compt", "DCSP_Rayl", "DCSP_Thoms"]
 from typing import TYPE_CHECKING
 
 from array_api_compat import array_namespace
+from xraylib import AVOGNUM, MEC2, RE2
 
 from .atomicweight import AtomicWeight
-from .constants import AVOGNUM, MEC2, RE2
 from .scattering import FF_Rayl, MomentTransf, SF_Compt
 
 if TYPE_CHECKING:

@@ -17,11 +17,13 @@ __all__ = [
 from typing import TYPE_CHECKING
 
 from array_api_compat import array_namespace
+from xraylib import AVOGNUM, KEV2ANGST, MEC2, PI, RE2
 
 from ._interpolate import interpolate1d
 from ._load import _load
 from .atomicweight import AtomicWeight
-from .constants import AVOGNUM, KEV2ANGST, MEC2, PI, RE2  # ??? import from xraylib
+
+# from .constants import KEV2ANGST, PI, RE2  # ??? import from xraylib
 
 if TYPE_CHECKING:
     from numpy import floating, integer
@@ -225,7 +227,7 @@ def CS_KN(E: NDArray[floating]) -> NDArray[floating]:
     """
     xp = array_namespace(E)
     a = xp.where(E > 0.0, E / MEC2, xp.nan)
-    a3 = a* a *a
+    a3 = a * a * a
     b = 1.0 + 2.0 * a
     b2 = b * b
     lb = xp.log(b)

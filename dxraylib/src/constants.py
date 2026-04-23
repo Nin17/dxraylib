@@ -1,6 +1,4 @@
-"""
-Physical constants and conversion factors
-"""
+"""Physical constants and conversion factors."""
 
 AVOGNUM = 0.602214129  # Avogadro number (mol-1 * barn-1 * cm2)
 HC_4PI = 9.8663479e-9  # ??? h*c/4pi apparently ???
