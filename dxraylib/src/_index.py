@@ -2,8 +2,6 @@
 
 from __future__ import annotations
 
-__all__ = ["index1d", "index2d"]
-
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
