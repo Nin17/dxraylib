@@ -1,253 +1,278 @@
-"""_summary_
-"""
+"""Cross-sections (barns/atom)."""
+
 from __future__ import annotations
-import inspect
+
+__all__ = [
+    "CSb_Compt",
+    # "CSb_FluorShell",
+    "CSb_Photo",
+    "CSb_Rayl",
+    "CSb_Total",
+    "DCSPb_Compt",
+    "DCSPb_Rayl",
+    "DCSb_Compt",
+    "DCSb_Rayl",
+]
+
 import functools
-from typing import Callable
+from typing import TYPE_CHECKING
 
-import jax
+from array_api_compat import array_namespace
+from xraylib import AVOGNUM
 
-from ._utilities import asarray, wrapped_partial
-from .atomicweight import AtomicWeight as _AtomicWeight
-from .config import Array, ArrayLike, jit, jit_kwargs
-from .constants import AVOGNUM
-from .cross_sections import (
-    CS_Compt as _CS_Compt,
-    CS_Photo as _CS_Photo,
-    CS_Rayl as _CS_Rayl,
-    CS_Total as _CS_Total,
-)
-from .polarized import DCSP_Compt as _DCSP_Compt, DCSP_Rayl as _DCSP_Rayl
-from .scattering import DCS_Compt as _DCS_Compt, DCS_Rayl as _DCS_Rayl
+from .cross_sections import CS_Compt, CS_Photo, CS_Rayl, CS_Total
+from .polarized import DCSP_Compt, DCSP_Rayl
+from .scattering import DCS_Compt, DCS_Rayl
+from .src.atomicweight import AtomicWeight
+
+# from .cs_line import CS_FluorShell
+
+if TYPE_CHECKING:
+    from collections.abc import Callable
+
+    from numpy import floating, integer
+    from numpy.typing import NDArray
 
 
-def barns(function: Callable) -> Callable:
-    """_summary_
+def barns(function: Callable[..., NDArray]) -> Callable[..., NDArray]:
+    """Convert cross-sections from cm^2/g to barns/atom.
 
     Parameters
     ----------
     function : Callable
-        _description_
+        function to be decorated
 
     Returns
     -------
     Callable
-        _description_
+        decorated function
+
     """
-    # TODO jax.tree_util.partial
-    # function = jax.tree_util.Partial(functools.wraps(function))
-    function = functools.update_wrapper(jax.tree_util.Partial(function), function)
-    # ??? do i need unwrap here
+
     @functools.wraps(function)
-    def wrapper(Z, *args, **kwargs) -> Array:
+    def wrapper(
+        Z: NDArray[integer],
+        *args: NDArray,
+        **kwargs: dict[str, NDArray],
+    ) -> NDArray:
+        xp = array_namespace(Z, *args, *kwargs.values())
         output = function(Z, *args, **kwargs)
-        a_w = inspect.unwrap(_AtomicWeight)(Z).reshape(
-            (*Z.shape, *(1,) * (output.ndim - Z.ndim))
-        )
+        a_w = xp.expand_dims(AtomicWeight(Z), (*range(Z.ndim, output.ndim),))
         return output * a_w / AVOGNUM
 
     return wrapper
 
 
-@wrapped_partial(jit, **jit_kwargs)
-@asarray()
 @barns
-def CSb_Total(Z: ArrayLike, E: ArrayLike) -> Array:
-    """
-    Total cross-section (barn/atom): Photoelectric + Compton + Rayleigh.
+def CSb_Total(Z: NDArray[integer], E: NDArray[floating]) -> NDArray[floating]:
+    """Total cross-section: Photoelectric + Compton + Rayleigh.
 
     Parameters
     ----------
-    Z : array_like
+    Z : NDArray[integer]
         atomic number
-    E : array_like
+    E : NDArray[floating]
         energy (keV)
 
     Returns
     -------
-    array
-        Total cross-section (barn/atom): Photoelectric + Compton + Rayleigh
+    NDArray[floating]
+        Total cross-section: Photoelectric + Compton + Rayleigh
+        (barn/atom)
+
     """
-    return _CS_Total(Z, E)
+    return CS_Total(Z, E)
 
 
-@wrapped_partial(jit, **jit_kwargs)
-@asarray()
 @barns
-def CSb_Photo(Z: ArrayLike, E: ArrayLike) -> Array:
-    """
-    Photoelectric absorption cross-section (barn/atom).
+def CSb_Photo(Z: NDArray[integer], E: NDArray[floating]) -> NDArray[floating]:
+    """Photoelectric absorption cross-section.
 
     Parameters
     ----------
-    Z : array_like
+    Z : NDArray[integer]
         atomic number
-    E : array_like
+    E : NDArray[floating]
         energy (keV)
 
     Returns
     -------
-    array
-        Photoelectric absorption cross-section (barn/atom)
+    NDArray[floating]
+        Photoelectric absorption cross-section
+        (barn/atom)
+
     """
-    return _CS_Photo(Z, E)
+    return CS_Photo(Z, E)
 
 
-@wrapped_partial(jit, **jit_kwargs)
-@asarray()
 @barns
-def CSb_Rayl(Z: ArrayLike, E: ArrayLike) -> Array:
-    """
-    Rayleigh scattering cross-section (barn/atom).
+def CSb_Rayl(Z: NDArray[integer], E: NDArray[floating]) -> NDArray[floating]:
+    """Rayleigh scattering cross-section.
 
     Parameters
     ----------
-    Z : array_like
+    Z : NDArray[integer]
         atomic number
-    E : array_like
+    E : NDArray[floating]
         energy (keV)
 
     Returns
     -------
-    array
-        Rayleigh scattering cross-section (barn/atom)
+    NDArray[floating]
+        Rayleigh scattering cross-section
+        (barn/atom)
+
     """
-    return _CS_Rayl(Z, E)
+    return CS_Rayl(Z, E)
 
 
-@wrapped_partial(jit, **jit_kwargs)
-@asarray()
 @barns
-def CSb_Compt(Z: ArrayLike, E: ArrayLike) -> Array:
-    """
-    Compton scattering cross-section (barn/atom).
+def CSb_Compt(Z: NDArray[integer], E: NDArray[floating]) -> NDArray[floating]:
+    """Compton scattering cross-section.
 
     Parameters
     ----------
-    Z : array_like
+    Z : NDArray[floating]
         atomic number
-    E : array_like
+    E : NDArray[floating]
         energy (keV)
 
     Returns
     -------
-    array
-        Compton scattering cross-section (barn/atom)
+    NDArray[floating]
+        Compton scattering cross-section
+        (barn/atom)
+
     """
-    return _CS_Compt(Z, E)
+    return CS_Compt(Z, E)
 
 
-# @barns(CS_FluorLine)
-def CSb_FluorLine(Z, line, E):
-    # TODO CS_FluorLine
-    ...
+# !!!
+# @barns
+# def CSb_FluorLine(Z, line, E):
+#     return _CS_FluorLine(Z, line, E)
 
 
-# @barns(CS_FluorShell)
-def CSb_FluorShell(Z, shell, E):
-    # TODO CS_FluorShell
-    ...
+# !!!
+# @barns
+# def CSb_FluorShell(
+#     Z: NDArray[integer],
+#     shell: NDArray[integer],
+#     E: NDArray[floating],
+# ) -> NDArray[floating]:
+#     # TODO(nin17): docstring
+#     return CS_FluorShell(Z, shell, E)
 
 
-@wrapped_partial(jit, **jit_kwargs)
-@asarray()
 @barns
-def DCSb_Rayl(Z: ArrayLike, E: ArrayLike, theta: ArrayLike) -> Array:
-    """
-    Rayleigh differential scattering cross-section (barn/atom/sr).
+def DCSb_Rayl(
+    Z: NDArray[integer],
+    E: NDArray[floating],
+    theta: NDArray[floating],
+) -> NDArray[floating]:
+    """Rayleigh differential scattering cross-section.
 
     Parameters
     ----------
-    Z : array_like
+    Z : NDArray[integer]
         atomic number
-    E : array_like
+    E : NDArray[floating]
         energy (keV)
-    theta : array_like
+    theta : NDArray[floating]
         scattering polar angle (rad)
 
     Returns
     -------
-    array
-        Rayleigh differential scattering cross-section (barn/atom/sr)
+    NDArray[floating]
+        Rayleigh differential scattering cross-section
+        (barn/atom/sr)
+
     """
-    return _DCS_Rayl(Z, E, theta)
+    return DCS_Rayl(Z, E, theta)
 
 
-@wrapped_partial(jit, **jit_kwargs)
-@asarray()
 @barns
-def DCSb_Compt(Z: ArrayLike, E: ArrayLike, theta: ArrayLike) -> Array:
-    """
-    Compton differential scattering cross-section (barn/atom/sr).
+def DCSb_Compt(
+    Z: NDArray[integer],
+    E: NDArray[floating],
+    theta: NDArray[floating],
+) -> NDArray[floating]:
+    """Compton differential scattering cross-section.
 
     Parameters
     ----------
-    Z : array_like
+    Z : NDArray[integer]
         atomic number
-    E : array_like
+    E : NDArray[floating]
         energy (keV)
-    theta : array_like
+    theta : NDArray[floating]
         scattering polar angle (rad)
 
     Returns
     -------
-    array
-        Compton differential scattering cross-section (barn/atom/sr)
+    NDArray[floating]
+        Compton differential scattering cross-section
+        (barn/atom/sr)
+
     """
-    return _DCS_Compt(Z, E, theta)
+    return DCS_Compt(Z, E, theta)
 
 
-@wrapped_partial(jit, **jit_kwargs)
-@asarray()
 @barns
-def DCSPb_Rayl(Z: ArrayLike, E: ArrayLike, theta: ArrayLike, phi: ArrayLike) -> Array:
-    """
-    Rayleigh differential scattering cross-section for a polarized beam
-    (barn/atom/sr).
+def DCSPb_Rayl(
+    Z: NDArray[integer],
+    E: NDArray[floating],
+    theta: NDArray[floating],
+    phi: NDArray[floating],
+) -> NDArray[floating]:
+    """Rayleigh differential scattering cross-section for a polarized beam.
 
     Parameters
     ----------
-    Z : array_like
+    Z : NDArray[integer]
         atomic number
-    E : array_like
+    E : NDArray[floating]
         energy (keV)
-    theta : array_like
+    theta : NDArray[floating]
         scattering polar angle (rad)
-    phi : array_like
+    phi : NDArray[floating]
         scattering azimuthal angle (rad)
 
     Returns
     -------
-    array
+    NDArray[floating]
         Rayleigh differential scattering cross-section for a polarized beam
         (barn/atom/sr)
+
     """
-    return _DCSP_Rayl(Z, E, theta, phi)
+    return DCSP_Rayl(Z, E, theta, phi)
 
 
-@wrapped_partial(jit, **jit_kwargs)
-@asarray()
 @barns
-def DCSPb_Compt(Z: ArrayLike, E: ArrayLike, theta: ArrayLike, phi: ArrayLike) -> Array:
-    """
-    Compton differential scattering cross-section for a polarized beam
-    (barn/atom/sr).
+def DCSPb_Compt(
+    Z: NDArray[integer],
+    E: NDArray[floating],
+    theta: NDArray[floating],
+    phi: NDArray[floating],
+) -> NDArray[floating]:
+    """Compton differential scattering cross-section for a polarized beam.
 
     Parameters
     ----------
-    Z : array_like
+    Z : NDArray[integer]
         atomic number
-    E : array_like
+    E : NDArray[floating]
         energy (keV)
-    theta : array_like
+    theta : NDArray[floating]
         scattering polar angle (rad)
-    phi : array_like
+    phi : NDArray[floating]
         scattering azimuthal angle (rad)
 
     Returns
     -------
-    array
+    NDArray[floating]
         Compton differential scattering cross-section for a polarized beam
         (barn/atom/sr)
+
     """
-    return _DCSP_Compt(Z, E, theta, phi)
+    return DCSP_Compt(Z, E, theta, phi)

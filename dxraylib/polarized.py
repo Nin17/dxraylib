@@ -1,164 +1,151 @@
-"""
-Differential scattering cross-sections for polarized beams
-"""
+"""Differential scattering cross-sections for polarized beams."""
 
 from __future__ import annotations
 
-from ._utilities import asarray, wrapped_partial
-from .atomicweight import AtomicWeight as _AtomicWeight
-from .config import Array, ArrayLike, jit, jit_kwargs, xp
+__all__ = ["DCSP_KN", "DCSP_Compt", "DCSP_Rayl", "DCSP_Thoms"]
+
+from typing import TYPE_CHECKING
+
+from array_api_compat import array_namespace
+
 from .constants import AVOGNUM, MEC2, RE2
-from .scattering import (
-    MomentTransf as _MomentTransf,
-    FF_Rayl as _FF_Rayl,
-    SF_Compt as _SF_Compt,
-)
+from .scattering import FF_Rayl, MomentTransf, SF_Compt
+from .src.atomicweight import AtomicWeight
+
+if TYPE_CHECKING:
+    from numpy import floating, integer
+    from numpy.typing import NDArray
 
 
-@wrapped_partial(jit, **jit_kwargs)
-@asarray()
 def DCSP_Rayl(
-    Z: ArrayLike, E: ArrayLike, theta: ArrayLike, phi: ArrayLike
-) -> Array:
-    """
-    Rayleigh differential scattering cross-section for a polarized beam
-    (cm²/g/sr).
+    Z: NDArray[integer],
+    E: NDArray[floating],
+    theta: NDArray[floating],
+    phi: NDArray[floating],
+) -> NDArray[floating]:
+    """Rayleigh differential scattering cross-section for a polarized beam.
 
     Parameters
     ----------
-    Z : array_like
+    Z : NDArray[integer]
         atomic number
-    E : array_like
+    E : NDArray[floating]
         energy (keV)
-    theta : array_like
+    theta : NDArray[floating]
         scattering polar angle (rad)
-    phi : array
+    phi : NDArray[floating]
         scattering azimuthal angle (rad)
 
     Returns
     -------
-    array
+    NDArray[floating]
         Rayleigh differential scattering cross-section for a polarized beam
         (cm²/g/sr)
+
     """
-    q = _MomentTransf(E, theta)
-    ff_rayl = _FF_Rayl(Z, q).reshape(
-        (*Z.shape, *E.shape, *theta.shape, *(1,) * phi.ndim)
-    )
-    a_w = _AtomicWeight(Z).reshape(
-        (*Z.shape, *(1,) * (E.ndim + theta.ndim + phi.ndim))
-    )
-    dcsp_thoms = DCSP_Thoms(theta, phi).reshape(
-        (*(1,) * (Z.ndim + E.ndim), *theta.shape, *phi.shape)
-    )
+    xp = array_namespace(Z, E, theta, phi)
+    dims = (*range(Z.ndim + E.ndim + theta.ndim + phi.ndim),)
+
+    q = MomentTransf(E, theta)
+    ff_rayl = xp.expand_dims(FF_Rayl(Z, q), dims[-phi.ndim :])
+    a_w = xp.expand_dims(AtomicWeight(Z), dims[Z.ndim :])
+    dcsp_thoms = xp.expand_dims(DCSP_Thoms(theta, phi), dims[: Z.ndim + E.ndim])
     return AVOGNUM / a_w * ff_rayl * ff_rayl * dcsp_thoms
 
 
-@wrapped_partial(jit, **jit_kwargs)
-@asarray()
 def DCSP_Compt(
-    Z: ArrayLike, E: ArrayLike, theta: ArrayLike, phi: ArrayLike
-) -> Array:
-    """
-    Compton differential scattering cross-section for a polarized beam
-    (cm²/g/sr).
+    Z: NDArray[integer],
+    E: NDArray[floating],
+    theta: NDArray[floating],
+    phi: NDArray[floating],
+) -> NDArray[floating]:
+    """Compton differential scattering cross-section for a polarized beam.
 
     Parameters
     ----------
-    Z : array_like
+    Z : NDArray[integer]
         atomic number
-    E : array_like
+    E : NDArray[floating]
         energy (keV)
-    theta : array_like
+    theta : NDArray[floating]
         scattering polar angle (rad)
-    phi : array_like
+    phi : NDArray[floating]
         scattering azimuthal angle (rad)
 
     Returns
     -------
-    array
+    NDArray[floating]
         Compton differential scattering cross-section for a polarized beam
         (cm²/g/sr)
-    """
-    q = _MomentTransf(E, theta)
-    sf_compt = _SF_Compt(Z, q).reshape(
-        (*Z.shape, *E.shape, *theta.shape, *(1,) * phi.ndim)
-    )
-    a_w = _AtomicWeight(Z).reshape(
-        (*Z.shape, *(1,) * (E.ndim + theta.ndim + phi.ndim))
-    )
 
-    dcsp_kn = DCSP_KN(E, theta, phi).reshape(
-        (*(1,) * Z.ndim, *E.shape, *theta.shape, *phi.shape)
-    )
+    """
+    xp = array_namespace(Z, E, theta, phi)
+    dims = (*range(Z.ndim + E.ndim + theta.ndim + phi.ndim),)
+
+    q = MomentTransf(E, theta)
+    sf_compt = xp.expand_dims(SF_Compt(Z, q), dims[-phi.ndim :])
+    a_w = xp.expand_dims(AtomicWeight(Z), dims[Z.ndim :])
+    dcsp_kn = xp.expand_dims(DCSP_KN(E, theta, phi), dims[: Z.ndim])
+
     return AVOGNUM / a_w * sf_compt * dcsp_kn
 
 
-@wrapped_partial(jit, **jit_kwargs)
-@asarray()
-def DCSP_KN(E: ArrayLike, theta: ArrayLike, phi: ArrayLike) -> Array:
-    """
-    Klein-Nishina differential scattering cross-section for a polarized beam
-    (barn).
+def DCSP_KN(
+    E: NDArray[floating],
+    theta: NDArray[floating],
+    phi: NDArray[floating],
+) -> NDArray[floating]:
+    """Klein-Nishina differential scattering cross-section for a polarized beam.
 
     Parameters
     ----------
-    E : array_like
+    E : NDArray[floating]
         energy (keV)
-    theta : array_like
+    theta : NDArray[floating]
         scattering polar angle (rad)
-    phi : array_like
+    phi : NDArray[floating]
         scattering azimuthal angle (rad)
 
     Returns
     -------
-    array
-        Klein-Nishina differential scattering cross-section for a polarized
-        beam (barn)
+    NDArray[floating]
+        Klein-Nishina differential scattering cross-section for a polarized beam
+        (barn)
+
     """
-    e = E.reshape((*E.shape, *(1,) * (theta.ndim + phi.ndim)))
-    _theta = theta.reshape(
-        (
-            *(1,) * E.ndim,
-            *theta.shape,
-            *(1,) * phi.ndim,
-        )
-    )
-    _phi = phi.reshape((*(1,) * (E.ndim + theta.ndim), *phi.shape))
-    cos_th = xp.cos(_theta)
-    sin_th = xp.sin(_theta)
-    cos_phi = xp.cos(_phi)
-    k0_k = xp.where(e > 0, 1.0 + (1.0 - cos_th) * e / MEC2, xp.nan)
+    xp = array_namespace(E, theta, phi)
+    dims = (*range(E.ndim + theta.ndim + phi.ndim),)
+
+    e = xp.expand_dims(E, dims[E.ndim :])
+    costh = xp.expand_dims(xp.cos(theta), dims[: E.ndim] + dims[-phi.ndim :])
+    sinth = xp.expand_dims(xp.sin(theta), dims[: E.ndim] + dims[-phi.ndim :])
+    cosphi = xp.expand_dims(xp.cos(phi), dims[: -phi.ndim])
+    k0_k = xp.where(e > 0, 1.0 + (1.0 - costh) * e / MEC2, xp.nan)
     k_k0 = 1.0 / k0_k
     k_k0_2 = k_k0 * k_k0
 
-    output = (
-        (RE2 / 2.0)
-        * k_k0_2
-        * (k_k0 + k0_k - 2 * sin_th * sin_th * cos_phi * cos_phi)
-    )
-    return output
+    return (RE2 / 2.0) * k_k0_2 * (k_k0 + k0_k - 2 * sinth * sinth * cosphi * cosphi)
 
 
-@wrapped_partial(jit, **jit_kwargs)
-@asarray()
-def DCSP_Thoms(theta: ArrayLike, phi: ArrayLike) -> Array:
-    """
-    Thomson differential scattering cross-section for a polarized beam (barn).
+def DCSP_Thoms(theta: NDArray[floating], phi: NDArray[floating]) -> NDArray[floating]:
+    """Thomson differential scattering cross-section for a polarized beam.
 
     Parameters
     ----------
-    theta : array_like
+    theta : NDArray[floating]
         scattering polar angle (rad)
-    phi : array_like
+    phi : NDArray[floating]
         scattering azimuthal angle (rad)
 
     Returns
     -------
-    array
+    NDArray[floating]
         Thomson differential scattering cross-section for a polarized beam
         (barn)
+
     """
-    sin_th = xp.sin(theta.reshape((*theta.shape, *(1,) * phi.ndim)))
-    cos_phi = xp.cos(phi.reshape((*(1,) * theta.ndim, *phi.shape)))
-    return RE2 * (1 - sin_th * sin_th * cos_phi * cos_phi)
+    dims = (*range(theta.ndim + phi.ndim),)
+    xp = array_namespace(theta, phi)
+    sin_theta = xp.expand_dims(xp.sin(theta), dims[theta.ndim :])
+    cos_phi = xp.expand_dims(xp.cos(phi), dims[: theta.ndim])
+    return RE2 * (1 - sin_theta * sin_theta * cos_phi * cos_phi)

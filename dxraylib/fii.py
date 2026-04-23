@@ -1,34 +1,39 @@
-"""
-Anomalous Scattering Factor Δf''
-"""
+"""Anomalous Scattering Factor Δf''."""
 
 from __future__ import annotations
 
+__all__ = ["Fii"]
+
+from typing import TYPE_CHECKING
+
+from array_api_compat import array_namespace
+
 from ._interpolate import interpolate1d
 from ._load import _load
-from ._utilities import asarray, wrapped_partial
-from .config import Array, ArrayLike, jit, jit_kwargs
 
-_FII = _load("fii")
+if TYPE_CHECKING:
+    from numpy import floating, integer
+    from numpy.typing import NDArray
+
+FII_DATA = _load("fii")
 
 
-@wrapped_partial(jit, **jit_kwargs)
-@asarray()
-def Fii(Z: ArrayLike, E: ArrayLike) -> Array:
-    """
-    Anomalous scattering factor Δf''.
+def Fii(Z: NDArray[integer], E: NDArray[floating]) -> NDArray[floating]:
+    """Anomalous scattering factor Δf''.
 
     Parameters
     ----------
-    Z : array_like
+    Z : NDArray[floating]
         atomic number
-    E : array_like
+    E : NDArray[floating]
         energy (keV)
 
     Returns
     -------
-    array
+    NDArray[floating]
         anomalous scattering factor Δf''
 
     """
-    return interpolate1d(_FII, Z, E, E)
+    xp = array_namespace(Z, E)
+    data = xp.asarray(FII_DATA)
+    return interpolate1d(data, Z, E, E, xp=xp)

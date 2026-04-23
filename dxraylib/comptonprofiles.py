@@ -1,60 +1,67 @@
-"""_summary_
-"""
-# TODO summary
-# TODO docstrings
+"""Compton scattering profile and subshell Compton scattering profile."""
 
-from . import _interpolate, _load, _utilities, config as cfg
+from __future__ import annotations
+
+__all__ = ["ComptonProfile", "ComptonProfile_Partial"]
+
+from typing import TYPE_CHECKING
+
+from array_api_compat import array_namespace
+
+from ._interpolate import interpolate1d, interpolate2d
+from ._load import _load
+
+if TYPE_CHECKING:
+    from numpy import floating, integer
+    from numpy.typing import NDArray
+
+COMPTONPROFILE_DATA = _load("compton_profiles")
+COMPTONPROFILEPARTIAL_DATA = _load("compton_profiles_partial")
 
 
-@_utilities.asarray()
-def ComptonProfile(Z: cfg.ArrayLike, pz: cfg.ArrayLike) -> cfg.Array:
-    """_summary_
+def ComptonProfile(Z: NDArray[integer], pz: NDArray[floating]) -> NDArray[floating]:
+    """Compton scattering profile.
 
     Parameters
     ----------
-    Z : array_like
-        _description_
-    pz : array_like
-        _description_
+    Z : NDArray[integer]
+        atomic number
+    pz : NDArray[floating]
+        momentum
 
     Returns
     -------
-    array
-        _description_
+    NDArray
+        Compton scattering profile
+
     """
-    return cfg.xp.exp(
-        _interpolate.interpolate1d(
-            _load.load("compton_profiles"), Z, pz, cfg.xp.log(pz + 1)
-        )
-    )
+    xp = array_namespace(Z, pz)
+    data = xp.asarray(COMPTONPROFILE_DATA)
+    return xp.exp(interpolate1d(data, Z, pz, xp.log(pz + 1), xp=xp))
 
 
-@_utilities.asarray()
 def ComptonProfile_Partial(
-    Z: cfg.ArrayLike, shell: cfg.ArrayLike, pz: cfg.ArrayLike
-) -> cfg.Array:
-    """_summary_
+    Z: NDArray[integer],
+    shell: NDArray[integer],
+    pz: NDArray[floating],
+) -> NDArray[floating]:
+    """Subshell Compton scattering profile.
 
     Parameters
     ----------
-    Z : ArrayLike
-        _description_
-    shell : ArrayLike
-        _description_
-    pz : ArrayLike
-        _description_
+    Z : NDArray[integer]
+        atomic number
+    shell : NDArray[integer]
+        shell macro
+    pz : NDArray[floating]
+        momentum
 
     Returns
     -------
-    Array
-        _description_
+    NDArray[floating]
+        subshell Compton scattering profile
+
     """
-    return cfg.xp.exp(
-        _interpolate.interpolate2d(
-            _load.load("compton_profiles_partial"),
-            Z,
-            shell,
-            pz,
-            cfg.xp.log(pz + 1),
-        )
-    )
+    xp = array_namespace(Z, shell, pz)
+    data = xp.asarray(COMPTONPROFILEPARTIAL_DATA)
+    return xp.exp(interpolate2d(data, Z, shell, pz, xp.log(pz + 1), xp=xp))
