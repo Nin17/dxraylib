@@ -17,7 +17,6 @@ ONE_D = 1
 TWO_D = 2
 
 
-# TODO(nin17): take xp as parameter
 def index1d(
     data: NDArray,
     a: NDArray[integer],
