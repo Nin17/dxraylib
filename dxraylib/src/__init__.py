@@ -1,18 +1,10 @@
-from .atomiclevelwidth import *
-from .atomicweight import *
-from .auger_trans import *
-from .comptonprofiles import *
-from .coskron import *
-from .cross_sections import *
-from .cs_barns import *
-from .cs_cp import *
-from .densities import *
-from .edges import *
-from .fi import *
-from .fii import *
-from .fluor_yield import *
-from .jumpy import *
-from .polarized import *
-from .radrate import *
-from .refractive_indices import *
-from .scattering import *
+import importlib
+import pkgutil
+
+__all__ = []
+
+for _loader, _mod_name, _is_pkg in pkgutil.iter_modules(__path__):
+    _mod = importlib.import_module(f".{_mod_name}", package=__name__)
+    if hasattr(_mod, "__all__"):
+        globals().update({k: getattr(_mod, k) for k in _mod.__all__})
+        __all__ += _mod.__all__
