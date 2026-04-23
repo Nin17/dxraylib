@@ -1,7 +1,0 @@
-xp = "jax.numpy"
-jit = "jax.jit"
-Array = "jax.Array"
-ArrayLike = "jax.typing.ArrayLike"
-double= true
-
-[kwargs.kwargs]
