@@ -13,8 +13,6 @@ from dxraylib._load import _load
 from ._index import index1d
 
 if TYPE_CHECKING:
-    from types import ModuleType
-
     from numpy import float64, floating, integer
     from numpy.typing import NDArray
 
@@ -36,6 +34,6 @@ def ElementDensity(Z: NDArray[integer]) -> NDArray[floating]:
         element density (g/cm³)
 
     """
-    xp: ModuleType = array_namespace(Z)
-    data: NDArray[floating] = xp.asarray(ELEMENTDENSITY_DATA)
+    xp = array_namespace(Z)
+    data = xp.asarray(ELEMENTDENSITY_DATA)
     return index1d(data, Z - 1, xp=xp)

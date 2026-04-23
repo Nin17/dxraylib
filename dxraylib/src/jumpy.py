@@ -13,8 +13,6 @@ from dxraylib._load import _load
 from ._index import index2d
 
 if TYPE_CHECKING:
-    from types import ModuleType
-
     from numpy import float64, floating, integer
     from numpy.typing import NDArray
 
@@ -38,6 +36,6 @@ def JumpFactor(Z: NDArray[integer], shell: NDArray[integer]) -> NDArray[floating
         jump factor
 
     """
-    xp: ModuleType = array_namespace(Z, shell)
-    data: NDArray[floating] = xp.asarray(JUMPFACTOR_DATA)
+    xp = array_namespace(Z, shell)
+    data = xp.asarray(JUMPFACTOR_DATA)
     return index2d(data, Z - 1, shell, xp=xp)

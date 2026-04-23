@@ -14,8 +14,6 @@ from dxraylib._load import _load
 from ._index import index2d
 
 if TYPE_CHECKING:
-    from types import ModuleType
-
     from numpy import float64, floating, integer
     from numpy.typing import NDArray
 
@@ -39,8 +37,8 @@ def AugerRate(Z: NDArray[integer], auger_trans: NDArray[integer]) -> NDArray[flo
         non-radiative rate
 
     """
-    xp: ModuleType = array_namespace(Z, auger_trans)
-    data: NDArray[floating] = xp.asarray(AUGERRATE_DATA)
+    xp = array_namespace(Z, auger_trans)
+    data = xp.asarray(AUGERRATE_DATA)
     return index2d(data, Z - 6, auger_trans, xp=xp)
 
 
@@ -60,6 +58,6 @@ def AugerYield(Z: NDArray[integer], shell: NDArray[integer]) -> NDArray[floating
         auger yield
 
     """
-    xp: ModuleType = array_namespace(Z, shell)
-    data: NDArray[floating] = xp.asarray(AUGERYIELD_DATA)
+    xp = array_namespace(Z, shell)
+    data = xp.asarray(AUGERYIELD_DATA)
     return index2d(data, Z - 3, shell, xp=xp)

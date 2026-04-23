@@ -13,8 +13,6 @@ from dxraylib._load import _load
 from ._index import index2d
 
 if TYPE_CHECKING:
-    from types import ModuleType
-
     from numpy import float64, floating, integer
     from numpy.typing import NDArray
 
@@ -37,6 +35,6 @@ def AtomicLevelWidth(Z: NDArray[integer], shell: NDArray[integer]) -> NDArray[fl
         atomic level width (keV)
 
     """
-    xp: ModuleType = array_namespace(Z, shell)
-    data: NDArray[floating] = xp.asarray(ATOMICLEVELWIDTH_DATA)
+    xp = array_namespace(Z, shell)
+    data = xp.asarray(ATOMICLEVELWIDTH_DATA)
     return index2d(data, Z - 10, shell, xp=xp)

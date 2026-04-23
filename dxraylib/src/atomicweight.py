@@ -35,6 +35,6 @@ def AtomicWeight(Z: NDArray[integer]) -> NDArray[floating]:
         standard atomic weight (g/mol)
 
     """
-    xp: ModuleType = array_namespace(Z)
-    data: NDArray[floating] = xp.asarray(ATOMICWEIGHT_DATA)
+    xp = array_namespace(Z)
+    data = xp.asarray(ATOMICWEIGHT_DATA)
     return index1d(data, Z - 1, xp=xp)

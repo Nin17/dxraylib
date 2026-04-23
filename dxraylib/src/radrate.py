@@ -13,8 +13,6 @@ from dxraylib._load import _load
 from ._index import index2d
 
 if TYPE_CHECKING:
-    from types import ModuleType
-
     from numpy import float64, floating, integer
     from numpy.typing import NDArray
 
@@ -39,6 +37,6 @@ def RadRate(Z: NDArray[integer], line: NDArray[integer]) -> NDArray[floating]:
         radiative rate
 
     """
-    xp: ModuleType = array_namespace(Z, line)
-    data: NDArray[floating] = xp.asarray(RADRATE_DATA)
+    xp = array_namespace(Z, line)
+    data = xp.asarray(RADRATE_DATA)
     return index2d(data, Z - 5, line, xp=xp)

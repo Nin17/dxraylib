@@ -14,8 +14,6 @@ from dxraylib._load import _load
 from ._index import index2d
 
 if TYPE_CHECKING:
-    from types import ModuleType
-
     from numpy import float64, floating, integer
     from numpy.typing import NDArray
 
@@ -39,7 +37,6 @@ def CosKronTransProb(Z: NDArray[integer], trans: NDArray[integer]) -> NDArray[fl
         Coster-Kronig transition probability
 
     """
-    xp: ModuleType = array_namespace(Z, trans)
-    data: NDArray[floating] = xp.asarray(COSKRON_DATA)
-
+    xp = array_namespace(Z, trans)
+    data = xp.asarray(COSKRON_DATA)
     return index2d(data, Z - 1, trans, xp=xp)
