@@ -20,7 +20,7 @@ EDGEENERGY_DATA = _load("edges")
 
 
 def EdgeEnergy(Z: NDArray[integer], shell: NDArray[integer]) -> NDArray[floating]:
-    """Absorption edge energy (keV).
+    """Absorption edge energy.
 
     Parameters
     ----------
@@ -32,7 +32,8 @@ def EdgeEnergy(Z: NDArray[integer], shell: NDArray[integer]) -> NDArray[floating
     Returns
     -------
     NDArray[floating]
-        absorption edge energy (keV)
+        absorption edge energy
+        (keV)
 
     """
     xp = array_namespace(Z, shell)

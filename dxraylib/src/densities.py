@@ -21,7 +21,7 @@ ELEMENTDENSITY_DATA = _load("densities")
 
 
 def ElementDensity(Z: NDArray[integer]) -> NDArray[floating]:
-    """Element density (g/cm³) at room temperature.
+    """Element density at room temperature.
 
     Parameters
     ----------
@@ -31,7 +31,8 @@ def ElementDensity(Z: NDArray[integer]) -> NDArray[floating]:
     Returns
     -------
     NDArray[floating]
-        element density (g/cm³)
+        element density
+        (g/cm³)
 
     """
     xp = array_namespace(Z)

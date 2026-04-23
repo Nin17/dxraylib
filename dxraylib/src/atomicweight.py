@@ -20,7 +20,7 @@ ATOMICWEIGHT_DATA = _load("atomic_weight")
 
 
 def AtomicWeight(Z: NDArray[integer]) -> NDArray[floating]:
-    """Standard atomic weight (g/mol).
+    """Standard atomic weight.
 
     Parameters
     ----------
@@ -30,7 +30,8 @@ def AtomicWeight(Z: NDArray[integer]) -> NDArray[floating]:
     Returns
     -------
     NDArray[floating]
-        standard atomic weight (g/mol)
+        standard atomic weight
+        (g/mol)
 
     """
     xp = array_namespace(Z)

@@ -20,7 +20,7 @@ ATOMICLEVELWIDTH_DATA = _load("atomic_level_width")
 
 
 def AtomicLevelWidth(Z: NDArray[integer], shell: NDArray[integer]) -> NDArray[floating]:
-    """Atomic level width (keV).
+    """Atomic level width.
 
     Parameters
     ----------
@@ -32,7 +32,8 @@ def AtomicLevelWidth(Z: NDArray[integer], shell: NDArray[integer]) -> NDArray[fl
     Returns
     -------
     NDArray[floating]
-        atomic level width (keV)
+        atomic level width
+        (keV)
 
     """
     xp = array_namespace(Z, shell)
