@@ -45,15 +45,10 @@ def index1d(
         indices (a) indexed from data for valid values, NaN otherwise
 
     """
-    # TODO(nin17): can probably do this in a uniform way between modules
     if data.ndim != ONE_D:
         msg = f"data is {data.ndim}D but must be 1D."
         raise ValueError(msg)
     condition: NDArray[bool_] = (a >= 0) & (a < data.shape[0])
-    # if cfg.xp.__name__ != "torch":
-    #     condition = (a >= 0) & (a < data.size)
-    # else:
-    #     condition = (a >= 0) & (a < data.size(dim=0))
     output: NDArray = data[xp.where(condition, a, 0)]
     return xp.where(condition, output, xp.nan)
 
