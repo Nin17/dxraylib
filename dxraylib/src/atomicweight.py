@@ -13,8 +13,6 @@ from dxraylib._load import _load
 from ._index import index1d
 
 if TYPE_CHECKING:
-    from types import ModuleType
-
     from numpy import float64, floating, integer
     from numpy.typing import NDArray
 
