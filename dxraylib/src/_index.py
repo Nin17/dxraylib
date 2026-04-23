@@ -48,9 +48,9 @@ def index1d(
     if data.ndim != ONE_D:
         msg = f"data is {data.ndim}D but must be 1D."
         raise ValueError(msg)
-    condition: NDArray[bool_] = (a >= 0) & (a < data.shape[0])
-    output: NDArray = data[xp.where(condition, a, 0)]
-    return xp.where(condition, output, xp.nan)
+    cond: NDArray[bool_] = (a >= 0) & (a < data.shape[0])
+    output: NDArray = data[xp.where(cond, a, 0)]
+    return xp.where(cond, output, xp.nan)
 
 
 def index2d(
@@ -90,10 +90,7 @@ def index2d(
         raise ValueError(msg)
     _a = xp.reshape(a, a.shape + (1,) * b.ndim)
     _b = xp.reshape(b, (1,) * a.ndim + b.shape)
-    condition_a: NDArray[bool_] = (_a >= 0) & (_a < data.shape[0])
-    condition_b: NDArray[bool_] = (_b >= 0) & (_b < data.shape[1])
-    output: NDArray[floating] = data[
-        xp.where(condition_a, _a, 0),
-        xp.where(condition_b, _b, 0),
-    ]
-    return xp.where(condition_a & condition_b, output, xp.nan)
+    cond_a: NDArray[bool_] = (_a >= 0) & (_a < data.shape[0])
+    cond_b: NDArray[bool_] = (_b >= 0) & (_b < data.shape[1])
+    output: NDArray[floating] = data[xp.where(cond_a, _a, 0), xp.where(cond_b, _b, 0)]
+    return xp.where(cond_a & cond_b, output, xp.nan)
