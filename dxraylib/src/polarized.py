@@ -8,9 +8,9 @@ from typing import TYPE_CHECKING
 
 from array_api_compat import array_namespace
 
+from .atomicweight import AtomicWeight
 from .constants import AVOGNUM, MEC2, RE2
 from .scattering import FF_Rayl, MomentTransf, SF_Compt
-from .src.atomicweight import AtomicWeight
 
 if TYPE_CHECKING:
     from numpy import floating, integer

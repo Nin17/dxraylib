@@ -20,8 +20,8 @@ from array_api_compat import array_namespace
 
 from ._interpolate import interpolate1d
 from ._load import _load
+from .atomicweight import AtomicWeight
 from .constants import AVOGNUM, KEV2ANGST, MEC2, PI, RE2  # ??? import from xraylib
-from .src.atomicweight import AtomicWeight
 
 if TYPE_CHECKING:
     from numpy import floating, integer
@@ -225,9 +225,9 @@ def CS_KN(E: NDArray[floating]) -> NDArray[floating]:
     """
     xp = array_namespace(E)
     a = xp.where(E > 0.0, E / MEC2, xp.nan)
-    a3 = a**3
+    a3 = a* a *a
     b = 1.0 + 2.0 * a
-    b2 = b**2
+    b2 = b * b
     lb = xp.log(b)
     c: float = 2 * PI * RE2
     return c * (

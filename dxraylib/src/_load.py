@@ -14,7 +14,7 @@ if TYPE_CHECKING:
     from numpy import float64
     from numpy.typing import NDArray
 
-_PATH = Path(__file__).parent / "data/data.npz"
+_PATH = Path(__file__).parent.parent / "data/data.npz"
 _DATA = np.load(_PATH)
 
 

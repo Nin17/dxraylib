@@ -20,10 +20,10 @@ from typing import TYPE_CHECKING
 from array_api_compat import array_namespace
 from xraylib import AVOGNUM
 
+from .atomicweight import AtomicWeight
 from .cross_sections import CS_Compt, CS_Photo, CS_Rayl, CS_Total
 from .polarized import DCSP_Compt, DCSP_Rayl
 from .scattering import DCS_Compt, DCS_Rayl
-from .src.atomicweight import AtomicWeight
 
 # from .cs_line import CS_FluorShell
 

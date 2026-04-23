@@ -8,9 +8,8 @@ from typing import TYPE_CHECKING
 
 from array_api_compat import array_namespace
 
-from dxraylib._load import _load
-
 from ._index import index2d
+from ._load import _load
 
 if TYPE_CHECKING:
     from numpy import floating, integer

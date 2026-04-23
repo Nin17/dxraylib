@@ -9,9 +9,8 @@ __all__ = ["AugerRate", "AugerYield"]
 
 from typing import TYPE_CHECKING
 
-from dxraylib._load import _load
-
 from ._index import index2d
+from ._load import _load
 
 if TYPE_CHECKING:
     from numpy import floating, integer

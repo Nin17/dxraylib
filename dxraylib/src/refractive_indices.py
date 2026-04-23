@@ -9,10 +9,10 @@ from typing import TYPE_CHECKING
 from array_api_compat import array_namespace
 
 from ._compounds import _compound_data
+from .atomicweight import AtomicWeight
 from .constants import HC_4PI, KD
 from .cross_sections import CS_Total
 from .fi import Fi
-from .src.atomicweight import AtomicWeight
 
 if TYPE_CHECKING:
     from numpy import complexfloating, floating
