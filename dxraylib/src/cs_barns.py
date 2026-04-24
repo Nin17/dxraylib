@@ -18,6 +18,7 @@ import functools
 from typing import TYPE_CHECKING
 
 from array_api_compat import array_namespace
+
 from xraylib import AVOGNUM
 
 from .atomicweight import AtomicWeight

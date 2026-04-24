@@ -17,13 +17,12 @@ __all__ = [
 from typing import TYPE_CHECKING
 
 from array_api_compat import array_namespace
+
 from xraylib import AVOGNUM, KEV2ANGST, MEC2, PI, RE2
 
 from ._interpolate import interpolate1d
 from ._load import _load
 from .atomicweight import AtomicWeight
-
-# from .constants import KEV2ANGST, PI, RE2  # ??? import from xraylib
 
 if TYPE_CHECKING:
     from numpy import floating, integer
